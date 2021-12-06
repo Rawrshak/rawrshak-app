@@ -1,0 +1,47 @@
+@tailwind base;
+
+@import "react-toastify/dist/ReactToastify.css";
+
+@tailwind components;
+
+@font-face {
+  font-family: "Vogie";
+  font-style: normal;
+  font-weight: 600;
+  src: local(""),
+    url("./assets/fonts/Vogie-SemiBold.woff2") format("woff2"),
+    url("./assets/fonts/Vogie-SemiBold.woff") format("woff");
+}
+
+@tailwind utilities;
+
+:root {
+  --toastify-color-light: #2C2F35;
+  --toastify-text-color-light: #F6F6F6;
+  --toastify-font-family: Vogie;
+  --toastify-color-progress-light: linear-gradient(
+    to right,
+    #C2FD44,
+    #6351DD
+  );
+}
+
+.assetCardBackground {
+  background: linear-gradient(156.21deg, #252348 0%, rgba(37, 35, 72, 0) 115.98%);
+}
+
+.sliding-pane {
+  height: 600px;
+}
+
+.wallet-sliding-pane {
+  height: 300px;
+}
+
+.slide-pane {
+  background-color: #1D2026 !important;
+}
+
+.slide-pane__overlay.overlay-after-open {
+  background-color: rgba(0, 0, 0, 0) !important;
+}
