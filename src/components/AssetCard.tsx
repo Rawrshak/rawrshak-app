@@ -13,7 +13,7 @@ function AssetCard({
   openAsset: (assetWithOrders: AssetWithOrders) => void
 }) {
   return (
-    <div onClick={() => openAsset(assetWithOrders)} className="box-content w-96 h-120 m-3 assetCardBackground rounded-xl cursor-pointer">
+    <div className="box-content w-96 h-120 m-3 assetCardBackground rounded-xl">
       <div className="flex h-4 justify-end">
         <img onClick={() => openAsset(assetWithOrders)} className="absolute self-end cursor-pointer pr-6 p-3 mt-4" src={Ellipsis} alt="Ellipsis" />
       </div>
