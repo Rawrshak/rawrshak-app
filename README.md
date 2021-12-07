@@ -1,26 +1,11 @@
-# Setup local environment
-1) Pull down & npm install within the Rawrshak contracts repository: https://github.com/Rawrshak/Rawrshak
-2) Pull down & npm install within the Rawrshak subgraphs repository: https://github.com/Rawrshak/Subgraphs
-3) Install IPFS Desktop: https://docs.ipfs.io/install/ipfs-desktop/#windows
-4) Install the graph-cli: npm install -g @graphprotocol/graph-cli
-5) Create an account on https://thegraph.com/ using your github account: https://thegraph.com/hosted-service/
-6) In your local IPFS node, pin the testdata/metadata folder from within the Rawrshak subgraphs repository
-7) Open a new terminal in Rawrshak contracts folder. Run “npx hardhat node”
-8) Open a new terminal in Rawrshak contracts folder. Run:
-      a) npx hardhat run --network localhost scripts/deploy.js
-      b) npx hardhat run --network localhost scripts/distribute_rawr_tokens.js
-      c) npx hardhat run --network localhost scripts/subgraph_arweave_data.js
-      d) npx hardhat run --network localhost scripts/subgraph_ipfs_data.js
-9) Set the deployed content factory contract addresses in the Rawrshak subgraph repository contents.yaml file
-10) In the Rawrshak subgraphs folder, delete the docker\data folder
-11) Open a new terminal in Rawrshak subgraphs folder. Run “npm run docker-up”
-12) Open a new terminal in Rawrshak subgraphs folder. Run: 
-      a) npm run codegen:contents
-      b) npm run create-local:contents
-      c) npm run deploy-local:contents
-13) The subgraph endpoint should now be available at: http://localhost:8000/subgraphs/name/<github username>/contents
-14) Add this URL to the REACT_APP_LOCAL_SUBGRAPH_ENDPOINT variable in the .env.local file of this repository
-15) Start the web app using "npm run start"
+# Setup environment variables
+1) Set environment variables for the supported chain IDs
+2) Set the address resolver contract addresses and supported token contract addresses per supported chain ID
+3) Set the endpoint URLs for both the exchange subgraph and the contents subgraph
+
+Note: API keys are not needed for this app, since all data is obtained from the subgraphs.
+If a user is going to interact with the app, they will need to connect with a browser Web3 wallet,
+which will be used as the provider.
 
 
 # Getting Started with Create React App
