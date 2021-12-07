@@ -90,13 +90,13 @@ function TradeAssetModal({
           <div className="text-offWhite text-xl ml-4">
             Qty {assetBalance?.toString()}
           </div>
-          <div className="flex bg-black400 my-1 mx-4 p-1 rounded-lg">
+          <div className="flex bg-black450 my-1 mx-4 p-1 rounded-lg">
             <Button
               label="BUY"
               onClick={() => setBuyMode(true)}
               enabled={!buyMode}
               show={true}
-              enabledClassName="flex flex-grow justify-center text-chartreuse500 text-sm bg-black400 m-2 py-2 rounded-lg"
+              enabledClassName="flex flex-grow justify-center text-chartreuse500 text-sm bg-black450 m-2 py-2 rounded-lg"
               disabledClassName="flex flex-grow justify-center text-chartreuse500 text-sm bg-black500 m-2 py-2 rounded-lg"
             />
             <Button
@@ -104,7 +104,7 @@ function TradeAssetModal({
               onClick={() => setBuyMode(false)}
               enabled={buyMode}
               show={true}
-              enabledClassName="flex flex-grow justify-center text-chartreuse500 text-sm bg-black400 m-2 py-2 rounded-lg"
+              enabledClassName="flex flex-grow justify-center text-chartreuse500 text-sm bg-black450 m-2 py-2 rounded-lg"
               disabledClassName="flex flex-grow justify-center text-chartreuse500 text-sm bg-black500 m-2 py-2 rounded-lg"
             />
           </div>

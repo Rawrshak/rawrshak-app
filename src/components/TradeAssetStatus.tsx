@@ -7,13 +7,13 @@ function TradeAssetStatus({
 }) {
   if (show) {
     return (
-      <div className="flex justify-center mx-3 h-6">
+      <div className="flex justify-center mx-3 h-6 text-black200">
         {status}
       </div>
     );
   } else {
     return (
-      <div className="flex justify-center mx-3 h-6" />
+      <div className="flex justify-center mx-3 h-6 text-black200" />
     );
   }
 }

@@ -5,6 +5,7 @@ import AssetCard from './AssetCard';
 import TradeAssetModal from "./TradeAssetModal";
 import AssetModal from "./AssetModal";
 import { ContentDataWithMetadata, AssetWithOrders } from '../data/data';
+import Image from './Image';
 
 function ExploreGames({
   setShowExploreAssets
@@ -95,11 +96,13 @@ function AssetsView({
 
   const tradeAsset = (assetWithOrders: AssetWithOrders) => {
     setShowTradeAssetModal(true);
+    setShowAssetModal(false);
     setActiveTradeAsset(assetWithOrders);
   }
 
   const openAsset = (assetWithOrders: AssetWithOrders) => {
     setShowAssetModal(true);
+    setShowTradeAssetModal(false);
     setActiveAsset(assetWithOrders);
   }
 
@@ -115,27 +118,25 @@ function AssetsView({
         <div className="flex flex-col">
           <TradeAssetModal show={showTradeAssetModal} setShow={setShowTradeAssetModal} assetWithOrders={activeTradeAsset} />
           <AssetModal show={showAssetModal} setShow={setShowAssetModal} assetWithOrders={activeAsset} tradeAsset={tradeAsset} />
-
           <div onClick={() => backToGameView()} className="flex text-offWhite text-sm m-2 cursor-pointer">
             {`< Marketplace`}
           </div>
-
           <div className="flex">
-            <img
+            <Image
               src={contentWithMetadata.imageUri}
-              alt="Rawrshak Game"
               className="object-cover h-44 w-64 rounded-xl"
+              type="content"
             />
           </div>
-
           <div className="flex text-offWhite text-xxl m-2">
             {contentWithMetadata.name}
           </div>
-
           <div className="flex text-offWhite text-sm m-2">
             {contentWithMetadata.description}
           </div>
-
+          <div className="flex text-offWhite text-sm m-2">
+            Assets: {contentWithMetadata.assets.length}
+          </div>
           <div className="flex flex-grow flex-wrap">
             {contentWithMetadata.assets.map(asset => (
               <AssetCard key={asset.id} assetWithOrders={asset} buyNow={tradeAsset} openAsset={openAsset} />

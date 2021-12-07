@@ -1,4 +1,5 @@
 import { ContentDataWithMetadata } from '../data/data';
+import Image from './Image';
 
 function GameCard({
   smartContract,
@@ -11,17 +12,19 @@ function GameCard({
   if (smartContract === undefined) {
     return (null);
   } else {
+
     return (
-      <div onClick={() => openSmartContract(smartContract)} className="box-content h-44 w-64 m-3 bg-black400 rounded-xl cursor-pointer overflow-hidden">
-        <div className="flex text-offWhite text-sm ml-4 h-6 justify-center truncate ...">
-          {smartContract.name}
+      <div className="flex w-64 h-44 m-3 bg-black rounded-xl cursor-pointer" onClick={() => openSmartContract(smartContract)} >
+        <div className="flex flex-grow absolute justify-center h-6 w-64">
+          <div className="flex text-offWhite text-sm z-50 mt-1 h-6 truncate ...">
+            {smartContract.name}
+          </div>
+        </div>
+        <div className="flex absolute text-offWhite text-sm z-50 mt-36 ml-4 h-6 truncate ...">
+          Assets: {smartContract.assets.length}
         </div>
         <div className="flex h-38">
-          <img
-            src={smartContract.imageUri}
-            alt="Rawrshak Game"
-            className="object-cover h-44 w-64 rounded-xl"
-          />
+          <Image src={smartContract.imageUri} className="object-cover h-44 w-64 rounded-xl opacity-95" type="content" />
         </div>
       </div>
     );

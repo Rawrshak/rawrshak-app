@@ -9,6 +9,7 @@ import CreateSmartContractModal from "./CreateSmartContractModal";
 import CreateAssetModal from "./CreateAssetModal";
 import { ContentManager, ContentManager__factory } from '../assets/typechain';
 import Button from "./Button";
+import Image from './Image';
 
 function SmartContractAssets({ activeContent }: { activeContent: ContentDataWithMetadata | undefined }) {
   const [showAssetModal, setShowAssetModal] = useState<boolean>(false);
@@ -45,7 +46,6 @@ function AssetsView({
   show: boolean
 }) {
   const { signerOrProvider } = useWeb3();
-
   const [activeContentManagerContract, setActiveContentManagerContract] = useState<ContentManager>();
   const [showCreateAssetModal, setShowCreateAssetModal] = useState<boolean>(false);
 
@@ -72,11 +72,7 @@ function AssetsView({
             </div>
           </div>
           <div className="flex">
-            <img
-              src={activeContent.imageUri}
-              alt="Rawrshak Game"
-              className="object-cover h-44 w-64 rounded-xl"
-            />
+            <Image src={activeContent.imageUri} className="object-cover h-44 w-64 rounded-xl opacity-95" type="content" />
           </div>
         </div>
         <div className="grid grid-cols-2 mt-24 mb-4">

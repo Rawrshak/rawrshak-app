@@ -322,12 +322,12 @@ function BuyAsset({
   if (show) {
     return (
       <div className="flex flex-col">
-        <div className="grid grid-cols-2 bg-black400 my-1 mx-4 p-4 rounded-lg">
+        <div className="grid grid-cols-2 bg-black450 my-1 mx-4 p-4 rounded-lg">
           <div className="flex mx-2 text-lg">
             Instant Buy
           </div>
           <div />
-          <div className="flex mt-3 mx-2 text-xsm">
+          <div className="flex mt-3 mx-2 text-xsm text-black200">
             How many {assetWithOrders?.name} would you like to buy?
           </div>
           <div>
@@ -338,7 +338,7 @@ function BuyAsset({
               className="bg-black500 m-2 p-2 rounded-lg w-48"
             />
           </div>
-          <div className="flex justify-center mx-2 mt-8">
+          <div className="flex justify-center mx-2 mt-8 text-black200">
             {`Total: ${ethers.utils.formatUnits(buyNowTokenAmount.toString(), supportedToken?.decimals)} ${supportedToken?.symbol}`}
           </div>
           <div className="flex flex-col flex-grow">
@@ -349,28 +349,28 @@ function BuyAsset({
                 onClick={() => buyNowApprove(buyNowTokenAmount)}
                 enabled={enableBuyNowApproveButton}
                 show={showBuyNowApproveButton}
-                enabledClassName="flex justify-center text-chartreuse500 text-sm bg-black400 border-chartreuse500 border-2 m-2 py-1 rounded-lg w-48"
-                disabledClassName="flex justify-center text-black300 text-sm bg-black400 border-black300 border-2 m-2 py-1 rounded-lg w-48"
+                enabledClassName="flex justify-center text-chartreuse500 text-sm bg-black450 border-chartreuse500 border-2 m-2 py-1 rounded-lg w-48"
+                disabledClassName="flex justify-center text-black300 text-sm bg-black450 border-black300 border-2 m-2 py-1 rounded-lg w-48"
               />
               <Button
                 label="BUY NOW"
                 onClick={buyNow}
                 enabled={enableBuyNowButton}
                 show={showBuyNowButton}
-                enabledClassName="flex justify-center text-chartreuse500 text-sm bg-black400 border-chartreuse500 border-2 m-2 py-1 rounded-lg w-48"
-                disabledClassName="flex justify-center text-black300 text-sm bg-black400 border-black300 border-2 m-2 py-1 rounded-lg w-48"
+                enabledClassName="flex justify-center text-chartreuse500 text-sm bg-black450 border-chartreuse500 border-2 m-2 py-1 rounded-lg w-48"
+                disabledClassName="flex justify-center text-black300 text-sm bg-black450 border-black300 border-2 m-2 py-1 rounded-lg w-48"
               />
               <Loader show={showBuyNowLoader} />
             </div>
           </div>
         </div>
-        <div className="bg-black400 my-1 mx-4 p-4 rounded-lg">
+        <div className="bg-black450 my-1 mx-4 p-4 rounded-lg">
           <div className="grid grid-cols-2">
             <div className="flex mx-2 text-lg">
               Buy Order
             </div>
             <div />
-            <div className="flex mt-3 mx-2 text-xsm">
+            <div className="flex mt-3 mx-2 text-xsm text-black200">
               How many {assetWithOrders?.name} do you want?
             </div>
             <div className="flex flex-col">
@@ -383,7 +383,7 @@ function BuyAsset({
                 />
               </div>
             </div>
-            <div className="flex mt-3 mx-2 text-xsm">
+            <div className="flex mt-3 mx-2 text-xsm text-black200">
               How much do you want to pay per asset?
             </div>
             <div className="flex flex-col">
@@ -394,7 +394,7 @@ function BuyAsset({
                 onChange={e => setPlaceOrderPriceString(e)}
                 className="bg-black500 m-2 p-2 rounded-lg w-48"
               />
-              <div className="flex text-xsm ml-2">
+              <div className="flex text-xsm ml-2 text-black200">
                 {`Total: ${ethers.utils.formatUnits(placeOrderTokenAmount.toString(), supportedToken?.decimals)} ${supportedToken?.symbol}`}
               </div>
             </div>
@@ -406,16 +406,16 @@ function BuyAsset({
               onClick={placeOrder}
               enabled={enablePlaceOrderButton}
               show={showPlaceOrderButton}
-              enabledClassName="flex justify-center text-chartreuse500 text-sm bg-black400 border-chartreuse500 border-2 py-1 m-2 rounded-lg w-48"
-              disabledClassName="flex justify-center text-black300 text-sm bg-black400 border-black300 border-2 py-1 m-2 rounded-lg w-48"
+              enabledClassName="flex justify-center text-chartreuse500 text-sm bg-black450 border-chartreuse500 border-2 py-1 m-2 rounded-lg w-48"
+              disabledClassName="flex justify-center text-black300 text-sm bg-black450 border-black300 border-2 py-1 m-2 rounded-lg w-48"
             />
             <Button
               label="APPROVE"
               onClick={() => placeOrderApprove(placeOrderTokenAmount)}
               enabled={enablePlaceOrderApproveButton}
               show={showPlaceOrderApproveButton}
-              enabledClassName="flex justify-center text-chartreuse500 text-sm bg-black400 border-chartreuse500 border-2 m-2 w-48 py-1 rounded-lg"
-              disabledClassName="flex justify-center text-black300 text-sm bg-black400 border-black300 border-2 m-2 py-1 w-48 rounded-lg"
+              enabledClassName="flex justify-center text-chartreuse500 text-sm bg-black450 border-chartreuse500 border-2 m-2 w-48 py-1 rounded-lg"
+              disabledClassName="flex justify-center text-black300 text-sm bg-black450 border-black300 border-2 m-2 py-1 w-48 rounded-lg"
             />
             <Loader show={showPlaceOrderLoader} />
           </div>

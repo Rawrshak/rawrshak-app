@@ -22,7 +22,7 @@ function AssetModal({
   } else {
     return (
       <SlidingPane
-        className="flex bg-black400 rounded-bl-lg rounded-tl-lg rounded-br-lg"
+        className="flex bg-gray"
         overlayClassName="sliding-pane"
         isOpen={show}
         onRequestClose={() => { setShow(false) }}

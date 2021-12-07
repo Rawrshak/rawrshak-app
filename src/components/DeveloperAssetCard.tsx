@@ -1,4 +1,5 @@
 import { Asset } from "../data/data";
+import Image from './Image';
 
 function DeveloperAssetCard({
   asset,
@@ -8,18 +9,17 @@ function DeveloperAssetCard({
   openAsset: (asset: Asset) => void
 }) {
   return (
-    <div onClick={() => openAsset(asset)} className="box-content h-96 w-60 m-3 bg-darkBlue800 rounded-xl cursor-pointer">
-      <div className="flex justify-center box-content h-40 w-52 text-offWhite text-xxl mt-5 mx-4 rounded-xl">
-        <img src={asset.imageUri} alt="Rawrshak Asset" className="self-center" />
+    <div className="flex w-64 h-44 m-3 bg-black450 rounded-xl cursor-pointer" onClick={() => openAsset(asset)} >
+      <div className="flex flex-grow absolute justify-center h-6 w-64">
+        <div className="flex text-offWhite text-sm z-50 mt-1 h-6 truncate ...">
+          {asset.name}
+        </div>
       </div>
-      <div className="box-content h-16 w-52 text-offWhite text-xxl mx-4 mt-2">
-        {asset.name}
+      <div className="flex absolute text-offWhite text-sm z-50 mt-36 ml-4 h-6 truncate ...">
+        {asset.currentSupply} / {asset.maxSupply}
       </div>
-      <div className="box-content h-4 w-52 text-offWhite text-sm mx-4 mt-2">
-        Token ID: {asset.tokenId}
-      </div>
-      <div className="box-content h-4 w-52 text-offWhite text-sm mx-4 mt-2">
-        Supply: {asset.currentSupply} / {asset.maxSupply}
+      <div className="flex h-38">
+        <Image src={asset.imageUri} className="object-cover h-44 w-64 rounded-xl opacity-95" type="content" />
       </div>
     </div>
   );

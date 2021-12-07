@@ -42,4 +42,5 @@
 
 .slide-pane__overlay.overlay-after-open {
   background-color: rgba(0, 0, 0, 0) !important;
+  z-index: 100 !important;
 }

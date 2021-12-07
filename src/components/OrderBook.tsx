@@ -13,13 +13,13 @@ function BuyOrders({
 
   if (buyOrders === undefined || buyOrders.length === 0 || supportedToken === undefined) {
     return (
-      <div className="flex justify-center text-offWhite">
+      <div className="flex justify-center text-black200">
         No Buy Orders found
       </div>
     )
   } else {
     return (
-      <div className="flex flex-grow flex-col text-offWhite">
+      <div className="flex flex-grow flex-col text-black200">
         <div className="flex justify-center">
           Buy Orders
         </div>
@@ -55,13 +55,13 @@ function SellOrders({
 
   if (sellOrders === undefined || sellOrders.length === 0 || supportedToken === undefined) {
     return (
-      <div className="flex justify-center text-offWhite">
+      <div className="flex justify-center  text-black200">
         No Sell Orders found
       </div>
     )
   } else {
     return (
-      <div className="flex flex-grow flex-col text-offWhite">
+      <div className="flex flex-grow flex-col  text-black200">
         <div className="flex justify-center">
           Sell Orders
         </div>
@@ -143,16 +143,16 @@ function OrderBook({
             onClick={() => tradeAsset(assetWithOrders)}
             enabled={true}
             show={showBuyAndSellButtons}
-            enabledClassName="flex justify-center text-chartreuse500 text-sm bg-black400 border-chartreuse500 border-2 mt-4 py-1 rounded-lg w-24"
-            disabledClassName="flex justify-center text-black300 text-sm bg-black400 border-black300 border-2 mt-4 py-1 rounded-lg w-24"
+            enabledClassName="flex justify-center text-chartreuse500 text-sm bg-black450 border-chartreuse500 border-2 mt-4 py-1 rounded-lg w-24"
+            disabledClassName="flex justify-center text-black300 text-sm bg-black450 border-black300 border-2 mt-4 py-1 rounded-lg w-24"
           /> : null}
           {tradeAsset !== undefined && assetWithOrders !== undefined ? <Button
             label="SELL"
             onClick={() => tradeAsset(assetWithOrders)}
             enabled={true}
             show={showBuyAndSellButtons}
-            enabledClassName="flex justify-center text-chartreuse500 text-sm bg-black400 border-chartreuse500 border-2 mt-4 py-1 rounded-lg w-24"
-            disabledClassName="flex justify-center text-black300 text-sm bg-black400 border-black300 border-2 mt-4 py-1 rounded-lg w-24"
+            enabledClassName="flex justify-center text-chartreuse500 text-sm bg-black450 border-chartreuse500 border-2 mt-4 py-1 rounded-lg w-24"
+            disabledClassName="flex justify-center text-black300 text-sm bg-black450 border-black300 border-2 mt-4 py-1 rounded-lg w-24"
           /> : null}
         </div>
       </div>
