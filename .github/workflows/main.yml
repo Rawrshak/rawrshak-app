@@ -1,0 +1,45 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Read .nvmrc
+        run: echo ::set-output name=NVMRC::$(cat .nvmrc)
+        id: nvm
+
+      - name: Use Node.js (.nvmrc)
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ steps.nvm.outputs.NVMRC }}
+
+      - name: Edit package.json
+        run: npx json -I -f package.json -e 'this.homepage="${{ secrets.DEV_HOMEPAGE_URL }}"'
+
+      - name: Install and Build
+        run: |
+          npm install
+          npm run build
+        env:
+          REACT_APP_SUPPORTED_CHAIN_IDS: ${{ secrets.DEV_SUPPORTED_CHAIN_IDS }}
+          REACT_APP_ADDRESS_RESOLVER_ADDRESSES: ${{ secrets.DEV_ADDRESS_RESOLVER_ADDRESSES }}
+          REACT_APP_SUPPORTED_TOKEN_ADDRESSES: ${{ secrets.DEV_SUPPORTED_TOKEN_ADDRESSES }}
+          REACT_APP_EXCHANGE_SUBGRAPH_ENDPOINT: ${{ secrets.DEV_EXCHANGE_SUBGRAPH_ENDPOINT }}
+          REACT_APP_CONTENTS_SUBGRAPH_ENDPOINT: ${{ secrets.DEV_CONTENTS_SUBGRAPH_ENDPOINT }}
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@4.1.5
+        with:
+          repository-name: ${{ secrets.DEV_DEPLOY_REPOSITORY_NAME }}
+          ssh-key: ${{ secrets.DEV_DEPLOY_KEY }}
+          branch: gh-pages
+          folder: build
+          clean: true
