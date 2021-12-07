@@ -1,12 +1,8 @@
-import { useWeb3 } from '../web3';
-import { useSubgraphEndpoints } from '../web3/chains';
 import { useEffect, useState } from 'react';
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 import { ContentData, AssetWithOrders } from './data';
 
-const useExploreContent = () => {
-  const { chainId } = useWeb3();
-  const { contentsSubgraphEndpoint } = useSubgraphEndpoints(chainId);
+const useExploreContent = (contentsSubgraphEndpoint: string | undefined) => {
   const [exploreContent, setExploreContent] = useState<ContentData[] | undefined>();
 
   useEffect(() => {

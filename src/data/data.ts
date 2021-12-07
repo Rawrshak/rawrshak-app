@@ -28,6 +28,10 @@ import {
   useErc20EscrowContract,
   useNftEscrowContract,
 } from './systemContracts';
+import {
+  useContentsSubgraphEndpoint,
+  useExchangeSubgraphEndpoint
+} from './subgraphEndpoints'
 import { BigNumber } from '@ethersproject/bignumber';
 
 export interface Token {
@@ -180,6 +184,8 @@ export interface Data {
     erc20Escrow: Erc20Escrow | undefined,
     nftEscrow: NftEscrow | undefined,
   },
+  contentsSubgraphEndpoint: string | undefined,
+  exchangeSubgraphEndpoint: string | undefined,
   supportedToken: Token | undefined,
   supportedTokenBalance: BigNumber | undefined,
   supportedTokenAllowance: BigNumber | undefined,
@@ -204,24 +210,26 @@ function useSystemData() {
   const rawrTokenContract = useRawrTokenContract(addressResolverContract);
   const erc20EscrowContract = useErc20EscrowContract(addressResolverContract);
   const nftEscrowContract = useNftEscrowContract(addressResolverContract);
-  const tags = useTags();
+  const contentsSubgraphEndpoint = useContentsSubgraphEndpoint();
+  const exchangeSubgraphEndpoint = useExchangeSubgraphEndpoint();
+  const tags = useTags(contentsSubgraphEndpoint);
   const [filteredTags, setFilteredTags] = useState<boolean[]>();
   const userChangedFilteredTags = (newFilteredTags: boolean[]) => { setFilteredTags(newFilteredTags) }
-  const ownedContent = useOwnedContent();
-  const assets = useAssets();
-  const assetOrders = useAssetOrders(assets, exchangeContract);
+  const ownedContent = useOwnedContent(contentsSubgraphEndpoint);
+  const assets = useAssets(contentsSubgraphEndpoint);
+  const assetOrders = useAssetOrders(assets, exchangeContract, exchangeSubgraphEndpoint);
   const assetsWithOrders = useAssetsWithOrders(assets, assetOrders);
-  const featuredAssets = useFeaturedAssets();
-  const featuredAssetOrders = useAssetOrders(featuredAssets, exchangeContract);
+  const featuredAssets = useFeaturedAssets(contentsSubgraphEndpoint);
+  const featuredAssetOrders = useAssetOrders(featuredAssets, exchangeContract, exchangeSubgraphEndpoint);
   const featuredAssetsWithOrders = useAssetsWithOrders(featuredAssets, featuredAssetOrders);
-  const inventoryAssets = useInventoryAssets();
-  const inventoryAssetOrders = useAssetOrders(inventoryAssets, exchangeContract);
+  const inventoryAssets = useInventoryAssets(contentsSubgraphEndpoint);
+  const inventoryAssetOrders = useAssetOrders(inventoryAssets, exchangeContract, exchangeSubgraphEndpoint);
   const inventoryAssetsWithOrders = useAssetsWithOrders(inventoryAssets, inventoryAssetOrders);
   const supportedToken = useSupportedToken();
   const ownedContentWithMetadata = useContentWithMetadata(ownedContent);
   const supportedTokenBalance = useSupportedTokenBalance(supportedToken);
   const supportedTokenAllowance = useSupportedTokenAllowance(supportedToken, erc20EscrowContract);
-  const exploreContent = useExploreContent();
+  const exploreContent = useExploreContent(contentsSubgraphEndpoint);
   const exploreContentWithMetadata = useContentWithMetadata(exploreContent);
   const exploreContentWithMetadataAndOrders = useContentWithMetadataAndOrders(exploreContentWithMetadata, assetsWithOrders);
 
@@ -234,6 +242,8 @@ function useSystemData() {
       erc20Escrow: erc20EscrowContract,
       nftEscrow: nftEscrowContract,
     },
+    contentsSubgraphEndpoint: contentsSubgraphEndpoint,
+    exchangeSubgraphEndpoint: exchangeSubgraphEndpoint,
     supportedToken: supportedToken,
     supportedTokenBalance: supportedTokenBalance,
     supportedTokenAllowance: supportedTokenAllowance,

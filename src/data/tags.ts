@@ -1,12 +1,8 @@
 import { useEffect, useState } from 'react';
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
-import { useSubgraphEndpoints } from '../web3/chains';
-import { useWeb3 } from '../web3';
 
-const useTags = () => {
+const useTags = (contentsSubgraphEndpoint: string | undefined) => {
   const [tags, setTags] = useState<string[] | undefined>();
-  const { chainId } = useWeb3();
-  const { contentsSubgraphEndpoint } = useSubgraphEndpoints(chainId);
 
   useEffect(() => {
     if (contentsSubgraphEndpoint === undefined) return;

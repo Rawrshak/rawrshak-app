@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ethers, getDefaultProvider } from 'ethers';
+import { ethers } from 'ethers';
 import Web3Modal from 'web3modal';
 import WalletConnectProvider from '@walletconnect/web3-provider';
 import { supportedChains } from './chains';
@@ -18,12 +18,6 @@ export interface Web3Custom {
 };
 
 let listenerProvider: ethers.providers.Provider;
-
-interface ProviderApiKeys {
-  infura?: string,
-  alchemy?: string,
-  etherscan?: string,
-};
 
 const web3Modal = new Web3Modal({
   providerOptions: {
@@ -80,46 +74,6 @@ const getInjectedProvider = (web3Modal: Web3Modal) => {
   });
 }
 
-const getLocalProvider = () => {
-  const localProvider = new ethers.providers.JsonRpcProvider(process.env.REACT_APP_LOCAL_PROVIDER_URL);
-  return new Promise<Web3Custom>((resolve, reject) => {
-    localProvider.detectNetwork().then(network => {
-      resolve({
-        connected: true,
-        provided: true,
-        providerName: 'local provider',
-        networkName: 'localhost',
-        account: '',
-        chainId: network.chainId,
-        provider: localProvider,
-        signerOrProvider: localProvider,
-      });
-    }).catch(reject);
-  });
-}
-
-const getFallbackProvider = () => {
-  const providerApiKeys: ProviderApiKeys = {};
-  if (process.env.REACT_APP_INFURA_API_KEY) providerApiKeys.infura = process.env.REACT_APP_INFURA_API_KEY;
-  if (process.env.REACT_APP_ALCHEMY_API_KEY) providerApiKeys.alchemy = process.env.REACT_APP_ALCHEMY_API_KEY;
-  if (process.env.REACT_APP_ETHERSCAN_API_KEY) providerApiKeys.etherscan = process.env.REACT_APP_ETHERSCAN_API_KEY;
-
-  const defaultProvider = getDefaultProvider(process.env.REACT_APP_PROVIDER_URL);
-
-  const provider: Web3Custom = {
-    connected: true,
-    provided: false,
-    providerName: 'fallback provider',
-    networkName: '',
-    account: '',
-    chainId: defaultProvider.network.chainId,
-    provider: defaultProvider,
-    signerOrProvider: defaultProvider,
-  };
-
-  return provider;
-}
-
 const useProvider = () => {
   const [web3Provider, setWeb3Provider] = useState(defaultWeb3);
 
@@ -158,10 +112,6 @@ const useProvider = () => {
         })
         .catch(console.error);
     }
-
-    getLocalProvider()
-      .then(setWeb3Provider)
-      .catch(() => setWeb3Provider(getFallbackProvider()));
 
   }, [web3Provider.connected, web3Provider.provider]);
 

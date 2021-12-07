@@ -3,13 +3,8 @@ import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 import { Asset, Order } from './data';
 import { BigNumber, Event } from 'ethers';
 import { Exchange } from '../assets/typechain';
-import { useWeb3 } from '../web3';
-import { useSubgraphEndpoints } from '../web3/chains';
 
-const useAssetOrders = (allAssets: Asset[] | undefined, exchangeContract: Exchange | undefined) => {
-  const { chainId } = useWeb3();
-  const { exchangeSubgraphEndpoint } = useSubgraphEndpoints(chainId);
-
+const useAssetOrders = (allAssets: Asset[] | undefined, exchangeContract: Exchange | undefined, exchangeSubgraphEndpoint: string | undefined) => {
   const [assetOrders, setAssetOrders] = useState<{ [assetId: string]: Order[] } | undefined>();
 
   useEffect(() => {

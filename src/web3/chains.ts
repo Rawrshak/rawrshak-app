@@ -55,57 +55,7 @@ const useAddresses = (chainId: number | undefined) => {
   return addresses;
 };
 
-const useSubgraphEndpoints = (chainId: number | undefined) => {
-  const [subgraphEndpoints, setSubgraphEndpoints] = useState<{ exchangeSubgraphEndpoint?: string, contentsSubgraphEndpoint?: string }>({});
-
-  useEffect(() => {
-    if (!chainId) return;
-
-    if (
-      process.env.REACT_APP_LOCAL_CHAIN_ID &&
-      chainId === parseInt(process.env.REACT_APP_LOCAL_CHAIN_ID, 10)
-    ) {
-      if (!process.env.REACT_APP_LOCAL_EXCHANGE_SUBGRAPH_ENDPOINT || !process.env.REACT_APP_LOCAL_CONTENTS_SUBGRAPH_ENDPOINT) {
-        console.error("No local subgraph endpoints have been set!");
-        setSubgraphEndpoints({});
-        return;
-      }
-
-      setSubgraphEndpoints({
-        exchangeSubgraphEndpoint: process.env.REACT_APP_LOCAL_EXCHANGE_SUBGRAPH_ENDPOINT,
-        contentsSubgraphEndpoint: process.env.REACT_APP_LOCAL_CONTENTS_SUBGRAPH_ENDPOINT
-      });
-    } else {
-      if (!process.env.REACT_APP_EXCHANGE_SUBGRAPH_ENDPOINTS || !process.env.REACT_APP_CONTENTS_SUBGRAPH_ENDPOINTS) {
-        console.error("No subgraph endpoints have been set!");
-        setSubgraphEndpoints({});
-        return;
-      }
-
-      const exchangeSubgraphEndpoints = JSON.parse(process.env.REACT_APP_EXCHANGE_SUBGRAPH_ENDPOINTS);
-      const exchangeSubgraphEndpoint: string = exchangeSubgraphEndpoints[chainId];
-
-      const contentsSubgraphEndpoints = JSON.parse(process.env.REACT_APP_CONTENTS_SUBGRAPH_ENDPOINTS);
-      const contentsSubgraphEndpoint: string = contentsSubgraphEndpoints[chainId];
-
-      if (!exchangeSubgraphEndpoint || !contentsSubgraphEndpoint) {
-        console.error(`Subgraph endpoints for network ${chainId} is not set!`);
-        setSubgraphEndpoints({});
-        return;
-      }
-
-      setSubgraphEndpoints({
-        exchangeSubgraphEndpoint: exchangeSubgraphEndpoint,
-        contentsSubgraphEndpoint: contentsSubgraphEndpoint
-      });
-    }
-  }, [chainId]);
-
-  return subgraphEndpoints;
-};
-
 export {
   supportedChains,
-  useAddresses,
-  useSubgraphEndpoints
+  useAddresses
 };

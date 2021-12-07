@@ -1,12 +1,8 @@
 import { useEffect, useState } from 'react';
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 import { Asset } from './data';
-import { useWeb3 } from '../web3';
-import { useSubgraphEndpoints } from '../web3/chains';
 
-const useFeaturedAssets = () => {
-  const { chainId } = useWeb3();
-  const { contentsSubgraphEndpoint } = useSubgraphEndpoints(chainId);
+const useFeaturedAssets = (contentsSubgraphEndpoint: string | undefined) => {
   const [featuredAssets, setFeaturedAssets] = useState<Asset[]>();
 
   useEffect(() => {
