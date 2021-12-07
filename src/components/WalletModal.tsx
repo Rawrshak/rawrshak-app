@@ -35,7 +35,6 @@ function WalletModal({
       overlayClassName="wallet-sliding-pane"
       isOpen={show}
       onRequestClose={() => { setShow(false) }}
-      width="500px"
       hideHeader={true}
     >
       <div className="flex flex-grow flex-col">

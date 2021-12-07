@@ -26,7 +26,7 @@ function AssetModal({
         overlayClassName="sliding-pane"
         isOpen={show}
         onRequestClose={() => { setShow(false) }}
-        width="500px"
+        width="40%"
         hideHeader={true}
       >
         <div className="flex flex-grow flex-col">

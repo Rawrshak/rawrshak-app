@@ -58,7 +58,7 @@ function SupportedTokenBalance() {
     return (null);
   } else {
     return (
-      <div className="flex text-offWhite mx-8 mt-1 text-lg">
+      <div className="flex text-offWhite mr-16 mt-3 text-lg">
         {`${ethers.utils.formatUnits(supportedTokenBalance.toString(), supportedToken?.decimals)} ${supportedToken?.symbol}`}
       </div>
     );
@@ -78,10 +78,10 @@ function Header() {
       <div className="flex py-6">
         <SupportedTokenBalance />
         <div onClick={() => { setShowWalletModal(true) }} className="flex cursor-pointer">
-          <div className="flex text-offWhite text-lg mx-2 mt-1">
+          <Hamburger />
+          <div className="flex text-offWhite text-lg ml-1 mr-3 mt-3">
             WALLET
           </div>
-          <Hamburger />
         </div>
       </div>
     </div>
