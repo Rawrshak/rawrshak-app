@@ -31,7 +31,7 @@ function WalletModal({
 
   return (
     <SlidingPane
-      className="flex h-48 bg-black400 rounded-bl-lg rounded-tl-lg rounded-br-lg"
+      className="flex bg-black400 rounded-bl-lg rounded-tl-lg rounded-br-lg"
       overlayClassName="wallet-sliding-pane"
       isOpen={show}
       onRequestClose={() => { setShow(false) }}
