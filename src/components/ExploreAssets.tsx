@@ -94,11 +94,11 @@ function TagSelector({
   setSelected: (e: any, index: number) => void
 }) {
   const getClassName = () => {
-    const commonClassNames = "flex flex-shrink text-black text-sm bg-neutral500 rounded-xl m-1 px-3 py-1 border-2 cursor-pointer";
+    const commonClassNames = "flex flex-shrink text-offWhite text-sm bg-gray rounded-xl m-1 px-3 py-1 border-2 cursor-pointer";
     if (selected) {
-      return (commonClassNames + " border-chartreuse500");
+      return (commonClassNames + " border-neutral600");
     } else {
-      return (commonClassNames + " border-chartreuse500-100");
+      return (commonClassNames + " border-gray");
     }
   }
 

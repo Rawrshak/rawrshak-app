@@ -38,7 +38,6 @@ function AssetModal({
           <div className="flex mb-12 justify-center">
             <img src={assetWithOrders.imageUri} alt="Rawrshak Asset" className="self-center" />
           </div>
-
           <div className="flex flex-grow flex-col bg-black450 mx-4 my-2 px-4 py-2 rounded-lg">
             <div className="text-offWhite text-lg">
               {assetWithOrders.name}
@@ -46,7 +45,7 @@ function AssetModal({
             <AssetQuantity balance={assetWithOrders.balance} />
             <div className="flex flex-wrap my-1">
               {assetWithOrders.tags.map(tag => (
-                <div key={tag} className="flex flex-shrink text-black text-xxsm bg-neutral700 rounded-xl m-1 px-2 py-1 border-2 border-neutral600">
+                <div key={tag} className="flex flex-shrink text-offWhite text-sm bg-gray rounded-xl m-1 px-2 py-1 border-2 border-neutral600">
                   {tag}
                 </div>
               ))}

@@ -96,7 +96,8 @@ module.exports = {
       yellow: '#FFF22E',
       white: '#FFFFFF',
       semanticGreen: '#40DD7F',
-      semanticRed: '#FF6262'
+      semanticRed: '#FF6262',
+      tagBorder: '3A3A3A'
     },
     fontSize: {
       xxsm: ['14px', '18px'],
