@@ -118,6 +118,7 @@ function ExploreAssets({
   const [activeTradeAsset, setActiveTradeAsset] = useState<AssetWithOrders>();
   const [showAssetModal, setShowAssetModal] = useState(false);
   const [activeAsset, setActiveAsset] = useState<AssetWithOrders>();
+  const [firstSelection, setFirstSelection] = useState<boolean>(false);
 
   const { tags, filteredTags, changeFilteredTags, assetsWithOrders } = useData();
 
@@ -143,7 +144,22 @@ function ExploreAssets({
 
   const updateFilteredTags = (selected: boolean, index: number) => {
     if (filteredTags === undefined || filteredTags[index] === undefined) return;
-    changeFilteredTags([...filteredTags.slice(0, index), selected, ...filteredTags.slice(index + 1, filteredTags.length)]);
+    if (firstSelection === false) {
+      changeFilteredTags([...(new Array<boolean>(index).fill(false)), true, ...(new Array<boolean>(filteredTags.length - index - 1).fill(false))]);
+      setFirstSelection(true);
+    } else {
+      changeFilteredTags([...filteredTags.slice(0, index), selected, ...filteredTags.slice(index + 1, filteredTags.length)]);
+    }
+  }
+
+  const selectAllTags = () => {
+    if (tags === undefined) return;
+    changeFilteredTags(new Array<boolean>(tags.length).fill(true));
+  }
+
+  const deselectAllTags = () => {
+    if (tags === undefined) return;
+    changeFilteredTags(new Array<boolean>(tags.length).fill(false));
   }
 
   if (show) {
@@ -158,6 +174,14 @@ function ExploreAssets({
           {tags ? tags.map((tag, index) => (
             <TagSelector key={index} index={index} tagId={tag ? tag : "Undefined"} selected={filteredTags ? filteredTags[index] : false} setSelected={updateFilteredTags} />
           )) : ""}
+        </div>
+        <div className="flex">
+          <div onClick={() => { selectAllTags() }} className="flex flex-shrink text-offWhite text-sm bg-gray rounded-xl m-1 px-3 py-1 border-2 cursor-pointer border-neutral600">
+            Select All
+          </div>
+          <div onClick={() => { deselectAllTags() }} className="flex flex-shrink text-offWhite text-sm bg-gray rounded-xl m-1 px-3 py-1 border-2 cursor-pointer border-neutral600">
+            Deselect All
+          </div>
         </div>
         <SelectedAssets
           tags={tags}
