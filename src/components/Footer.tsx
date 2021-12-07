@@ -25,10 +25,20 @@ function Footer() {
           </Link>
         </div>
         <div className="flex flex-grow justify-end">
-          <a href="https://discord.gg/7VGPphBU" className="flex justify-center m-4">
+          <a
+            href="https://discord.gg/7VGPphBU"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex justify-center m-4"
+          >
             <DiscordLogo />
           </a>
-          <a href="https://twitter.com/rawrshak" className="flex justify-center m-4 mr-8">
+          <a
+            href="https://twitter.com/rawrshak"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex justify-center m-4 mr-8"
+          >
             <TwitterLogo />
           </a>
         </div>
