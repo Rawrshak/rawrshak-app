@@ -36,6 +36,7 @@ function WalletModal({
       isOpen={show}
       onRequestClose={() => { setShow(false) }}
       hideHeader={true}
+      width="40%"
     >
       <div className="flex flex-grow flex-col">
         <div className="flex justify-start mb-4">

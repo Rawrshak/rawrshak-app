@@ -17,7 +17,7 @@ function SupportedTokenBalance() {
     return (null);
   } else {
     return (
-      <div className="flex text-offWhite mx-4 mt-1">
+      <div className="flex text-offWhite mx-8 mt-1">
         {`${ethers.utils.formatUnits(supportedTokenBalance.toString(), supportedToken?.decimals)} ${supportedToken?.symbol}`}
       </div>
     );
@@ -80,16 +80,20 @@ function TradeAssetModal({
     return (
       <Modal isOpen={show} setIsOpen={setShow}>
         <div className="flex flex-col bg-gray">
-          <div className="flex mb-4 justify-center">
-            <img src={assetWithOrders.imageUri} alt="Rawrshak Asset" className="self-center" />
+          <div className="flex flex-row">
+            <div className="flex flex-col flex-grow ml-8 w-16">
+              <div className="text-offWhite text-xl ml-4 mt-4">
+                {assetWithOrders.name}
+              </div>
+              <div className="text-offWhite text-xl ml-4">
+                Qty {assetBalance?.toString()}
+              </div>
+            </div>
+            <div className="flex flex-grow mb-4 justify-center">
+              <img src={assetWithOrders.imageUri} alt="Rawrshak Asset" className="self-center" />
+            </div>
           </div>
           <SupportedTokenBalance />
-          <div className="text-offWhite text-xl ml-4">
-            {assetWithOrders.name}
-          </div>
-          <div className="text-offWhite text-xl ml-4">
-            Qty {assetBalance?.toString()}
-          </div>
           <div className="flex bg-black450 my-1 mx-4 rounded-lg">
             <Button
               label="BUY"
