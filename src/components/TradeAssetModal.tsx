@@ -90,7 +90,7 @@ function TradeAssetModal({
           <div className="text-offWhite text-xl ml-4">
             Qty {assetBalance?.toString()}
           </div>
-          <div className="flex bg-black450 my-1 mx-4 p-1 rounded-lg">
+          <div className="flex bg-black450 my-1 mx-4 rounded-lg">
             <Button
               label="BUY"
               onClick={() => setBuyMode(true)}

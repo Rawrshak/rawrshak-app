@@ -15,7 +15,7 @@ function AvailableLinks() {
   if (isDevMode) {
     return (
       <>
-        <div className="flex mr-12 py-4 justify-center">
+        <div className="flex mr-12 py-4 justify-center mt-2">
           <Link to="/">
             <Logo />
           </Link>
