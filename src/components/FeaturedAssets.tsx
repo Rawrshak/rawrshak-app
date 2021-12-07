@@ -1,4 +1,3 @@
-// import FeaturedAsset from "./FeaturedAsset";
 import AssetCard from "./AssetCard";
 import TradeAssetModal from "./TradeAssetModal";
 import AssetModal from "./AssetModal";
@@ -16,11 +15,13 @@ function FeaturedAssets() {
 
   const buyNow = (assetWithOrders: AssetWithOrders) => {
     setShowTradeAssetModal(true);
+    setShowAssetModal(false);
     setActiveTradeAsset(assetWithOrders);
   }
 
   const openAsset = (assetWithOrders: AssetWithOrders) => {
     setShowAssetModal(true);
+    setShowTradeAssetModal(false);
     setActiveAsset(assetWithOrders);
   }
 
