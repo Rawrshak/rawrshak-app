@@ -4,6 +4,7 @@ import OrderBook from "./OrderBook";
 import SlidingPane from "react-sliding-pane";
 import "react-sliding-pane/dist/react-sliding-pane.css";
 import X from '../assets/icons/X';
+import Image from "./Image";
 
 function AssetModal({
   show,
@@ -36,7 +37,7 @@ function AssetModal({
             </button>
           </div>
           <div className="flex mb-12 justify-center">
-            <img src={assetWithOrders.imageUri} alt="Rawrshak Asset" className="self-center" />
+            <Image src={assetWithOrders.imageUri} className="flex cursor-pointer" type="content" />
           </div>
           <div className="flex flex-grow flex-col bg-black450 mx-4 my-2 px-4 py-2 rounded-lg">
             <div className="text-offWhite text-lg">
@@ -51,7 +52,6 @@ function AssetModal({
               ))}
             </div>
           </div>
-
           <OrderBook assetWithOrders={assetWithOrders} showInTheMarketplace={true} showBuyAndSellButtons={true} tradeAsset={tradeAsset} />
         </div>
       </SlidingPane>

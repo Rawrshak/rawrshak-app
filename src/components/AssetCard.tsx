@@ -1,6 +1,7 @@
 import { AssetWithOrders } from "../data/data";
 import Ellipsis from '../assets/images/ellipsis.png'
 import BuyNow from "./BuyNow";
+import Image from "./Image";
 
 function AssetCard({
   assetWithOrders,
@@ -12,7 +13,7 @@ function AssetCard({
   openAsset: (assetWithOrders: AssetWithOrders) => void
 }) {
   return (
-    <div className="box-content w-96 h-120 m-3 assetCardBackground rounded-xl">
+    <div onClick={() => openAsset(assetWithOrders)} className="box-content w-96 h-120 m-3 assetCardBackground rounded-xl cursor-pointer">
       <div className="flex h-4 justify-end">
         <img onClick={() => openAsset(assetWithOrders)} className="absolute self-end cursor-pointer pr-6 p-3 mt-4" src={Ellipsis} alt="Ellipsis" />
       </div>
@@ -25,7 +26,7 @@ function AssetCard({
         ))}
       </div>
       <div className="flex box-content h-48 text-offWhite text-xxl mt-2 mx-4 rounded-xl justify-center">
-        <img onClick={() => openAsset(assetWithOrders)} src={assetWithOrders.imageUri} alt="Rawrshak Asset" className="flex cursor-pointer" />
+        <Image src={assetWithOrders.imageUri} className="flex cursor-pointer" type="content" />
       </div>
       <div className="box-content h-12 text-offWhite text-xxl ml-8 mt-2">
         {assetWithOrders.name}

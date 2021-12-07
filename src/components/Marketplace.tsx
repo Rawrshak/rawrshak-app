@@ -6,7 +6,7 @@ function Marketplace() {
   const [showExploreAssets, setShowExploreAssets] = useState<boolean>(true);
 
   return (
-    <div className="container flex flex-col py-2">
+    <div className="flex flex-col py-2">
       <ExploreGames setShowExploreAssets={setShowExploreAssets} />
       <ExploreAssets show={showExploreAssets} />
     </div>
