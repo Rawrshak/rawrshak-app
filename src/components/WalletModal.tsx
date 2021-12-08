@@ -29,6 +29,21 @@ function WalletModal({
   const web3 = useWeb3();
   const { isDevMode, changeIsDevMode } = useData();
 
+  const connectClicked = () => {
+    setShow(false);
+    connect();
+  }
+
+  const toDevMode = () => {
+    changeIsDevMode(true);
+    setShow(false);
+  }
+
+  const toGamerMode = () => {
+    changeIsDevMode(false);
+    setShow(false);
+  }
+
   return (
     <SlidingPane
       className="flex bg-black400 rounded-bl-lg rounded-tl-lg rounded-br-lg"
@@ -47,7 +62,7 @@ function WalletModal({
         <div className="flex">
           <Button
             label="CONNECT"
-            onClick={() => connect()}
+            onClick={() => connectClicked()}
             enabled={true}
             show={!web3.account}
             enabledClassName="flex flex-grow justify-center text-black400 text-lg bg-chartreuse500 rounded-lg h-10 w-48 m-2 mt-16 pt-2"
@@ -59,7 +74,7 @@ function WalletModal({
         <div className="flex grow grid-cols-2 mt-6">
           <Button
             label="Gamer Mode"
-            onClick={() => changeIsDevMode(false)}
+            onClick={() => toGamerMode()}
             enabled={isDevMode}
             show={web3.account !== undefined && web3.account !== ""}
             enabledClassName="flex flex-grow justify-center text-chartreuse500 text-lg bg-black400 rounded-lg h-24 w-48 m-2 pt-8"
@@ -67,7 +82,7 @@ function WalletModal({
           />
           <Button
             label="Developer Mode"
-            onClick={() => changeIsDevMode(true)}
+            onClick={() => toDevMode()}
             enabled={!isDevMode}
             show={web3.account !== undefined && web3.account !== ""}
             enabledClassName="flex flex-grow justify-center text-chartreuse500 text-lg bg-black400 rounded-lg h-24 w-48 m-2 pt-8"

@@ -19,7 +19,6 @@ function Image({
 
   useEffect(() => {
     if (useFallback) {
-      console.log("Using fallback");
       if (type === "3d") {
         setFallbackImg(threeDimAsset);
       } else if (type === "image") {
@@ -35,11 +34,9 @@ function Image({
   }, [useFallback, type]);
 
   useEffect(() => {
-    console.log("Fallback: ", fallbackImg);
   }, [fallbackImg]);
 
   if (useFallback) {
-    console.log("Using fallback2");
     return (
       <img
         src={fallbackImg}
