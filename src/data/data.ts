@@ -88,6 +88,7 @@ export interface Asset {
   imageUri: string,
   parentContract: string,
   balance: BigNumber | undefined,
+  creator: string,
 };
 
 export interface AssetWithOrders extends Asset {

@@ -21,7 +21,7 @@ function GameCard({
           </div>
         </div>
         <div className="flex absolute text-offWhite text-sm z-50 mt-36 ml-4 h-6 truncate ...">
-          Assets: {smartContract.assets.length}
+          {smartContract.creator}
         </div>
         <div className="flex h-38">
           <Image src={smartContract.imageUri} className="object-cover h-44 w-64 rounded-xl opacity-95" type="content" />

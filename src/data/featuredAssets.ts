@@ -29,6 +29,7 @@ const useFeaturedAssets = (contentsSubgraphEndpoint: string | undefined) => {
           imageUri
           parentContract {
             id
+            creator
           }
         }
       }
@@ -57,6 +58,7 @@ const useFeaturedAssets = (contentsSubgraphEndpoint: string | undefined) => {
             imageUri: asset.imageUri,
             parentContract: asset.parentContract.id,
             balance: undefined,
+            creator: asset.parentContract.creator,
           }
           return newAsset;
         })

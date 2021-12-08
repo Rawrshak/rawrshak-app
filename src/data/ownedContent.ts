@@ -41,6 +41,7 @@ const useOwnedContent = (contentsSubgraphEndpoint: string | undefined) => {
               imageUri
               parentContract {
                 id
+                creator
               }
             }
           }
@@ -72,6 +73,7 @@ const useOwnedContent = (contentsSubgraphEndpoint: string | undefined) => {
               imageUri: asset.imageUri,
               parentContract: asset.parentContract.id,
               balance: undefined,
+              creator: asset.parentContract.creator,
               orders: [],
             }
             return newAsset;

@@ -22,6 +22,7 @@ const useAssetsWithOrders = (assets: Asset[] | undefined, assetOrders: { [assetI
         imageUri: asset.imageUri,
         parentContract: asset.parentContract,
         balance: asset.balance,
+        creator: asset.creator,
         orders: assetOrders[asset.id] ? assetOrders[asset.id] : [],
       }
 

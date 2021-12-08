@@ -50,17 +50,13 @@ function GameView({
 }) {
   if (show) {
     if (contentsWithMetadata === undefined) {
-      return (
-        <div className="flex text-offWhite text-xxxl m-2">
-          No Rawr Games Found
-        </div>
-      );
+      return (null);
     } else {
       return (
         <div className="flex flex-grow max-w-screen-xl m-4">
           <div className="flex flex-col flex-grow">
             <div className="flex text-offWhite text-xxxl m-2">
-              Rawr Games
+              Collections
             </div>
             <div className="flex flex-grow flex-wrap justify-center">
               {contentsWithMetadata.map(contentWithMetadata => (

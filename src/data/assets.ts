@@ -24,6 +24,7 @@ const useAssets = (contentsSubgraphEndpoint: string | undefined) => {
           imageUri
           parentContract {
             id
+            creator
           }
         }
       }
@@ -38,6 +39,7 @@ const useAssets = (contentsSubgraphEndpoint: string | undefined) => {
       query: gql(exploreAssetsQuery)
     })
       .then((data) => {
+        console.log("assets data: ", data);
         const allAssets = data.data.assets.map((asset: any) => {
           const newTags: string[] = asset.tags.map((tag: any) => tag.id)
           const newAsset: Asset = {
@@ -52,6 +54,7 @@ const useAssets = (contentsSubgraphEndpoint: string | undefined) => {
             imageUri: asset.imageUri,
             parentContract: asset.parentContract.id,
             balance: undefined,
+            creator: asset.parentContract.creator
           }
           return newAsset;
         })

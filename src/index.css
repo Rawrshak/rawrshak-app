@@ -28,6 +28,8 @@
 
 .assetCardBackground {
   background: linear-gradient(156.21deg, #252348 0%, rgba(37, 35, 72, 0) 115.98%);
+  min-width: 320px;
+  max-width: 376px;
 }
 
 .slide-pane {
