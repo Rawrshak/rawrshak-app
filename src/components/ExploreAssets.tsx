@@ -176,10 +176,10 @@ function ExploreAssets({
           )) : ""}
         </div>
         <div className="flex">
-          <div onClick={() => { selectAllTags() }} className="flex flex-shrink text-offWhite text-sm bg-gray rounded-xl m-1 px-3 py-1 border-2 cursor-pointer border-neutral600">
+          <div onClick={() => { selectAllTags() }} className="flex flex-shrink text-chartreuse500 text-sm bg-gray rounded-xl m-1 px-3 py-1 border-2 cursor-pointer border-chartreuse500">
             Select All
           </div>
-          <div onClick={() => { deselectAllTags() }} className="flex flex-shrink text-offWhite text-sm bg-gray rounded-xl m-1 px-3 py-1 border-2 cursor-pointer border-neutral600">
+          <div onClick={() => { deselectAllTags() }} className="flex flex-shrink text-chartreuse500 text-sm bg-gray rounded-xl m-1 px-3 py-1 border-2 cursor-pointer border-chartreuse500">
             Deselect All
           </div>
         </div>
