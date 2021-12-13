@@ -20,6 +20,12 @@ function AvailableLinks() {
             <Logo />
           </Link>
         </div>
+        {web3.account && <div className="mr-4 mx-12 py-4 flex flex-col justify-center text-lg">
+          <ActiveLink to="/inventory" exact>
+            INVENTORY
+          </ActiveLink>
+        </div>
+        }
         <div className="mr-4 mx-12 py-4 flex flex-col justify-center text-lg">
           <ActiveLink to="/store" exact>
             STORE
