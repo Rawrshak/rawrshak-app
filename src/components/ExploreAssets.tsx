@@ -74,7 +74,7 @@ function SelectedAssets({
   }
 
   return (
-    <div className="flex flex-grow flex-wrap">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       {filteredAssets && filteredAssets.length > 0 ? filteredAssets.map(assetWithOrders => (
         <AssetCard key={assetWithOrders.id} assetWithOrders={assetWithOrders} buyNow={tradeAsset} openAsset={openAsset} />
       )) : <div className="flex text-offWhite text-xl mt-4">No assets found</div>}
@@ -164,18 +164,18 @@ function ExploreAssets({
 
   if (show) {
     return (
-      <div className="flex flex-col m-4">
+      <div className="flex flex-grow flex-col m-4">
         <TradeAssetModal show={showTradeAssetModal} setShow={setShowTradeAssetModal} assetWithOrders={activeTradeAsset} />
         <AssetModal show={showAssetModal} setShow={setShowAssetModal} assetWithOrders={activeAsset} tradeAsset={tradeAsset} />
-        <div className="flex text-offWhite text-xxxl m-2">
+        <div className="flex text-offWhite text-xxxl my-2 mx-4">
           Explore Assets
         </div>
-        <div className="flex flex-wrap">
+        <div className="flex flex-wrap my-1 mx-3">
           {tags ? tags.map((tag, index) => (
             <TagSelector key={index} index={index} tagId={tag ? tag : "Undefined"} selected={filteredTags ? filteredTags[index] : false} setSelected={updateFilteredTags} />
           )) : ""}
         </div>
-        <div className="flex">
+        <div className="flex my-1 mx-3">
           <div onClick={() => { selectAllTags() }} className="flex flex-shrink text-chartreuse500 text-sm bg-gray rounded-xl m-1 px-3 py-1 border-2 cursor-pointer border-chartreuse500">
             Select All
           </div>

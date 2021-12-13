@@ -8,11 +8,11 @@ import textAsset from '../assets/images/textAsset.png';
 function Image({
   src,
   className,
-  type
+  type,
 }: {
   src: string
   className: string,
-  type: "3d" | "image" | "audio" | "text" | "content"
+  type: "3d" | "image" | "audio" | "text" | "content",
 }) {
   const [useFallback, setUseFallback] = useState<boolean>(false);
   const [fallbackImg, setFallbackImg] = useState<string>("");

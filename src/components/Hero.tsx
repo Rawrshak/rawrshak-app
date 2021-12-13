@@ -6,7 +6,7 @@ function Hero() {
   const web3 = useWeb3();
 
   return (
-    <div className="flex m-4 max-w-6xl">
+    <div className="flex m-8">
       <div className="flex flex-wrap flex-shrink border-2 my-4 rounded-xl border-darkBlue100">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12">
           <div className="flex m-8">
