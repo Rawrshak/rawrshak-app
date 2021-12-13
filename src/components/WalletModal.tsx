@@ -1,9 +1,11 @@
+import React from 'react';
+import { useHistory } from 'react-router-dom';
 import SlidingPane from "react-sliding-pane";
 import "react-sliding-pane/dist/react-sliding-pane.css";
 import X from '../assets/icons/X';
+import Button from './Button';
 import { useWeb3 } from '../web3';
 import { connect } from '../web3/providers';
-import Button from './Button';
 import { useData } from '../data';
 
 function truncate(fullStr: string, strLen: number, separator: string = "...") {
@@ -27,6 +29,7 @@ function WalletModal({
   setShow: React.Dispatch<React.SetStateAction<boolean>>,
 }) {
   const web3 = useWeb3();
+  const history = useHistory();
   const { isDevMode, changeIsDevMode } = useData();
 
   const connectClicked = () => {
@@ -37,11 +40,13 @@ function WalletModal({
   const toDevMode = () => {
     changeIsDevMode(true);
     setShow(false);
+    history.push('/');
   }
 
   const toGamerMode = () => {
     changeIsDevMode(false);
     setShow(false);
+    history.push('/');
   }
 
   return (
