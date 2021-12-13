@@ -120,7 +120,7 @@ function OrderBook({
   const inTheMarketplace = () => {
     if (showInTheMarketplace) {
       return (
-        <div className="flex text-lg mb-2 text-offWhite">
+        <div className="flex text-lg mb-2 ml-2 text-offWhite">
           In The Marketplace
         </div>
       );

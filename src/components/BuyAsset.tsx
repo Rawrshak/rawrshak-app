@@ -327,15 +327,15 @@ function BuyAsset({
             Instant Buy
           </div>
           <div />
-          <div className="flex mt-3 mx-2 text-xsm text-black200">
-            How many {assetWithOrders?.name} would you like to buy?
+          <div className="flex mt-3 mx-2 text-xsm text-black200 justify-center">
+            Amount
           </div>
           <div>
             <InputNumber
               value={buyNowAssetAmountString}
               disabled={false}
               onChange={e => setBuyNowAssetAmountString(e)}
-              className="bg-black500 m-2 p-2 rounded-lg w-48"
+              className="bg-black500 text-black200 m-2 p-2 rounded-lg w-48"
             />
           </div>
           <div className="flex justify-center mx-2 mt-8 text-black200">
@@ -370,8 +370,8 @@ function BuyAsset({
               Buy Order
             </div>
             <div />
-            <div className="flex mt-3 mx-2 text-xsm text-black200">
-              How many {assetWithOrders?.name} do you want?
+            <div className="flex mt-3 mx-2 text-xsm text-black200 justify-center">
+              Amount
             </div>
             <div className="flex flex-col">
               <div className="flex">
@@ -379,12 +379,12 @@ function BuyAsset({
                   value={placeOrderAssetAmountString}
                   disabled={false}
                   onChange={e => setPlaceOrderAssetAmountString(e)}
-                  className="bg-black500 m-2 p-2 rounded-lg w-48"
+                  className="bg-black500 text-black200 m-2 p-2 rounded-lg w-48"
                 />
               </div>
             </div>
-            <div className="flex mt-3 mx-2 text-xsm text-black200">
-              How much do you want to pay per asset?
+            <div className="flex mt-3 mx-2 text-xsm text-black200 justify-center">
+              Price
             </div>
             <div className="flex flex-col">
               <InputAmount
@@ -392,7 +392,7 @@ function BuyAsset({
                 decimals={6}
                 disabled={false}
                 onChange={e => setPlaceOrderPriceString(e)}
-                className="bg-black500 m-2 p-2 rounded-lg w-48"
+                className="bg-black500 text-black200 m-2 p-2 rounded-lg w-48"
               />
               <div className="flex text-xsm ml-2 text-black200">
                 {`Total: ${ethers.utils.formatUnits(placeOrderTokenAmount.toString(), supportedToken?.decimals)} ${supportedToken?.symbol}`}
