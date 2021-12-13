@@ -133,7 +133,7 @@ function AssetsView({
           <div className="flex text-offWhite text-sm m-2">
             Assets: {contentWithMetadata.assets.length}
           </div>
-          <div className="flex flex-grow flex-wrap">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {contentWithMetadata.assets.map(asset => (
               <AssetCard key={asset.id} assetWithOrders={asset} buyNow={tradeAsset} openAsset={openAsset} />
             ))}
