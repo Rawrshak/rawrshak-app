@@ -12,6 +12,7 @@ import { useAssetsWithOrders } from './assetsWithOrders';
 import { useSupportedToken } from './supportedToken';
 import { useSupportedTokenBalance } from './supportedTokenBalance';
 import { useSupportedTokenAllowance } from './supportedTokenAllowance';
+import { useFeaturedContent } from './featuredContent';
 import {
   AddressResolver,
   ContentFactory,
@@ -200,6 +201,7 @@ export interface Data {
   inventoryAssetsWithOrders: AssetWithOrders[] | undefined,
   ownedContentWithMetadata: ContentDataWithMetadata[] | undefined,
   exploreContentWithMetadata: ContentDataWithMetadata[] | undefined,
+  featuredContentWithMetadata: ContentDataWithMetadata[] | undefined,
 };
 
 function useSystemData() {
@@ -233,6 +235,7 @@ function useSystemData() {
   const exploreContent = useExploreContent(contentsSubgraphEndpoint);
   const exploreContentWithMetadata = useContentWithMetadata(exploreContent);
   const exploreContentWithMetadataAndOrders = useContentWithMetadataAndOrders(exploreContentWithMetadata, assetsWithOrders);
+  const featuredContentWithMetadata = useFeaturedContent(exploreContentWithMetadataAndOrders);
 
   const data: Data = {
     systemContracts: {
@@ -257,7 +260,8 @@ function useSystemData() {
     featuredAssetsWithOrders: featuredAssetsWithOrders,
     inventoryAssetsWithOrders: inventoryAssetsWithOrders,
     ownedContentWithMetadata: ownedContentWithMetadata,
-    exploreContentWithMetadata: exploreContentWithMetadataAndOrders
+    exploreContentWithMetadata: exploreContentWithMetadataAndOrders,
+    featuredContentWithMetadata: featuredContentWithMetadata,
   }
 
   console.log("data: ", data);

@@ -6,10 +6,7 @@ const useFeaturedAssets = (contentsSubgraphEndpoint: string | undefined) => {
   const [featuredAssets, setFeaturedAssets] = useState<Asset[]>();
 
   useEffect(() => {
-    if (contentsSubgraphEndpoint === undefined) {
-      console.error("Contents subgraph endpoint has not been set!");
-      return;
-    }
+    if (contentsSubgraphEndpoint === undefined) return;
 
     if (process.env.REACT_APP_FEATURED_ASSETS === undefined) {
       console.error("Featured assets have not been set!");

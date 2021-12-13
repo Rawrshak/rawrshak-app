@@ -12,7 +12,7 @@ function ExploreGames({
 }: {
   setShowExploreAssets: React.Dispatch<React.SetStateAction<boolean>>
 }) {
-  const { exploreContentWithMetadata } = useData();
+  const { featuredContentWithMetadata } = useData();
 
   const [showAssetsView, setShowAssetsView] = useState<boolean>(false);
   const [selectedGame, setSelectedGame] = useState<ContentDataWithMetadata>();
@@ -34,7 +34,7 @@ function ExploreGames({
     );
   } else {
     return (
-      <GameView contentsWithMetadata={exploreContentWithMetadata} selectGame={selectGame} show={!showAssetsView} />
+      <GameView contentsWithMetadata={featuredContentWithMetadata} selectGame={selectGame} show={!showAssetsView} />
     );
   }
 }
@@ -55,10 +55,10 @@ function GameView({
       return (
         <div className="flex flex-grow max-w-screen-xl m-4">
           <div className="flex flex-col flex-grow">
-            <div className="flex text-offWhite text-xxxl m-2">
+            <div className="flex text-offWhite text-xxxl mx-4">
               Collections
             </div>
-            <div className="flex flex-grow flex-wrap justify-center">
+            <div className="flex flex-grow flex-wrap">
               {contentsWithMetadata.map(contentWithMetadata => (
                 <GameCard
                   key={contentWithMetadata.id}

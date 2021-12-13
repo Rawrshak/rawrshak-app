@@ -36,6 +36,7 @@ jobs:
           REACT_APP_CONTENTS_SUBGRAPH_ENDPOINT: ${{ secrets.DEV_CONTENTS_SUBGRAPH_ENDPOINT }}
           REACT_APP_CURATED_TAGS: ${{ secrets.DEV_CURATED_TAGS }}
           REACT_APP_FEATURED_ASSETS: ${{ secrets.DEV_FEATURED_ASSETS }}
+          REACT_APP_FEATURED_CONTENT_ADDRESSES: ${{ secrets.DEV_FEATURED_CONTENT_ADDRESSES }}
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@4.1.5
