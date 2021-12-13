@@ -20,14 +20,6 @@ export interface Web3Custom {
 let listenerProvider: ethers.providers.Provider;
 
 const web3Modal = new Web3Modal({
-  providerOptions: {
-    walletconnect: {
-      package: WalletConnectProvider,
-      options: {
-        infuraId: process.env.REACT_APP_INFURA_API_KEY,
-      },
-    },
-  },
   cacheProvider: true,
   theme: {
     background: tailwind.theme.colors.neutral900,

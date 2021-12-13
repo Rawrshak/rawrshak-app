@@ -8,17 +8,24 @@ const useSupportedTokenBalance = (supportedToken: Token | undefined) => {
   const [supportedTokenBalance, setSupportedTokenBalance] = useState<BigNumber>();
 
   useEffect(() => {
-    if (supportedToken === undefined || web3.account === undefined) return;
+    if (supportedToken === undefined || web3.account === undefined) {
+      setSupportedTokenBalance(undefined);
+      return;
+    }
 
     if (supportedTokenBalance === undefined) {
       supportedToken.contract.balanceOf(web3.account)
         .then((supportedTokenBalance) => setSupportedTokenBalance(supportedTokenBalance))
         .catch((error) => console.error(error));
     }
-  });
+  }, [supportedToken, web3.account, supportedTokenBalance]);
 
   useEffect(() => {
-    if (supportedToken === undefined || web3.account === "") return;
+    if (supportedToken === undefined || web3.account === "") {
+      console.log("SupportedToken: ", supportedToken);
+      console.log("web3Account: ", web3.account);
+      return;
+    }
 
     const listenerCallback = () => {
       if (web3.account === undefined) return;
