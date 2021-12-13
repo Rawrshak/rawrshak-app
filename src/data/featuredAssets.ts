@@ -6,12 +6,17 @@ const useFeaturedAssets = (contentsSubgraphEndpoint: string | undefined) => {
   const [featuredAssets, setFeaturedAssets] = useState<Asset[]>();
 
   useEffect(() => {
-    if (contentsSubgraphEndpoint === undefined) return;
+    if (contentsSubgraphEndpoint === undefined) {
+      console.error("Contents subgraph endpoint has not been set!");
+      return;
+    }
 
-    const featuredAssetIds = `[
-      "0x2bf2685c0cf29ff00bdfc66041fe8efa1bcf5d7f-0",
-      "0x2bf2685c0cf29ff00bdfc66041fe8efa1bcf5d7f-1"
-    ]`;
+    if (process.env.REACT_APP_FEATURED_ASSETS === undefined) {
+      console.error("Featured assets have not been set!");
+      return;
+    }
+
+    const featuredAssetIds = process.env.REACT_APP_FEATURED_ASSETS;
 
     const exploreAssetsQuery = `
       query {

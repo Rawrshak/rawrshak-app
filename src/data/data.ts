@@ -213,7 +213,7 @@ function useSystemData() {
   const nftEscrowContract = useNftEscrowContract(addressResolverContract);
   const contentsSubgraphEndpoint = useContentsSubgraphEndpoint();
   const exchangeSubgraphEndpoint = useExchangeSubgraphEndpoint();
-  const tags = useTags(contentsSubgraphEndpoint);
+  const tags = useTags();
   const [filteredTags, setFilteredTags] = useState<boolean[]>();
   const userChangedFilteredTags = (newFilteredTags: boolean[]) => { setFilteredTags(newFilteredTags) }
   const ownedContent = useOwnedContent(contentsSubgraphEndpoint);

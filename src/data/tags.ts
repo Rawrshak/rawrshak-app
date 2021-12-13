@@ -1,37 +1,16 @@
 import { useEffect, useState } from 'react';
-import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 
-const useTags = (contentsSubgraphEndpoint: string | undefined) => {
+const useTags = () => {
   const [tags, setTags] = useState<string[] | undefined>();
 
   useEffect(() => {
-    if (contentsSubgraphEndpoint === undefined) return;
+    if (process.env.REACT_APP_CURATED_TAGS === undefined) {
+      console.error("Curated tags have not been set!");
+      return;
+    }
 
-    const tagsQuery = `
-      query {
-        tags {
-          id
-        }
-      }
-    `;
-
-    const client = new ApolloClient({
-      uri: contentsSubgraphEndpoint,
-      cache: new InMemoryCache(),
-    });
-
-    client.query({
-      query: gql(tagsQuery)
-    })
-      .then((data) => {
-        const newTags: string[] = data.data.tags.map((tag: any) => tag.id);
-        setTags(newTags);
-      })
-      .catch(err => {
-        console.error("Error fetching GraphQL data: ", err);
-        setTags(undefined);
-      });
-  }, [contentsSubgraphEndpoint]);
+    setTags(JSON.parse(process.env.REACT_APP_CURATED_TAGS));
+  }, []);
 
   return tags;
 }
