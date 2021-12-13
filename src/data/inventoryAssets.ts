@@ -36,6 +36,8 @@ const useInventoryAssets = (contentsSubgraphEndpoint: string | undefined) => {
               imageUri
               parentContract {
                 id
+                creator
+                game
               }         
             }
             amount
@@ -56,7 +58,7 @@ const useInventoryAssets = (contentsSubgraphEndpoint: string | undefined) => {
         if (data.data.accounts.length > 0) {
           const inventoryAssets = data.data.accounts[0].assetBalances.map((assetBalance: any) => {
             const newTags: string[] = assetBalance.asset.tags.map((tag: any) => tag.id);
-            const newAsset = {
+            const newAsset: Asset = {
               id: assetBalance.asset.id,
               tokenId: assetBalance.asset.tokenId,
               currentSupply: assetBalance.asset.currentSupply,
@@ -68,6 +70,8 @@ const useInventoryAssets = (contentsSubgraphEndpoint: string | undefined) => {
               imageUri: assetBalance.asset.imageUri,
               parentContract: assetBalance.asset.parentContract.id,
               balance: assetBalance.amount,
+              creator: assetBalance.asset.parentContract.creator,
+              game: assetBalance.asset.parentContract.game,
             }
 
             return newAsset;

@@ -90,6 +90,7 @@ export interface Asset {
   parentContract: string,
   balance: BigNumber | undefined,
   creator: string,
+  game: string,
 };
 
 export interface AssetWithOrders extends Asset {

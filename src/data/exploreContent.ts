@@ -16,6 +16,7 @@ const useExploreContent = (contentsSubgraphEndpoint: string | undefined) => {
           contractUri
           name
           creator
+          game
           owner {
             id
           }
@@ -34,10 +35,6 @@ const useExploreContent = (contentsSubgraphEndpoint: string | undefined) => {
               id
             }
             imageUri
-            parentContract {
-              id
-              creator
-            }
           }
         }
       }
@@ -65,9 +62,10 @@ const useExploreContent = (contentsSubgraphEndpoint: string | undefined) => {
               subtype: asset.subtype,
               tags: newTags,
               imageUri: asset.imageUri,
-              parentContract: asset.parentContract.id,
+              parentContract: content.id,
               balance: undefined,
-              creator: asset.parentContract.creator,
+              creator: content.creator,
+              game: content.game,
               orders: [],
             }
             return newAsset;

@@ -32,6 +32,7 @@ const useFeaturedAssets = (contentsSubgraphEndpoint: string | undefined) => {
           parentContract {
             id
             creator
+            game
           }
         }
       }
@@ -61,6 +62,7 @@ const useFeaturedAssets = (contentsSubgraphEndpoint: string | undefined) => {
             parentContract: asset.parentContract.id,
             balance: undefined,
             creator: asset.parentContract.creator,
+            game: asset.parentContract.game,
           }
           return newAsset;
         })
