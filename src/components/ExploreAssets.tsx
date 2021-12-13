@@ -3,6 +3,7 @@ import { useData } from '../data';
 import AssetCard from "./AssetCard";
 import TradeAssetModal from "./TradeAssetModal";
 import AssetModal from "./AssetModal";
+import Button from "./Button";
 import { AssetWithOrders } from "../data/data"
 
 function SelectedAssets({
@@ -23,6 +24,15 @@ function SelectedAssets({
   const { assetsWithOrders } = useData();
 
   const [filteredAssets, setFilteredAssets] = useState<AssetWithOrders[]>();
+  const [filteredAndSlicedAssets, setFilteredAndSlicedAssets] = useState<AssetWithOrders[]>();
+  const [assetShowCount, setAssetShowCount] = useState<number>(6);
+
+  useEffect(() => {
+    if (filteredAssets === undefined) return;
+    console.log("Filtered asset count: ", filteredAssets.length);
+    console.log("asset show count: ", assetShowCount);
+  }, [filteredAssets, assetShowCount])
+
   useEffect(() => {
     if (!tags || !filteredTags || !assetsWithOrders) return;
 
@@ -51,6 +61,12 @@ function SelectedAssets({
 
   }, [assetsWithOrders, tags, filteredTags]);
 
+  useEffect(() => {
+    if (filteredAssets === undefined) return;
+
+    setFilteredAndSlicedAssets(filteredAssets.slice(0, assetShowCount));
+  }, [filteredAssets, assetShowCount])
+
   const tradeAsset = (assetWithOrders: AssetWithOrders) => {
     setShowAssetModal(false);
     setShowBuyAssetModal(true);
@@ -73,13 +89,27 @@ function SelectedAssets({
     );
   }
 
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-      {filteredAssets && filteredAssets.length > 0 ? filteredAssets.map(assetWithOrders => (
-        <AssetCard key={assetWithOrders.id} assetWithOrders={assetWithOrders} buyNow={tradeAsset} openAsset={openAsset} />
-      )) : <div className="flex text-offWhite text-xl mt-4">No assets found</div>}
-    </div>
-  )
+  if (filteredAndSlicedAssets === undefined || filteredAssets === undefined || filteredAndSlicedAssets.length === 0) {
+    return null;
+  } else {
+    return (
+      <>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+          {filteredAndSlicedAssets.map(assetWithOrders => (
+            <AssetCard key={assetWithOrders.id} assetWithOrders={assetWithOrders} buyNow={tradeAsset} openAsset={openAsset} />
+          ))}
+        </div>
+        <Button
+          label="Show More Assets"
+          onClick={() => setAssetShowCount(assetShowCount + 6)}
+          enabled={true}
+          show={filteredAssets.length > assetShowCount}
+          enabledClassName="flex text-chartreuse500 border-chartreuse500 border-2 text-sm rounded-md w-44 h-8 justify-center pt-1 ml-3 mt-2"
+          disabledClassName=""
+        />
+      </>
+    );
+  }
 }
 
 function TagSelector({
