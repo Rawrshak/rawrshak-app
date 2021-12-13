@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 import Web3Modal from 'web3modal';
-import WalletConnectProvider from '@walletconnect/web3-provider';
 import { supportedChains } from './chains';
 import { useListeners } from './listeners';
 import tailwind from '../../tailwind.config';
