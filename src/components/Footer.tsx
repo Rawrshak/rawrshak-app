@@ -2,8 +2,13 @@ import Logo from '../assets/icons/Logo';
 import DiscordLogo from '../assets/icons/DiscordLogo';
 import TwitterLogo from '../assets/icons/TwitterLogo';
 import { Link } from 'react-router-dom';
+import { useData } from '../data';
+import { useWeb3 } from '../web3';
 
 function Footer() {
+  const { isDevMode } = useData();
+  const web3 = useWeb3();
+
   return (
     <div className="flex flex-grow flex-col">
       <div className="flex flex-grow" />
@@ -14,15 +19,15 @@ function Footer() {
           </Link>
         </div>
         <div className="flex flex-grow flex-col text-offWhite justify-center">
-          <Link to="/inventory" className="flex justify-center">
+          {web3.account && <Link to="/inventory" className="flex justify-center">
             Inventory
-          </Link>
+          </Link>}
           <Link to="/marketplace" className="flex justify-center">
             Marketplace
           </Link>
-          <Link to="/store" className="flex justify-center">
+          {isDevMode && <Link to="/store" className="flex justify-center">
             Store
-          </Link>
+          </Link>}
         </div>
         <div className="flex flex-grow justify-end">
           <a
