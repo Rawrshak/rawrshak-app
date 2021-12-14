@@ -126,7 +126,7 @@ export interface PublicAssetMetadata {
   image: string,
   tags: string[],
   type: string,
-  subType: string,
+  subtype: string,
   nsfw: boolean,
 }
 

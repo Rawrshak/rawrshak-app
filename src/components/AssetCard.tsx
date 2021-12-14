@@ -39,8 +39,6 @@ function BuyNow({
     }
   }, [assetWithOrders, supportedToken]);
 
-
-
   if (buyNowAvailable) {
     return (
       <div className="flex flex-col h-30 text-offWhite mx-4">

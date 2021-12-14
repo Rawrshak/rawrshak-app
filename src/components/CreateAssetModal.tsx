@@ -837,7 +837,7 @@ function CreateAssetModal({
   const [imageUri, setImageUri] = useState<string>("https://arweave.net/");
   const [tags, setTags] = useState<string[]>([""]);
   const [type, setType] = useState<string>("audio");
-  const [subType, setSubType] = useState<string>("sound-effect");
+  const [subtype, setSubtype] = useState<string>("sound-effect");
   const [nsfw, setNsfw] = useState<boolean>(false);
   const [maxSupply, setMaxSupply] = useState<BigNumber>(BigNumber.from("0"));
   const [royaltyReceiver, setRoyaltyReceiver] = useState<string>("");
@@ -852,7 +852,7 @@ function CreateAssetModal({
       image: "",
       tags: [""],
       type: "",
-      subType: "",
+      subtype: "",
       nsfw: false,
     }
   );
@@ -928,7 +928,7 @@ function CreateAssetModal({
       image: publicAssetMetadata.image,
       tags: publicAssetMetadata.tags,
       type: publicAssetMetadata.type,
-      subType: publicAssetMetadata.subType,
+      subtype: publicAssetMetadata.subtype,
       nsfw: publicAssetMetadata.nsfw,
       assetProperties: audioFilesMetadata
     }
@@ -943,7 +943,7 @@ function CreateAssetModal({
       image: publicAssetMetadata.image,
       tags: publicAssetMetadata.tags,
       type: publicAssetMetadata.type,
-      subType: publicAssetMetadata.subType,
+      subtype: publicAssetMetadata.subtype,
       nsfw: publicAssetMetadata.nsfw,
       assetProperties: imageFilesMetadata
     }
@@ -958,7 +958,7 @@ function CreateAssetModal({
       image: publicAssetMetadata.image,
       tags: publicAssetMetadata.tags,
       type: publicAssetMetadata.type,
-      subType: publicAssetMetadata.subType,
+      subtype: publicAssetMetadata.subtype,
       nsfw: publicAssetMetadata.nsfw,
       assetProperties: static3dObjectFilesMetadata
     }
@@ -973,7 +973,7 @@ function CreateAssetModal({
       image: publicAssetMetadata.image,
       tags: publicAssetMetadata.tags,
       type: publicAssetMetadata.type,
-      subType: publicAssetMetadata.subType,
+      subtype: publicAssetMetadata.subtype,
       nsfw: publicAssetMetadata.nsfw,
       assetProperties: textFilesMetadata
     }
@@ -988,14 +988,41 @@ function CreateAssetModal({
       image: imageUri,
       tags: tags,
       type: type,
-      subType: subType,
+      subtype: subtype,
       nsfw: nsfw,
     }
 
     setPublicAssetMetadata(newPublicAssetMetadata);
-  }, [name, description, imageUri, tags, type, subType, nsfw]);
+  }, [name, description, imageUri, tags, type, subtype, nsfw]);
 
+  useEffect(() => {
+    if (type === "audio") {
+      setSubtype("sound-effect");
+    } else if (type === "image") {
+      setSubtype("square");
+    } else if (type === "static3dobject") {
+      setSubtype("trophy");
+    } else {
+      setSubtype("title");
+    }
+  }, [type]);
 
+  useEffect(() => {
+    let jsonToPin;
+
+    if (type === "audio") {
+      jsonToPin = audioAssetMetadata;
+    } else if (type === "image") {
+      jsonToPin = imageAssetMetadata;
+    } else if (type === "static3dobject") {
+      jsonToPin = static3dObjectAssetMetadata;
+    } else {
+      jsonToPin = textAssetMetadata;
+    }
+
+    console.log("JSON to pin: ", jsonToPin);
+
+  }, [type, audioAssetMetadata, imageAssetMetadata, static3dObjectAssetMetadata, textAssetMetadata]);
 
   const uploadAndDeploy = async () => {
     if (contentManagerContract === undefined) return;
@@ -1175,12 +1202,12 @@ function CreateAssetModal({
         </div>
         <AssetTypes
           assetType={type}
-          subType={subType}
+          subType={subtype}
           audioFilesMetadata={audioFilesMetadata}
           imageFilesMetadata={imageFilesMetadata}
           static3dObjectFilesMetadata={static3dObjectFilesMetadata}
           textFilesMetadata={textFilesMetadata}
-          setSubType={setSubType}
+          setSubType={setSubtype}
           setAudioFilesMetadata={setAudioFilesMetadata}
           setImageFilesMetadata={setImageFilesMetadata}
           setStatic3dObjectFilesMetadata={setStatic3dObjectFilesMetadata}

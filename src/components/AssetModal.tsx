@@ -115,34 +115,34 @@ function AssetModal({
             <div className="text-offWhite text-lg mb-2 ml-1">
               {assetWithOrders.name}
             </div>
-            <div className="flex text-offWhite text-sm ml-1">
+            <div className="flex text-black200 text-sm ml-1">
               Description: {description}
             </div>
-            {assetBalance !== undefined ? <div className="text-offWhite text-sm ml-1">
+            {assetBalance !== undefined ? <div className="text-black200 text-sm ml-1">
               Qty {(assetBalance).toString()}
             </div> : null}
-            <div className="flex text-offWhite text-sm ml-1">
+            <div className="flex text-black200 text-sm ml-1">
               Supply: {Number(assetWithOrders.currentSupply)}
             </div>
-            <div className="flex text-offWhite text-sm ml-1">
+            <div className="flex text-black200 text-sm ml-1">
               Max Supply: {Number(assetWithOrders.maxSupply)}
             </div>
-            <div className="flex text-offWhite text-sm ml-1">
+            <div className="flex text-black200 text-sm ml-1">
               Collection: {assetWithOrders.game}
             </div>
-            <div className="flex text-offWhite text-sm ml-1">
+            <div className="flex text-black200 text-sm ml-1">
               Contract Address: {truncate(assetWithOrders.parentContract, 11)}
             </div>
-            <div className="flex text-offWhite text-sm ml-1">
+            <div className="flex text-black200 text-sm ml-1">
               Token ID: {assetWithOrders.tokenId}
             </div>
-            <div className="flex text-offWhite text-sm ml-1">
+            <div className="flex text-black200 text-sm ml-1">
               Type: {assetWithOrders.type}
             </div>
-            <div className="flex text-offWhite text-sm ml-1">
+            <div className="flex text-black200 text-sm ml-1">
               Subtype: {assetWithOrders.subtype}
             </div>
-            <div className="flex text-offWhite text-sm ml-1">
+            <div className="flex text-black200 text-sm ml-1">
               NSFW: {nsfw}
             </div>
             <div className="flex flex-wrap my-1">
