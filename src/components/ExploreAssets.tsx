@@ -166,6 +166,16 @@ function ExploreAssets({
         <div className="flex text-offWhite text-xxxl my-2 mx-4">
           Explore Assets
         </div>
+        <div className="flex">
+          <div className="flex flex-grow bg-black450 text-offWhite mb-2 mx-4 py-2 pl-3 pr-2 rounded-lg">
+            <div className="flex text-offWhite text-sm mt-1 mr-2">
+              Search All Tags
+            </div>
+            <div className="flex flex-grow">
+              <input value={searchTerm} onChange={(e) => { setSearchTerm(e.target.value) }} type="text" className="flex flex-grow text-offWhite bg-black400 focus:outline-none rounded py-1 px-2" />
+            </div>
+          </div>
+        </div>
         <div className="flex flex-wrap my-1 mx-3">
           {visibleTags ? visibleTags.map((tag, index) => (
             <Tag key={index} tagId={tag ? tag : "Undefined"} selected={selectedTags ? selectedTags.includes(tag) : false} selectTag={selectTag} />
@@ -179,16 +189,7 @@ function ExploreAssets({
             Deselect All
           </div>
         </div>
-        <div className="flex">
-          <div className="flex flex-shrink bg-black450 text-offWhite my-2 mx-4 py-2 pl-3 pr-2 rounded-lg">
-            <div className="flex text-offWhite text-sm mt-1 mr-2">
-              Search All Tags
-            </div>
-            <div className="flex">
-              <input value={searchTerm} onChange={(e) => { setSearchTerm(e.target.value) }} type="text" className="flex text-offWhite bg-black400 focus:outline-none rounded py-1 px-2" />
-            </div>
-          </div>
-        </div>
+
         <SelectedAssets
           selectedTags={selectedTags}
         />
