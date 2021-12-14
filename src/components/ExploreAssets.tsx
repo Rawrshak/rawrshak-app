@@ -28,12 +28,6 @@ function SelectedAssets({
   const [assetShowCount, setAssetShowCount] = useState<number>(6);
 
   useEffect(() => {
-    if (filteredAssets === undefined) return;
-    console.log("Filtered asset count: ", filteredAssets.length);
-    console.log("asset show count: ", assetShowCount);
-  }, [filteredAssets, assetShowCount])
-
-  useEffect(() => {
     if (!tags || !filteredTags || !assetsWithOrders) return;
 
     const checkIfAssetHasTags = (assetTags: string[], filteredTags: (string | undefined)[]) => {

@@ -62,20 +62,21 @@ function AssetsView({
         <div onClick={() => setShowAssetsView(false)} className="cursor-pointer">
           {`< Back to smart contracts`}
         </div>
-        <div className="flex flex-row mx-4 mt-8">
-          <div className="flex flex-col mr-16">
-            <div className="flex text-xxxl">
-              {activeContent.name}
-            </div>
-            <div className="flex text-lg">
-              {activeContent.description}
-            </div>
-          </div>
-          <div className="flex">
-            <Image src={activeContent.imageUri} className="object-cover h-44 w-64 rounded-xl opacity-95" type="content" />
-          </div>
+
+        <div className="flex mt-8 mx-3">
+          <Image src={activeContent.imageUri} className="object-cover h-44 w-64 rounded-xl opacity-95" type="content" />
         </div>
-        <div className="grid grid-cols-2 mt-24 mb-4">
+
+        <div className="flex text-xxxl mx-3">
+          {activeContent.name}
+        </div>
+        <div className="flex text-lg mx-3">
+          {activeContent.description}
+        </div>
+
+
+
+        <div className="grid grid-cols-2 mt-12 mb-4">
           <div className="text-offWhite text-xl ml-4">
             {activeContent.assets.length} {activeContent.assets.length === 1 ? "Asset" : "Assets"}
           </div>
