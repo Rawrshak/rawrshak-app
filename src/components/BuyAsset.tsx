@@ -339,7 +339,7 @@ function BuyAsset({
             />
           </div>
           <div className="flex justify-center mx-2 mt-8 text-black200">
-            {`Total: ${ethers.utils.formatUnits(buyNowTokenAmount.toString(), supportedToken?.decimals)} ${supportedToken?.symbol}`}
+            {`Total: ${ethers.utils.formatUnits(buyNowTokenAmount.toString(), supportedToken?.decimals)} ${supportedToken ? supportedToken.symbol : 'RAWR'}`}
           </div>
           <div className="flex flex-col flex-grow">
             <TradeAssetStatus show={showBuyNowStatus} status={buyNowStatus} />
@@ -395,7 +395,7 @@ function BuyAsset({
                 className="bg-black500 text-black200 m-2 p-2 rounded-lg w-48"
               />
               <div className="flex text-xsm ml-2 text-black200">
-                {`Total: ${ethers.utils.formatUnits(placeOrderTokenAmount.toString(), supportedToken?.decimals)} ${supportedToken?.symbol}`}
+                {`Total: ${ethers.utils.formatUnits(placeOrderTokenAmount.toString(), supportedToken?.decimals)} ${supportedToken ? supportedToken.symbol : 'RAWR'}`}
               </div>
             </div>
           </div>

@@ -382,7 +382,7 @@ function SellAsset({
             />
           </div>
           <div className="flex justify-center mx-2 mt-8 text-black200">
-            {`Total: ${ethers.utils.formatUnits(sellNowTokenAmount.toString(), supportedToken?.decimals)} ${supportedToken?.symbol}`}
+            {`Total: ${ethers.utils.formatUnits(sellNowTokenAmount.toString(), supportedToken?.decimals)} ${supportedToken ? supportedToken.symbol : 'RAWR'}`}
           </div>
           <div className="flex flex-col flex-grow">
             <TradeAssetStatus show={showSellNowStatus} status={sellNowStatus} />
@@ -438,7 +438,7 @@ function SellAsset({
                 className="bg-black500 text-black200 m-2 p-2 rounded-lg w-48"
               />
               <div className="flex text-xsm text-black200 ml-2">
-                {`Total: ${ethers.utils.formatUnits(placeOrderTokenAmount.toString(), supportedToken?.decimals)} ${supportedToken?.symbol}`}
+                {`Total: ${ethers.utils.formatUnits(placeOrderTokenAmount.toString(), supportedToken?.decimals)} ${supportedToken ? supportedToken.symbol : 'RAWR'}`}
               </div>
             </div>
           </div>
