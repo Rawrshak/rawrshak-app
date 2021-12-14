@@ -6,7 +6,8 @@ import { useExploreContent } from './exploreContent';
 import { useOwnedContent } from './ownedContent';
 import { useContentWithMetadata } from './contentWithMetadata';
 import { useContentWithMetadataAndOrders } from './contentWithMetadataAndOrders';
-import { useTags } from './tags';
+import { useCuratedTags } from './curatedTags';
+import { useAllTags } from './allTags';
 import { useAssetOrders } from './assetOrders';
 import { useAssetsWithOrders } from './assetsWithOrders';
 import { useSupportedToken } from './supportedToken';
@@ -194,9 +195,8 @@ export interface Data {
   supportedTokenAllowance: BigNumber | undefined,
   isDevMode: boolean,
   changeIsDevMode: (newUserSetting: boolean) => void,
-  tags: string[] | undefined,
-  filteredTags: boolean[] | undefined,
-  changeFilteredTags: (newFilteredTags: boolean[]) => void,
+  curatedTags: string[] | undefined,
+  allTags: string[] | undefined,
   assetsWithOrders: AssetWithOrders[] | undefined,
   featuredAssetsWithOrders: AssetWithOrders[] | undefined,
   inventoryAssetsWithOrders: AssetWithOrders[] | undefined,
@@ -216,9 +216,8 @@ function useSystemData() {
   const nftEscrowContract = useNftEscrowContract(addressResolverContract);
   const contentsSubgraphEndpoint = useContentsSubgraphEndpoint();
   const exchangeSubgraphEndpoint = useExchangeSubgraphEndpoint();
-  const tags = useTags();
-  const [filteredTags, setFilteredTags] = useState<boolean[]>();
-  const userChangedFilteredTags = (newFilteredTags: boolean[]) => { setFilteredTags(newFilteredTags) }
+  const curatedTags = useCuratedTags();
+  const allTags = useAllTags(contentsSubgraphEndpoint);
   const ownedContent = useOwnedContent(contentsSubgraphEndpoint);
   const assets = useAssets(contentsSubgraphEndpoint);
   const assetOrders = useAssetOrders(assets, exchangeContract, exchangeSubgraphEndpoint);
@@ -254,9 +253,8 @@ function useSystemData() {
     supportedTokenAllowance: supportedTokenAllowance,
     isDevMode: isDevMode,
     changeIsDevMode: userChangedIsDevMode,
-    tags: tags,
-    filteredTags: filteredTags,
-    changeFilteredTags: userChangedFilteredTags,
+    curatedTags: curatedTags,
+    allTags: allTags,
     assetsWithOrders: assetsWithOrders,
     featuredAssetsWithOrders: featuredAssetsWithOrders,
     inventoryAssetsWithOrders: inventoryAssetsWithOrders,

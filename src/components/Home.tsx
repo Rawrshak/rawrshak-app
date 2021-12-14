@@ -4,7 +4,7 @@ import ExploreAssets from './ExploreAssets';
 
 function Home() {
   return (
-    <div className="flex justify-center flex-wrap">
+    <div className="flex justify-start flex-wrap">
       <Hero />
       <FeaturedAssets />
       <ExploreAssets show={true} />

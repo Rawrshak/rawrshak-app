@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const useTags = () => {
+const useCuratedTags = () => {
   const [tags, setTags] = useState<string[] | undefined>();
 
   useEffect(() => {
@@ -15,4 +15,4 @@ const useTags = () => {
   return tags;
 }
 
-export { useTags }
+export { useCuratedTags }
