@@ -2,9 +2,7 @@ import { useState } from 'react';
 import { useData } from '../data';
 import GameCard from "./GameCard";
 import AssetCard from './AssetCard';
-import TradeAssetModal from "./TradeAssetModal";
-import AssetModal from "./AssetModal";
-import { ContentDataWithMetadata, AssetWithOrders } from '../data/data';
+import { ContentDataWithMetadata } from '../data/data';
 import Image from './Image';
 
 function ExploreGames({
@@ -85,23 +83,6 @@ function AssetsView({
   show: boolean,
   backToGameView: () => void
 }) {
-  const [showTradeAssetModal, setShowTradeAssetModal] = useState(false);
-  const [activeTradeAsset, setActiveTradeAsset] = useState<AssetWithOrders>();
-  const [showAssetModal, setShowAssetModal] = useState(false);
-  const [activeAsset, setActiveAsset] = useState<AssetWithOrders>();
-
-  const tradeAsset = (assetWithOrders: AssetWithOrders) => {
-    setShowTradeAssetModal(true);
-    setShowAssetModal(false);
-    setActiveTradeAsset(assetWithOrders);
-  }
-
-  const openAsset = (assetWithOrders: AssetWithOrders) => {
-    setShowAssetModal(true);
-    setShowTradeAssetModal(false);
-    setActiveAsset(assetWithOrders);
-  }
-
   if (show) {
     if (contentWithMetadata === undefined) {
       return (
@@ -112,8 +93,6 @@ function AssetsView({
     } else {
       return (
         <div className="flex flex-col">
-          <TradeAssetModal show={showTradeAssetModal} setShow={setShowTradeAssetModal} assetWithOrders={activeTradeAsset} />
-          <AssetModal show={showAssetModal} setShow={setShowAssetModal} assetWithOrders={activeAsset} tradeAsset={tradeAsset} />
           <div onClick={() => backToGameView()} className="flex text-offWhite text-sm m-2 cursor-pointer">
             {`< Marketplace`}
           </div>
@@ -135,7 +114,7 @@ function AssetsView({
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {contentWithMetadata.assets.map(asset => (
-              <AssetCard key={asset.id} assetWithOrders={asset} buyNow={tradeAsset} openAsset={openAsset} />
+              <AssetCard key={asset.id} assetWithOrders={asset} />
             ))}
           </div>
         </div>

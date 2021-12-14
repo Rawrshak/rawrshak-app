@@ -15,7 +15,7 @@ function AssetModal({
   show: boolean;
   setShow: React.Dispatch<React.SetStateAction<boolean>>,
   assetWithOrders: AssetWithOrders | undefined,
-  tradeAsset: (assetWithOrders: AssetWithOrders) => void
+  tradeAsset: (buyMode: boolean) => void
 }) {
 
   if (assetWithOrders === undefined) {

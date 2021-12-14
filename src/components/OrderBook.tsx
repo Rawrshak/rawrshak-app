@@ -97,7 +97,7 @@ function OrderBook({
   assetWithOrders: AssetWithOrders | undefined,
   showInTheMarketplace: boolean,
   showBuyAndSellButtons: boolean,
-  tradeAsset: ((assetWithOrders: AssetWithOrders) => void) | undefined
+  tradeAsset: ((buyMode: boolean) => void) | undefined
 }) {
   const { supportedToken } = useData();
   const [buyOrders, setBuyOrders] = useState<Order[] | undefined>();
@@ -140,7 +140,7 @@ function OrderBook({
           <SellOrders sellOrders={sellOrders} />
           {tradeAsset !== undefined && assetWithOrders !== undefined ? <Button
             label="BUY"
-            onClick={() => tradeAsset(assetWithOrders)}
+            onClick={() => tradeAsset(true)}
             enabled={true}
             show={showBuyAndSellButtons}
             enabledClassName="flex justify-center text-chartreuse500 text-sm bg-black450 border-chartreuse500 border-2 mt-4 py-1 rounded-lg w-24"
@@ -148,7 +148,7 @@ function OrderBook({
           /> : null}
           {tradeAsset !== undefined && assetWithOrders !== undefined ? <Button
             label="SELL"
-            onClick={() => tradeAsset(assetWithOrders)}
+            onClick={() => tradeAsset(false)}
             enabled={true}
             show={showBuyAndSellButtons}
             enabledClassName="flex justify-center text-chartreuse500 text-sm bg-black450 border-chartreuse500 border-2 mt-4 py-1 rounded-lg w-24"

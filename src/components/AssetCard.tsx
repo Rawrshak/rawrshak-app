@@ -4,6 +4,8 @@ import { ethers } from "ethers";
 import { AssetWithOrders } from "../data/data";
 import Ellipsis from '../assets/images/ellipsis.png'
 import Image from "./Image";
+import TradeAssetModal from "./TradeAssetModal";
+import AssetModal from "./AssetModal";
 
 
 function BuyNow({
@@ -70,35 +72,50 @@ function BuyNow({
 }
 
 function AssetCard({
-  assetWithOrders,
-  buyNow,
-  openAsset
+  assetWithOrders
 }: {
-  assetWithOrders: AssetWithOrders,
-  buyNow: (assetWithOrders: AssetWithOrders) => void,
-  openAsset: (assetWithOrders: AssetWithOrders) => void
+  assetWithOrders: AssetWithOrders
 }) {
+  const [showAssetModal, setShowAssetModal] = useState(false);
+  const [showTradeAssetModal, setShowTradeAssetModal] = useState(false);
+  const [initialBuyMode, setInitialBuyMode] = useState(true);
+
+  const openAssetModal = () => {
+    setShowAssetModal(true);
+    setShowTradeAssetModal(false);
+  }
+
+  const openTradeAssetModal = (buyMode: boolean) => {
+    setShowAssetModal(false);
+    setShowTradeAssetModal(true);
+    setInitialBuyMode(buyMode);
+  }
+
   return (
-    <div className="flex flex-col flex-grow h-120 m-3 assetCardBackground rounded-xl">
-      <div className="grid grid-cols-8 h-8 my-2 ml-4 mr-3">
-        <div className="col-span-7 text-offWhite text-sm mt-1 truncate ...">
-          {assetWithOrders.game}
+    <>
+      <TradeAssetModal show={showTradeAssetModal} setShow={setShowTradeAssetModal} initialBuyMode={initialBuyMode} assetWithOrders={assetWithOrders} />
+      <AssetModal show={showAssetModal} setShow={setShowAssetModal} assetWithOrders={assetWithOrders} tradeAsset={openTradeAssetModal} />
+      <div className="flex flex-col flex-grow h-120 m-3 assetCardBackground rounded-xl">
+        <div className="grid grid-cols-8 h-8 my-2 ml-4 mr-3">
+          <div className="col-span-7 text-offWhite text-sm mt-1 truncate ...">
+            {assetWithOrders.game}
+          </div>
+          <div className="col-span-1">
+            <img onClick={() => openAssetModal()} className="absolute self-end cursor-pointer p-3" src={Ellipsis} alt="Ellipsis" />
+          </div>
         </div>
-        <div className="col-span-1">
-          <img onClick={() => openAsset(assetWithOrders)} className="absolute self-end cursor-pointer p-3" src={Ellipsis} alt="Ellipsis" />
+        <div onClick={() => openAssetModal()} className="flex h-64 text-offWhite text-xxl p-6 rounded-xl justify-center">
+          <Image src={assetWithOrders.imageUri} className="flex cursor-pointer object-contain" type="content" />
         </div>
+        <div className="text-offWhite h-8 text-xxl mx-8 mt-2 truncate ...">
+          {assetWithOrders.name}
+        </div>
+        <div className="flex text-offWhite h-8 text-lg ml-8 mt-2">
+          Type: {assetWithOrders.type}
+        </div>
+        <BuyNow assetWithOrders={assetWithOrders} buyNow={() => openTradeAssetModal(true)} />
       </div>
-      <div onClick={() => openAsset(assetWithOrders)} className="flex h-64 text-offWhite text-xxl p-6 rounded-xl justify-center">
-        <Image src={assetWithOrders.imageUri} className="flex cursor-pointer object-contain" type="content" />
-      </div>
-      <div className="text-offWhite h-8 text-xxl mx-8 mt-2 truncate ...">
-        {assetWithOrders.name}
-      </div>
-      <div className="flex text-offWhite h-8 text-lg ml-8 mt-2">
-        Type: {assetWithOrders.type}
-      </div>
-      <BuyNow assetWithOrders={assetWithOrders} buyNow={() => buyNow(assetWithOrders)} />
-    </div>
+    </>
   );
 }
 

@@ -27,14 +27,20 @@ function SupportedTokenBalance() {
 function TradeAssetModal({
   show,
   setShow,
+  initialBuyMode,
   assetWithOrders
 }: {
   show: boolean;
   setShow: React.Dispatch<React.SetStateAction<boolean>>,
+  initialBuyMode: boolean,
   assetWithOrders: AssetWithOrders | undefined
 }) {
   const web3 = useWeb3();
+
   const [buyMode, setBuyMode] = useState(true);
+  useEffect(() => {
+    setBuyMode(initialBuyMode);
+  }, [initialBuyMode]);
 
   const [contentContract, setContentContract] = useState<Content>();
   useEffect(() => {

@@ -1,25 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useData } from '../data';
 import AssetCard from "./AssetCard";
-import TradeAssetModal from "./TradeAssetModal";
-import AssetModal from "./AssetModal";
 import Button from "./Button";
 import { AssetWithOrders } from "../data/data"
 
 function SelectedAssets({
   tags,
-  filteredTags,
-  setShowBuyAssetModal,
-  setActiveTradeAsset,
-  setShowAssetModal,
-  setActiveAsset
+  filteredTags
 }: {
   tags: string[] | undefined,
   filteredTags: boolean[] | undefined
-  setShowBuyAssetModal: React.Dispatch<React.SetStateAction<boolean>>,
-  setActiveTradeAsset: React.Dispatch<React.SetStateAction<AssetWithOrders | undefined>>,
-  setShowAssetModal: React.Dispatch<React.SetStateAction<boolean>>,
-  setActiveAsset: React.Dispatch<React.SetStateAction<AssetWithOrders | undefined>>
 }) {
   const { assetsWithOrders } = useData();
 
@@ -61,22 +51,6 @@ function SelectedAssets({
     setFilteredAndSlicedAssets(filteredAssets.slice(0, assetShowCount));
   }, [filteredAssets, assetShowCount])
 
-  const tradeAsset = (assetWithOrders: AssetWithOrders) => {
-    setShowAssetModal(false);
-    setShowBuyAssetModal(true);
-    if (assetsWithOrders) {
-      setActiveTradeAsset(assetWithOrders);
-    }
-  }
-
-  const openAsset = (assetWithOrders: AssetWithOrders) => {
-    setShowBuyAssetModal(false);
-    setShowAssetModal(true);
-    if (assetsWithOrders) {
-      setActiveAsset(assetWithOrders);
-    }
-  }
-
   if (!assetsWithOrders) {
     return (
       <div>No assets found</div>
@@ -90,7 +64,7 @@ function SelectedAssets({
       <>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {filteredAndSlicedAssets.map(assetWithOrders => (
-            <AssetCard key={assetWithOrders.id} assetWithOrders={assetWithOrders} buyNow={tradeAsset} openAsset={openAsset} />
+            <AssetCard key={assetWithOrders.id} assetWithOrders={assetWithOrders} />
           ))}
         </div>
         <Button
@@ -138,21 +112,11 @@ function ExploreAssets({
 }: {
   show: boolean
 }) {
-  const [showTradeAssetModal, setShowTradeAssetModal] = useState(false);
   const [activeTradeAsset, setActiveTradeAsset] = useState<AssetWithOrders>();
-  const [showAssetModal, setShowAssetModal] = useState(false);
-  const [activeAsset, setActiveAsset] = useState<AssetWithOrders>();
   const [firstSelection, setFirstSelection] = useState<boolean>(false);
 
-  const { tags, filteredTags, changeFilteredTags, assetsWithOrders } = useData();
 
-  const tradeAsset = (assetWithOrders: AssetWithOrders) => {
-    setShowAssetModal(false);
-    setShowTradeAssetModal(true);
-    if (assetsWithOrders) {
-      setActiveTradeAsset(assetWithOrders);
-    }
-  }
+  const { tags, filteredTags, changeFilteredTags, assetsWithOrders } = useData();
 
   useEffect(() => {
     if (assetsWithOrders === undefined || activeTradeAsset === undefined) return;
@@ -189,8 +153,6 @@ function ExploreAssets({
   if (show) {
     return (
       <div className="flex flex-grow flex-col m-4">
-        <TradeAssetModal show={showTradeAssetModal} setShow={setShowTradeAssetModal} assetWithOrders={activeTradeAsset} />
-        <AssetModal show={showAssetModal} setShow={setShowAssetModal} assetWithOrders={activeAsset} tradeAsset={tradeAsset} />
         <div className="flex text-offWhite text-xxxl my-2 mx-4">
           Explore Assets
         </div>
@@ -210,10 +172,6 @@ function ExploreAssets({
         <SelectedAssets
           tags={tags}
           filteredTags={filteredTags}
-          setShowBuyAssetModal={setShowTradeAssetModal}
-          setActiveTradeAsset={setActiveTradeAsset}
-          setShowAssetModal={setShowAssetModal}
-          setActiveAsset={setActiveAsset}
         />
       </div>
     );
