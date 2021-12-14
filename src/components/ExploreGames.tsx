@@ -54,7 +54,7 @@ function GameView({
         <div className="flex flex-grow max-w-screen-xl m-4">
           <div className="flex flex-col flex-grow">
             <div className="flex text-offWhite text-xxxl mx-4">
-              Collections
+              Featured Collections
             </div>
             <div className="flex flex-grow flex-wrap">
               {contentsWithMetadata.map(contentWithMetadata => (

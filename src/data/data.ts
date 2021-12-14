@@ -80,7 +80,7 @@ export interface ContentDataWithMetadata extends ContentData {
 
 export interface Asset {
   id: string,
-  tokenId: number,
+  tokenId: BigNumber,
   currentSupply: string,
   maxSupply: string,
   name: string,
