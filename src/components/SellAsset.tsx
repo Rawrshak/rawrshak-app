@@ -320,7 +320,7 @@ function SellAsset({
 
     setSellNowPending(true);
 
-    transaction(() => contentContract.setApprovalForAll(nftEscrow.address, true), "Transaction pending", "Transaction failed", "Transaction succeeded", undefined, undefined, () => setSellNowPending(false));
+    transaction(() => contentContract.setApprovalForAll(nftEscrow.address, true), "Transaction pending", "Transaction failed", "Transaction succeeded", undefined, () => setAssetApproved(true), () => setSellNowPending(false));
   }
 
   const placeOrder = () => {
@@ -353,7 +353,7 @@ function SellAsset({
 
     setPlaceOrderPending(true);
 
-    transaction(() => contentContract.setApprovalForAll(nftEscrow.address, true), "Transaction pending", "Transaction failed", "Transaction succeeded", undefined, undefined, () => setPlaceOrderPending(false));
+    transaction(() => contentContract.setApprovalForAll(nftEscrow.address, true), "Transaction pending", "Transaction failed", "Transaction succeeded", undefined, () => setAssetApproved(true), () => setPlaceOrderPending(false));
   }
 
   const resetValues = () => {
@@ -386,7 +386,7 @@ function SellAsset({
           </div>
           <div className="flex flex-col flex-grow">
             <TradeAssetStatus show={showSellNowStatus} status={sellNowStatus} />
-            <div className="flex flex-grow">
+            <div className="flex flex-grow justify-center">
               <Button
                 label="APPROVE"
                 onClick={() => sellNowApprove()}

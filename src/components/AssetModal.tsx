@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { AssetWithOrders } from "../data/data"
-import { BigNumber } from "ethers";
 import OrderBook from "./OrderBook";
 import SlidingPane from "react-sliding-pane";
 import "react-sliding-pane/dist/react-sliding-pane.css";
@@ -8,6 +7,20 @@ import X from '../assets/icons/X';
 import Image from "./Image";
 import { Content, Content__factory } from '../assets/typechain';
 import { useWeb3 } from '../web3';
+import { BigNumber } from "ethers";
+
+function truncate(fullStr: string, strLen: number, separator: string = "...") {
+  if (fullStr.length <= strLen) return fullStr;
+
+  separator = separator || '...';
+
+  const sepLen = separator.length;
+  const charsToShow = strLen - sepLen;
+  const frontChars = Math.ceil(charsToShow / 2 + 1); // accounts for the "0x"
+  const backChars = Math.floor(charsToShow / 2 - 1); // accounts for the "0x"
+
+  return fullStr.substr(0, frontChars) + separator + fullStr.substr(fullStr.length - backChars);
+}
 
 function AssetModal({
   show,
@@ -25,6 +38,8 @@ function AssetModal({
   const [assetUri, setAssetUri] = useState<string>();
   const [contentContract, setContentContract] = useState<Content>();
   const [description, setDescription] = useState<string | undefined>();
+  const [nsfw, setNsfw] = useState<boolean | undefined>();
+  const [assetBalance, setAssetBalance] = useState<BigNumber>();
 
   useEffect(() => {
     if (assetWithOrders === undefined || web3.signerOrProvider === undefined || show === false) return;
@@ -47,9 +62,33 @@ function AssetModal({
       .then(response => response.json())
       .then(data => {
         setDescription(data.description);
+        setNsfw(data.nsfw);
       })
       .catch(error => console.error(error));
   }, [assetUri]);
+
+
+  useEffect(() => {
+    if (contentContract === undefined) return;
+
+    const updateAssetBalance = () => {
+      if (contentContract === undefined || web3.account === undefined || assetWithOrders === undefined) return;
+
+      contentContract.balanceOf(web3.account, assetWithOrders.tokenId)
+        .then((balance) => {
+          setAssetBalance(balance);
+        })
+        .catch((error) => console.error(error));
+    }
+
+    if (assetBalance === undefined) {
+      updateAssetBalance();
+    }
+
+    const filter = contentContract.filters.TransferSingle();
+
+    contentContract.on(filter, updateAssetBalance);
+  }, [contentContract, assetWithOrders, web3.account, assetBalance]);
 
   if (assetWithOrders === undefined) {
     return (null);
@@ -76,15 +115,35 @@ function AssetModal({
             <div className="text-offWhite text-lg mb-2 ml-1">
               {assetWithOrders.name}
             </div>
-            <AssetQuantity balance={assetWithOrders.balance} />
             <div className="flex text-offWhite text-sm ml-1">
               Description: {description}
+            </div>
+            {assetBalance !== undefined ? <div className="text-offWhite text-sm ml-1">
+              Qty {(assetBalance).toString()}
+            </div> : null}
+            <div className="flex text-offWhite text-sm ml-1">
+              Supply: {Number(assetWithOrders.currentSupply)}
+            </div>
+            <div className="flex text-offWhite text-sm ml-1">
+              Max Supply: {Number(assetWithOrders.maxSupply)}
+            </div>
+            <div className="flex text-offWhite text-sm ml-1">
+              Collection: {assetWithOrders.game}
+            </div>
+            <div className="flex text-offWhite text-sm ml-1">
+              Contract Address: {truncate(assetWithOrders.parentContract, 11)}
+            </div>
+            <div className="flex text-offWhite text-sm ml-1">
+              Token ID: {assetWithOrders.tokenId}
             </div>
             <div className="flex text-offWhite text-sm ml-1">
               Type: {assetWithOrders.type}
             </div>
             <div className="flex text-offWhite text-sm ml-1">
               Subtype: {assetWithOrders.subtype}
+            </div>
+            <div className="flex text-offWhite text-sm ml-1">
+              NSFW: {nsfw}
             </div>
             <div className="flex flex-wrap my-1">
               {assetWithOrders.tags.map(tag => (
@@ -96,23 +155,7 @@ function AssetModal({
           </div>
           <OrderBook assetWithOrders={assetWithOrders} showInTheMarketplace={true} showBuyAndSellButtons={true} tradeAsset={tradeAsset} />
         </div>
-      </SlidingPane>
-    );
-  }
-}
-
-function AssetQuantity({
-  balance
-}: {
-  balance: BigNumber | undefined
-}) {
-  if (balance === undefined) {
-    return (null);
-  } else {
-    return (
-      <div className="text-offWhite text-lg">
-        Qty {balance.toString()}
-      </div>
+      </SlidingPane >
     );
   }
 }

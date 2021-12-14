@@ -343,7 +343,7 @@ function BuyAsset({
           </div>
           <div className="flex flex-col flex-grow">
             <TradeAssetStatus show={showBuyNowStatus} status={buyNowStatus} />
-            <div className="flex flex-grow">
+            <div className="flex flex-grow justify-center">
               <Button
                 label="APPROVE"
                 onClick={() => buyNowApprove(buyNowTokenAmount)}
