@@ -6,7 +6,11 @@ import Ellipsis from '../assets/images/ellipsis.png'
 import Image from "./Image";
 import TradeAssetModal from "./TradeAssetModal";
 import AssetModal from "./AssetModal";
-
+import audioIcon from '../assets/icons/audioIcon.png';
+import contentIcon from '../assets/icons/contentIcon.png';
+import imageIcon from '../assets/icons/imageIcon.png';
+import static3dObjectIcon from '../assets/icons/static3dObjectIcon.png';
+import textIcon from '../assets/icons/textIcon.png';
 
 function BuyNow({
   assetWithOrders,
@@ -16,11 +20,10 @@ function BuyNow({
   buyNow: (assetWithOrders: AssetWithOrders) => void
 }) {
   const { supportedToken } = useData();
-
   const [buyNowPrice, setBuyNowPrice] = useState<string>("");
   const [buyNowAvailable, setBuyNowAvailable] = useState<boolean>(false);
-  useEffect(() => {
 
+  useEffect(() => {
     if (!assetWithOrders || !assetWithOrders.orders || assetWithOrders.orders.length === 0 || supportedToken === undefined) return;
 
     const unfilledSellOrders = (assetWithOrders.orders
@@ -35,6 +38,8 @@ function BuyNow({
       setBuyNowPrice("");
     }
   }, [assetWithOrders, supportedToken]);
+
+
 
   if (buyNowAvailable) {
     return (
@@ -79,6 +84,7 @@ function AssetCard({
   const [showAssetModal, setShowAssetModal] = useState(false);
   const [showTradeAssetModal, setShowTradeAssetModal] = useState(false);
   const [initialBuyMode, setInitialBuyMode] = useState(true);
+  const [typeIcon, setTypeIcon] = useState<any>();
 
   const openAssetModal = () => {
     setShowAssetModal(true);
@@ -90,6 +96,20 @@ function AssetCard({
     setShowTradeAssetModal(true);
     setInitialBuyMode(buyMode);
   }
+
+  useEffect(() => {
+    if (assetWithOrders.type === "audio") {
+      setTypeIcon(audioIcon);
+    } else if (assetWithOrders.type === "image") {
+      setTypeIcon(imageIcon);
+    } else if (assetWithOrders.type === "static3dObject") {
+      setTypeIcon(static3dObjectIcon);
+    } else if (assetWithOrders.type === "text") {
+      setTypeIcon(textIcon);
+    } else {
+      setTypeIcon(contentIcon);
+    }
+  }, [assetWithOrders]);
 
   return (
     <>
@@ -107,11 +127,15 @@ function AssetCard({
         <div onClick={() => openAssetModal()} className="flex h-64 text-offWhite text-xxl p-6 rounded-xl justify-center">
           <Image src={assetWithOrders.imageUri} className="flex cursor-pointer object-contain" type="content" />
         </div>
+        <div className="flex mx-8 h-8">
+          <img
+            src={typeIcon}
+            alt=" "
+            className={"h-8"}
+          />
+        </div>
         <div className="text-offWhite h-8 text-xxl mx-8 mt-2 truncate ...">
           {assetWithOrders.name}
-        </div>
-        <div className="flex text-offWhite h-8 text-lg ml-8 mt-2">
-          Type: {assetWithOrders.type}
         </div>
         <BuyNow assetWithOrders={assetWithOrders} buyNow={() => openTradeAssetModal(true)} />
       </div>
