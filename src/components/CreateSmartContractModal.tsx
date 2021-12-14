@@ -4,10 +4,11 @@ import { ContentJson } from "../data/data";
 import axios from 'axios';
 import Modal from './Modal';
 import Button from './Button';
-import { InputAddress, InputNumber } from './Input';
+import { InputAddress, InputAmount } from './Input';
 import { BigNumber } from '@ethersproject/bignumber';
 import { useTransaction } from "../web3/transactions";
 import Loader from "./Loader";
+import { useWeb3 } from '../web3';
 
 function CreateSmartContractModal({
   show,
@@ -16,9 +17,8 @@ function CreateSmartContractModal({
   show: boolean;
   setShow: React.Dispatch<React.SetStateAction<boolean>>
 }) {
-  const {
-    systemContracts: { contentFactory }
-  } = useData();
+  const { systemContracts: { contentFactory } } = useData();
+  const web3 = useWeb3();
 
   const [pinataApiKey, setPinataApiKey] = useState<string>("");
   const [pinataApiSecret, setPinataApiSecret] = useState<string>("");
@@ -35,8 +35,15 @@ function CreateSmartContractModal({
   const [showCreateButton, setShowCreateButton] = useState<boolean>(true);
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const [createButtonEnabled, setCreateButtonEnabled] = useState<boolean>(false);
-
   const [contentJson, setContentJson] = useState<ContentJson>();
+  const [statusMessage, setStatusMessage] = useState<string>("");
+  const [showStatusMessage, setShowStatusMessage] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (web3.account === undefined) return;
+
+    setRoyaltyAccount(web3.account);
+  }, [web3.account]);
 
   const [royaltyRate, setRoyaltyRate] = useState<BigNumber>(BigNumber.from("0"));
   useEffect(() => {
@@ -69,9 +76,14 @@ function CreateSmartContractModal({
     if (transactionPending) {
       setShowCreateButton(false);
       setShowLoader(true);
+      setShowStatusMessage(true);
+      setStatusMessage("Pinning and propagating JSON to IPFS");
+      setShowStatusMessage(true);
     } else {
       setShowCreateButton(true);
       setShowLoader(false);
+      setStatusMessage("");
+      setShowStatusMessage(false);
     }
   }, [transactionPending]);
 
@@ -108,19 +120,23 @@ function CreateSmartContractModal({
           pinata_secret_api_key: pinataApiSecret
         }
       })
-      .then(function (response) {
-        transaction(() => contentFactory.createContracts(
-          royaltyAccount,
-          royaltyRate,
-          response.data.IpfsHash,
-        ),
-          "Transaction pending",
-          "Transaction failed",
-          "Transaction succeeded",
-          () => setTransactionPending(false),
-          () => createContractSuccess(),
-          () => setTransactionPending(false)
-        );
+      .then(response => {
+        setTimeout(() => {
+          setShowStatusMessage(false);
+          setStatusMessage("");
+          transaction(() => contentFactory.createContracts(
+            royaltyAccount,
+            royaltyRate,
+            response.data.IpfsHash,
+          ),
+            "Transaction pending",
+            "Transaction failed",
+            "Transaction succeeded",
+            () => setTransactionPending(false),
+            () => createContractSuccess(),
+            () => setTransactionPending(false)
+          );
+        }, 30000);
       })
       .catch(function (error) {
         console.error(error);
@@ -129,64 +145,73 @@ function CreateSmartContractModal({
 
   return (
     <Modal isOpen={show} setIsOpen={setShow}>
-      <div>
+      <div className="flex flex-col">
         <div className="flex text-xl justify-center mb-4">
           Create Content Contract
         </div>
-        <div className="grid grid-cols-2">
-          <div className="my-3 mr-2 text-right">
+        <div className="grid grid-cols-12">
+          <div className="col-span-4 my-3 mr-2 text-right">
             Pinata API Key
           </div>
-          <div className="my-2">
-            <input value={pinataApiKey} onChange={(e) => { setPinataApiKey(e.target.value) }} type="text" className="bg-neutral700 focus:outline-none rounded py-1 px-2" />
+          <div className="flex flex-grow col-span-8 my-2">
+            <input value={pinataApiKey} onChange={(e) => { setPinataApiKey(e.target.value) }} type="text" className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2" />
           </div>
-          <div className="my-3 mr-2 text-right">
+          <div className="col-span-4 my-3 mr-2 text-right">
             Pinata API Secret
           </div>
-          <div className="my-2">
-            <input value={pinataApiSecret} onChange={(e) => { setPinataApiSecret(e.target.value) }} type="text" className="bg-neutral700 focus:outline-none rounded py-1 px-2" />
+          <div className="flex flex-grow col-span-8 my-2">
+            <input value={pinataApiSecret} onChange={(e) => { setPinataApiSecret(e.target.value) }} type="text" className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2" />
           </div>
-          <div className="my-3 mr-2 text-right">
+          <div className="col-span-4 my-3 mr-2 text-right">
             Name
           </div>
-          <div className="my-2">
-            <input value={name} onChange={(e) => { setName(e.target.value) }} type="text" className="bg-neutral700 focus:outline-none rounded py-1 px-2" />
+          <div className="flex flex-grow col-span-8 my-2">
+            <input value={name} onChange={(e) => { setName(e.target.value) }} type="text" className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2" />
           </div>
-          <div className="my-3 mr-2 text-right">
+          <div className="col-span-4 my-3 mr-2 text-right">
             Description
           </div>
-          <div className="my-2">
-            <input value={description} onChange={(e) => { setDescription(e.target.value) }} type="text" className="bg-neutral700 focus:outline-none rounded py-1 px-2" />
+          <div className="flex flex-grow col-span-8 my-2 h-20">
+            <textarea value={description} onChange={(e) => { setDescription(e.target.value) }} className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2 h-20" />
           </div>
-          <div className="my-3 mr-2 text-right">
+          <div className="col-span-4 my-3 mr-2 text-right">
             Image URI
           </div>
-          <div className="my-2">
-            <input value={imageUri} onChange={(e) => { setImageUri(e.target.value) }} type="text" className="bg-neutral700 focus:outline-none rounded py-1 px-2" />
+          <div className="flex flex-grow col-span-8 my-2">
+            <input value={imageUri} onChange={(e) => { setImageUri(e.target.value) }} type="text" className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2" />
           </div>
-          <div className="my-3 mr-2 text-right">
+          <div className="col-span-4 my-3 mr-2 text-right">
             Creator
           </div>
-          <div className="my-2">
-            <input value={creator} onChange={(e) => { setCreator(e.target.value) }} type="text" className="bg-neutral700 focus:outline-none rounded py-1 px-2" />
+          <div className="flex flex-grow col-span-8 my-2">
+            <input value={creator} onChange={(e) => { setCreator(e.target.value) }} type="text" className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2" />
           </div>
-          <div className="my-3 mr-2 text-right">
+          <div className="col-span-4 my-3 mr-2 text-right">
             Owner
           </div>
-          <div className="my-2">
-            <input value={owner} onChange={(e) => { setOwner(e.target.value) }} type="text" className="bg-neutral700 focus:outline-none rounded py-1 px-2" />
+          <div className="flex flex-grow col-span-8 my-2">
+            <input value={owner} onChange={(e) => { setOwner(e.target.value) }} type="text" className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2" />
           </div>
-          <div className="my-3 mr-2 text-right">
+          <div className="col-span-4 mt-3 mr-2 text-right">
             Tags
           </div>
-          <div className="my-2">
-            {tags.map((tag, index) => (
-              <div key={index}>
+
+          {tags.map((tag, index) => {
+            let tagInputJsx = [];
+
+            if (index > 0) {
+              tagInputJsx.push(
+                <div className="col-span-4" />
+              );
+            }
+
+            tagInputJsx.push(
+              <div key={index} className="flex flex-grow flex-row col-span-8">
                 <input
                   value={tag}
                   onChange={e => setTags([...tags.slice(0, index), e.target.value, ...tags.slice(index + 1, tags.length)])}
                   type="text"
-                  className="bg-neutral700 focus:outline-none rounded mb-2 py-1 px-2"
+                  className="flex flex-grow bg-neutral700 focus:outline-none rounded mb-1 mt-2 py-1 px-2"
                 />
                 <Button
                   label="X"
@@ -197,49 +222,64 @@ function CreateSmartContractModal({
                   disabledClassName=""
                 />
               </div>
-            ))}
+            );
+
+            return (tagInputJsx);
+          }
+          )}
+
+          <div className="col-span-4" />
+          <div className="col-span-8 mt-1 mb-2">
             <Button
               label="+"
               onClick={() => { setTags(tags.concat([""])) }}
               enabled={true}
               show={true}
-              enabledClassName="bg-chartreuse500 text-neutral900 text-xl px-3 rounded-md"
+              enabledClassName="flex bg-chartreuse500 text-neutral900 text-xl px-3 rounded-md"
               disabledClassName=""
             />
           </div>
-          <div className="my-3 mr-2 text-right">
+
+          <div className="col-span-4 my-3 mr-2 text-right">
             Royalty Account Address
           </div>
-          <div className="my-2">
+          <div className="col-span-8 flex flex-grow my-2">
             <InputAddress
               value={royaltyAccount}
               onChange={(e) => { setRoyaltyAccount(e) }}
-              className="bg-neutral700 focus:outline-none rounded py-1 px-2"
+              className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2"
               disabled={false}
             />
           </div>
-          <div className="my-3 mr-2 text-right">
+          <div className="col-span-4 my-3 mr-2 text-right">
             Royalty Rate (%)
           </div>
-          <div className="my-2">
-            <InputNumber
+          <div className="flex flex-grow col-span-8 my-2">
+            <InputAmount
               value={royaltyRateString}
+              decimals={2}
               onChange={(e) => updateRoyaltyRateString(e)}
-              className="bg-neutral700 focus:outline-none rounded py-1 px-2"
+              className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2"
               disabled={false}
             />
           </div>
         </div>
-        <div className="flex justify-center mt-4">
-          <Button
-            label="Create"
-            onClick={() => uploadAndDeploy()}
-            enabled={createButtonEnabled}
-            show={showCreateButton}
-            enabledClassName="bg-chartreuse500 text-neutral900 text-xsm mr-4 px-6 py-2 rounded-md"
-            disabledClassName="bg-black400 text-black300 text-xsm mr-4 px-6 py-2 rounded-md"
-          />
-          <Loader show={showLoader} />
+        <div className="flex flex-col mt-4">
+          {showStatusMessage && <div className="flex justify-center text-offWhite">
+            {statusMessage}
+          </div>}
+          <div className="flex justify-center">
+            <Button
+              label="Create"
+              onClick={() => uploadAndDeploy()}
+              enabled={createButtonEnabled}
+              show={showCreateButton}
+              enabledClassName="flex bg-chartreuse500 text-neutral900 text-xsm px-6 py-2 rounded-md w-24"
+              disabledClassName="flex bg-black400 text-black300 text-xsm px-6 py-2 rounded-md w-24"
+            />
+            <Loader show={showLoader} />
+          </div>
+
         </div>
       </div>
     </Modal >

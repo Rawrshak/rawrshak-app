@@ -40,6 +40,7 @@ module.exports = {
       80: '320px',
       96: '384px',
       120: '480px',
+      180: '720px'
     },
     colors: {
       black: '#13161D',

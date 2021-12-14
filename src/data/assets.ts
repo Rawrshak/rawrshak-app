@@ -40,7 +40,6 @@ const useAssets = (contentsSubgraphEndpoint: string | undefined) => {
       query: gql(exploreAssetsQuery)
     })
       .then((data) => {
-        console.log("assets data: ", data);
         const allAssets = data.data.assets.map((asset: any) => {
           const newTags: string[] = asset.tags.map((tag: any) => tag.id)
           const newAsset: Asset = {
