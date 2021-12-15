@@ -49,6 +49,8 @@ function AssetsView({
   const [activeContentManagerContract, setActiveContentManagerContract] = useState<ContentManager>();
   const [showCreateAssetModal, setShowCreateAssetModal] = useState<boolean>(false);
 
+  console.log("activeContent: ", activeContent);
+
   useEffect(() => {
     if (activeContent === undefined || signerOrProvider === undefined) return;
 
@@ -68,8 +70,23 @@ function AssetsView({
         <div className="flex text-xxxl mx-3">
           {activeContent.name}
         </div>
-        <div className="flex text-lg mx-3">
-          {activeContent.description}
+        <div className="flex text-sm mx-3">
+          Description: {activeContent.description}
+        </div>
+        <div className="flex text-sm mx-3">
+          URI: {activeContent.contractUri}
+        </div>
+        <div className="flex text-sm mx-3">
+          Contract Address: {activeContent.contractAddress}
+        </div>
+        <div className="flex text-sm mx-3">
+          Creator Address: {activeContent.creatorAddress}
+        </div>
+        <div className="flex text-sm mx-3">
+          Creator: {activeContent.creator}
+        </div>
+        <div className="flex text-sm mx-3">
+          Owner: {activeContent.owner}
         </div>
         <div className="grid grid-cols-2 mt-12 mb-4">
           <div className="text-offWhite text-xl ml-4">
