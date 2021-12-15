@@ -3,7 +3,7 @@ import ReactLoading from "react-loading";
 function Loader({ show }: { show: boolean }) {
   if (show) {
     return (
-      <div className="flex mt-2">
+      <div className="flex justify-center mt-2">
         <ReactLoading
           type="spinningBubbles"
           color="#B5FF18"

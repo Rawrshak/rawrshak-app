@@ -176,7 +176,7 @@ export interface TextFileMetadata {
 }
 
 export interface TextAssetMetadata extends PublicAssetMetadata {
-  assetProperties: TextFileMetadata[]
+  assetProperties: TextFileMetadata
 }
 
 export interface Data {

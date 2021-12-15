@@ -195,16 +195,13 @@ function CreateSmartContractModal({
           <div className="col-span-4 mt-3 mr-2 text-right">
             Tags
           </div>
-
           {tags.map((tag, index) => {
             let tagInputJsx = [];
-
             if (index > 0) {
               tagInputJsx.push(
                 <div className="col-span-4" />
               );
             }
-
             tagInputJsx.push(
               <div key={index} className="flex flex-grow flex-row col-span-8">
                 <input
@@ -223,11 +220,9 @@ function CreateSmartContractModal({
                 />
               </div>
             );
-
             return (tagInputJsx);
           }
           )}
-
           <div className="col-span-4" />
           <div className="col-span-8 mt-1 mb-2">
             <Button
@@ -239,7 +234,6 @@ function CreateSmartContractModal({
               disabledClassName=""
             />
           </div>
-
           <div className="col-span-4 my-3 mr-2 text-right">
             Royalty Account Address
           </div>
@@ -264,7 +258,7 @@ function CreateSmartContractModal({
             />
           </div>
         </div>
-        <div className="flex flex-col mt-4">
+        <div className="flex flex-col justify-center mt-4">
           {showStatusMessage && <div className="flex justify-center text-offWhite">
             {statusMessage}
           </div>}
@@ -274,12 +268,11 @@ function CreateSmartContractModal({
               onClick={() => uploadAndDeploy()}
               enabled={createButtonEnabled}
               show={showCreateButton}
-              enabledClassName="flex bg-chartreuse500 text-neutral900 text-xsm px-6 py-2 rounded-md w-24"
-              disabledClassName="flex bg-black400 text-black300 text-xsm px-6 py-2 rounded-md w-24"
+              enabledClassName="flex justify-center bg-chartreuse500 text-neutral900 text-xsm px-6 py-2 rounded-md w-24"
+              disabledClassName="flex justify-center bg-black400 text-black300 text-xsm px-6 py-2 rounded-md w-24"
             />
-            <Loader show={showLoader} />
           </div>
-
+          <Loader show={showLoader} />
         </div>
       </div>
     </Modal >

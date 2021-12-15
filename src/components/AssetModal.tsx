@@ -52,6 +52,7 @@ function AssetModal({
 
     contentContract["uri(uint256)"](assetWithOrders.tokenId)
       .then(uri => {
+        console.log("URI: ", uri);
         setAssetUri(uri);
       })
       .catch((error) => console.error(error));
@@ -144,6 +145,9 @@ function AssetModal({
             </div>
             <div className="flex text-black200 text-sm ml-1">
               NSFW: {nsfw}
+            </div>
+            <div className="flex text-black200 text-sm ml-1">
+              URI: {assetUri}
             </div>
             <div className="flex flex-wrap my-1">
               {assetWithOrders.tags.map(tag => (

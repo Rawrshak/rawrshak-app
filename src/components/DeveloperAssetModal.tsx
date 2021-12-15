@@ -26,15 +26,27 @@ function AssetModal({
   const [mintAmount, setMintAmount] = useState<BigNumber>();
   const [mintAmountString, setMintAmountString] = useState<string>("");
   const { signerOrProvider, account } = useWeb3();
-  const [activeContentContract, setActiveContentContract] = useState<Content>();
+  const [contentContract, setContentContract] = useState<Content>();
   const [transaction] = useTransaction();
   const [transactionPending, setTransactionPending] = useState<boolean>(false);
+  const [assetUri, setAssetUri] = useState<string>();
 
   useEffect(() => {
     if (assetWithOrders === undefined || signerOrProvider === undefined || content === undefined) return;
 
-    setActiveContentContract(Content__factory.connect(assetWithOrders.parentContract, signerOrProvider));
+    setContentContract(Content__factory.connect(assetWithOrders.parentContract, signerOrProvider));
   }, [assetWithOrders, signerOrProvider, content]);
+
+  useEffect(() => {
+    if (contentContract === undefined || assetWithOrders === undefined) return;
+
+    contentContract["uri(uint256)"](assetWithOrders.tokenId)
+      .then(uri => {
+        console.log("URI: ", uri);
+        setAssetUri(uri);
+      })
+      .catch((error) => console.error(error));
+  }, [assetWithOrders, contentContract]);
 
   useEffect(() => {
     if (mintAmountString !== "") {
@@ -44,7 +56,7 @@ function AssetModal({
 
   const mint = () => {
     if (
-      activeContentContract === undefined ||
+      contentContract === undefined ||
       assetWithOrders === undefined ||
       mintAmount === undefined ||
       mintAmount.eq(BigNumber.from("0")) ||
@@ -53,7 +65,7 @@ function AssetModal({
 
     setTransactionPending(true);
 
-    transaction(() => activeContentContract.mintBatch({
+    transaction(() => contentContract.mintBatch({
       to: account,
       tokenIds: [assetWithOrders.tokenId],
       amounts: [mintAmount],
@@ -117,6 +129,9 @@ function AssetModal({
             </div>
             <div className="text-offWhite text-sm">
               Supply: {Number(assetWithOrders.currentSupply)} / {Number(assetWithOrders.maxSupply)}
+            </div>
+            <div className="text-offWhite text-sm">
+              URI: {assetUri}
             </div>
           </div>
 
