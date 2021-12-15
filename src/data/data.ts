@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useInventoryAssets } from './inventoryAssets';
 import { useAssets } from './assets';
 import { useFeaturedAssets } from './featuredAssets';
-import { useExploreContent } from './exploreContent';
+import { useAllContent } from './allContent';
 import { useOwnedContent } from './ownedContent';
 import { useContentWithMetadata } from './contentWithMetadata';
 import { useContentWithMetadataAndOrders } from './contentWithMetadataAndOrders';
@@ -61,6 +61,7 @@ export interface ContentData {
   creator: string,
   owner: string,
   managerAddress: string,
+  creatorAddress: string,
   assets: AssetWithOrders[],
 }
 
@@ -201,7 +202,7 @@ export interface Data {
   featuredAssetsWithOrders: AssetWithOrders[] | undefined,
   inventoryAssetsWithOrders: AssetWithOrders[] | undefined,
   ownedContentWithMetadata: ContentDataWithMetadata[] | undefined,
-  exploreContentWithMetadata: ContentDataWithMetadata[] | undefined,
+  allContentWithMetadata: ContentDataWithMetadata[] | undefined,
   featuredContentWithMetadata: ContentDataWithMetadata[] | undefined,
 };
 
@@ -232,10 +233,10 @@ function useSystemData() {
   const ownedContentWithMetadata = useContentWithMetadata(ownedContent);
   const supportedTokenBalance = useSupportedTokenBalance(supportedToken);
   const supportedTokenAllowance = useSupportedTokenAllowance(supportedToken, erc20EscrowContract);
-  const exploreContent = useExploreContent(contentsSubgraphEndpoint);
-  const exploreContentWithMetadata = useContentWithMetadata(exploreContent);
-  const exploreContentWithMetadataAndOrders = useContentWithMetadataAndOrders(exploreContentWithMetadata, assetsWithOrders);
-  const featuredContentWithMetadata = useFeaturedContent(exploreContentWithMetadataAndOrders);
+  const allContent = useAllContent(contentsSubgraphEndpoint);
+  const allContentWithMetadata = useContentWithMetadata(allContent);
+  const allContentWithMetadataAndOrders = useContentWithMetadataAndOrders(allContentWithMetadata, assetsWithOrders);
+  const featuredContentWithMetadata = useFeaturedContent(allContentWithMetadataAndOrders);
 
   const data: Data = {
     systemContracts: {
@@ -259,7 +260,7 @@ function useSystemData() {
     featuredAssetsWithOrders: featuredAssetsWithOrders,
     inventoryAssetsWithOrders: inventoryAssetsWithOrders,
     ownedContentWithMetadata: ownedContentWithMetadata,
-    exploreContentWithMetadata: exploreContentWithMetadataAndOrders,
+    allContentWithMetadata: allContentWithMetadataAndOrders,
     featuredContentWithMetadata: featuredContentWithMetadata,
   }
 

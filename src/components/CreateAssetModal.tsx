@@ -984,7 +984,6 @@ function CreateAssetModal({
   }, [name, description, imageUri, tags, type, subtype, nsfw]);
 
   useEffect(() => {
-    console.log("type changed");
     if (type === "audio") {
       setSubtype("sound-effect");
     } else if (type === "image") {

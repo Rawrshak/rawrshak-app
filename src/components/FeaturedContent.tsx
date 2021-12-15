@@ -5,7 +5,7 @@ import AssetCard from './AssetCard';
 import { ContentDataWithMetadata } from '../data/data';
 import Image from './Image';
 
-function ExploreGames({
+function FeaturedContent({
   setShowExploreAssets
 }: {
   setShowExploreAssets: React.Dispatch<React.SetStateAction<boolean>>
@@ -125,4 +125,4 @@ function AssetsView({
   }
 }
 
-export default ExploreGames;
+export default FeaturedContent;

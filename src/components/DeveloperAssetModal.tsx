@@ -42,7 +42,6 @@ function AssetModal({
 
     contentContract["uri(uint256)"](assetWithOrders.tokenId)
       .then(uri => {
-        console.log("URI: ", uri);
         setAssetUri(uri);
       })
       .catch((error) => console.error(error));

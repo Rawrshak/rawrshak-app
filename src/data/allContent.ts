@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { ApolloClient, InMemoryCache, gql } from '@apollo/client';
 import { ContentData, AssetWithOrders } from './data';
 
-const useExploreContent = (contentsSubgraphEndpoint: string | undefined) => {
+const useAllContent = (contentsSubgraphEndpoint: string | undefined) => {
   const [exploreContent, setExploreContent] = useState<ContentData[] | undefined>();
 
   useEffect(() => {
@@ -16,6 +16,7 @@ const useExploreContent = (contentsSubgraphEndpoint: string | undefined) => {
           contractUri
           name
           creator
+          creatorAddress
           game
           owner {
             id
@@ -76,6 +77,7 @@ const useExploreContent = (contentsSubgraphEndpoint: string | undefined) => {
             contractUri: content.contractUri,
             name: content.name,
             creator: content.creator,
+            creatorAddress: content.creatorAddress,
             owner: content.owner.id,
             managerAddress: content.manager.id,
             assets: newAssets,
@@ -93,4 +95,4 @@ const useExploreContent = (contentsSubgraphEndpoint: string | undefined) => {
   return exploreContent;
 }
 
-export { useExploreContent }
+export { useAllContent }

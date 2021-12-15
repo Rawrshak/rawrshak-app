@@ -23,6 +23,7 @@ const useOwnedContent = (contentsSubgraphEndpoint: string | undefined) => {
             contractUri
             name
             creator
+            creatorAddress
             owner
             manager {
               id
@@ -86,6 +87,7 @@ const useOwnedContent = (contentsSubgraphEndpoint: string | undefined) => {
             contractUri: contentManager.content.contractUri,
             name: contentManager.content.name,
             creator: contentManager.content.creator,
+            creatorAddress: contentManager.content.creatorAddress,
             owner: contentManager.content.owner,
             managerAddress: contentManager.content.manager.id,
             assets: newAssets,

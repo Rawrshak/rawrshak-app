@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import ExploreGames from "./ExploreGames";
+import FeaturedContent from "./FeaturedContent";
 import ExploreAssets from "./ExploreAssets";
 
 function Marketplace() {
@@ -7,7 +7,7 @@ function Marketplace() {
 
   return (
     <div className="flex flex-col py-2">
-      <ExploreGames setShowExploreAssets={setShowExploreAssets} />
+      <FeaturedContent setShowExploreAssets={setShowExploreAssets} />
       <ExploreAssets show={showExploreAssets} />
     </div>
   );

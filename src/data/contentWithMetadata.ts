@@ -24,6 +24,7 @@ const useContentWithMetadata = (ownedContent: ContentData[] | undefined) => {
             description: metadata.description,
             imageUri: metadata.image,
             creator: metadata.creator,
+            creatorAddress: ownedContent.creatorAddress,
             owner: metadata.owner,
             tags: metadata.tags
           }
@@ -38,6 +39,7 @@ const useContentWithMetadata = (ownedContent: ContentData[] | undefined) => {
             description: "",
             imageUri: "",
             creator: "",
+            creatorAddress: "",
             owner: "",
             tags: []
           }
