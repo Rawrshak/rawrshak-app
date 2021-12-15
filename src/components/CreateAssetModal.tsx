@@ -1099,7 +1099,7 @@ function CreateAssetModal({
             Pinata API Secret
           </div>
           <div className="flex flex-grow col-span-8 my-2">
-            <input value={pinataApiSecret} onChange={(e) => { setPinataApiSecret(e.target.value) }} type="text" className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2" />
+            <textarea value={pinataApiSecret} onChange={(e) => { setPinataApiSecret(e.target.value) }} className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2 h-14" />
           </div>
           <div className="col-span-4 my-3 mr-2 text-right">
             Token ID
@@ -1117,7 +1117,7 @@ function CreateAssetModal({
             Description
           </div>
           <div className="flex flex-grow col-span-8 my-2">
-            <textarea value={description} onChange={(e) => { setDescription(e.target.value) }} className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2 h-20" />
+            <textarea value={description} onChange={(e) => { setDescription(e.target.value) }} className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2 h-14" />
           </div>
           <div className="col-span-4 my-3 mr-2 text-right">
             Image URI
@@ -1177,7 +1177,7 @@ function CreateAssetModal({
             Royalty Receiver Address
           </div>
           <div className="flex flex-grow col-span-8 my-2">
-            <input value={royaltyReceiver} onChange={(e) => { setRoyaltyReceiver(e.target.value) }} type="text" className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2" />
+            <textarea value={royaltyReceiver} onChange={(e) => { setRoyaltyReceiver(e.target.value) }} className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2 h-14" />
           </div>
           <div className="col-span-4 my-3 mr-2 text-right">
             Royalty Rate (%)

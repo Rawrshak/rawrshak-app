@@ -4,7 +4,7 @@ import { ContentJson } from "../data/data";
 import axios from 'axios';
 import Modal from './Modal';
 import Button from './Button';
-import { InputAddress, InputAmount } from './Input';
+import { InputAmount } from './Input';
 import { BigNumber } from '@ethersproject/bignumber';
 import { useTransaction } from "../web3/transactions";
 import Loader from "./Loader";
@@ -160,7 +160,7 @@ function CreateSmartContractModal({
             Pinata API Secret
           </div>
           <div className="flex flex-grow col-span-8 my-2">
-            <input value={pinataApiSecret} onChange={(e) => { setPinataApiSecret(e.target.value) }} type="text" className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2" />
+            <textarea value={pinataApiSecret} onChange={(e) => { setPinataApiSecret(e.target.value) }} className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2 h-14" />
           </div>
           <div className="col-span-4 my-3 mr-2 text-right">
             Name
@@ -171,8 +171,8 @@ function CreateSmartContractModal({
           <div className="col-span-4 my-3 mr-2 text-right">
             Description
           </div>
-          <div className="flex flex-grow col-span-8 my-2 h-20">
-            <textarea value={description} onChange={(e) => { setDescription(e.target.value) }} className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2 h-20" />
+          <div className="flex flex-grow col-span-8 my-2 h-14">
+            <textarea value={description} onChange={(e) => { setDescription(e.target.value) }} className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2 h-14" />
           </div>
           <div className="col-span-4 my-3 mr-2 text-right">
             Image URI
@@ -238,12 +238,7 @@ function CreateSmartContractModal({
             Royalty Account Address
           </div>
           <div className="col-span-8 flex flex-grow my-2">
-            <InputAddress
-              value={royaltyAccount}
-              onChange={(e) => { setRoyaltyAccount(e) }}
-              className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2"
-              disabled={false}
-            />
+            <textarea value={royaltyAccount} onChange={(e) => { setRoyaltyAccount(e.target.value) }} className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2 h-14" />
           </div>
           <div className="col-span-4 my-3 mr-2 text-right">
             Royalty Rate (%)
