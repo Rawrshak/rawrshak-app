@@ -113,8 +113,8 @@ function BuyAsset({
               setShowBuyNowApproveButton(true);
               setEnableBuyNowApproveButton(true);
               setShowBuyNowLoader(false);
-              setShowBuyNowStatus(true);
-              setBuyNowStatus("Token transfer must be approved");
+              setShowBuyNowStatus(false);
+              setBuyNowStatus("");
             } else {
               // All good to Buy Now
               setShowBuyNowButton(true);
@@ -177,8 +177,8 @@ function BuyAsset({
             setShowPlaceOrderApproveButton(true);
             setEnablePlaceOrderApproveButton(true);
             setShowPlaceOrderLoader(false);
-            setShowPlaceOrderStatus(true);
-            setPlaceOrderStatus("Token transfer must be approved");
+            setShowPlaceOrderStatus(false);
+            setPlaceOrderStatus("");
           } else {
             // Can place order
             setShowPlaceOrderButton(true);

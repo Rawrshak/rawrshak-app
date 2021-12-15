@@ -143,12 +143,12 @@ function AssetModal({
             <div className="flex text-black200 text-sm ml-1">
               Subtype: {assetWithOrders.subtype}
             </div>
-            <div className="flex text-black200 text-sm ml-1">
+            {nsfw !== undefined ? <div className="flex text-black200 text-sm ml-1">
               NSFW: {nsfw}
-            </div>
-            <div className="flex text-black200 text-sm ml-1">
+            </div> : null}
+            {assetUri !== undefined ? <div className="flex flex-grow flex-wrap break-all text-black200 text-sm ml-1">
               URI: {assetUri}
-            </div>
+            </div> : null}
             <div className="flex flex-wrap my-1">
               {assetWithOrders.tags.map(tag => (
                 <div key={tag} className="flex flex-shrink text-offWhite text-sm bg-gray rounded-xl m-1 px-2 py-1 border-2 border-neutral600">
