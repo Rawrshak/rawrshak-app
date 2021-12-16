@@ -187,7 +187,7 @@ export interface Data {
     exchange: Exchange | undefined,
     rawrToken: ERC20PresetMinterPauserUpgradeable | undefined,
     erc20Escrow: Erc20Escrow | undefined,
-    nftEscrow: NftEscrow | undefined,
+    nftEscrow: NftEscrow | undefined
   },
   contentsSubgraphEndpoint: string | undefined,
   exchangeSubgraphEndpoint: string | undefined,

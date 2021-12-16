@@ -120,7 +120,7 @@ function OrderBook({
           }
         }
       })
-      .splice(0, 6));
+      .splice(0, 5));
 
     setSellOrders((assetWithOrders.orders
       .filter(order => order.type === "Sell" && Number(order.cancelledAtTimestamp) === 0 && Number(order.filledAtTimestamp) === 0))
@@ -137,7 +137,7 @@ function OrderBook({
           }
         }
       })
-      .splice(0, 6));
+      .splice(0, 5));
 
   }, [assetWithOrders]);
 

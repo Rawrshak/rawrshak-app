@@ -52,7 +52,7 @@ const useAssetOrders = (allAssets: Asset[] | undefined, exchangeContract: Exchan
     exchangeContract.on(filter, listenerCallback);
 
     return () => { exchangeContract.off(filter, listenerCallback) };
-  }, [exchangeContract, exchangeSubgraphEndpoint]);
+  }, [exchangeContract]);
 
   useEffect(() => {
     if (allAssets === undefined) return;
