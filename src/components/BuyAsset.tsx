@@ -5,9 +5,28 @@ import { ethers, BigNumber } from "ethers";
 import { useTransaction } from "../web3/transactions";
 import { useWeb3 } from '../web3';
 import Button from "./Button";
-import TradeAssetStatus from "./TradeAssetStatus";
 import { InputNumber, InputAmount } from "./Input";
 import Loader from "./Loader";
+
+function TradeAssetStatus({
+  show,
+  status
+}: {
+  show: boolean,
+  status: string
+}) {
+  if (show) {
+    return (
+      <div className="flex justify-center mx-3 h-6 text-black200">
+        {status}
+      </div>
+    );
+  } else {
+    return (
+      <div className="flex justify-center mx-3 h-6 text-black200" />
+    );
+  }
+}
 
 function BuyAsset({
   show,
@@ -32,15 +51,27 @@ function BuyAsset({
   const [buyNowUnfilledAssetAmount, setBuyNowUnfilledAssetAmount] = useState<BigNumber>(BigNumber.from("0"));
   const [buyNowTokenAmount, setBuyNowTokenAmount] = useState<BigNumber>(BigNumber.from("0"));
   const [buyNowPending, setBuyNowPending] = useState<boolean>(false);
-
   const [placeOrderPrice, setPlaceOrderPrice] = useState<BigNumber>(BigNumber.from("0"));
   const [placeOrderPriceString, setPlaceOrderPriceString] = useState<string>("0");
   const [placeOrderAssetAmount, setPlaceOrderAssetAmount] = useState<BigNumber>(BigNumber.from("0"));
   const [placeOrderAssetAmountString, setPlaceOrderAssetAmountString] = useState<string>("0");
   const [placeOrderTokenAmount, setPlaceOrderTokenAmount] = useState<BigNumber>(BigNumber.from("0"));
   const [placeOrderPending, setPlaceOrderPending] = useState<boolean>(false);
-
   const [sellOrders, setSellOrders] = useState<Order[] | undefined>();
+  const [showBuyNowButton, setShowBuyNowButton] = useState<boolean>(false);
+  const [enableBuyNowButton, setEnableBuyNowButton] = useState<boolean>(false);
+  const [showBuyNowApproveButton, setShowBuyNowApproveButton] = useState<boolean>(false);
+  const [enableBuyNowApproveButton, setEnableBuyNowApproveButton] = useState<boolean>(false);
+  const [showBuyNowLoader, setShowBuyNowLoader] = useState<boolean>(false);
+  const [showBuyNowStatus, setShowBuyNowStatus] = useState<boolean>(false);
+  const [buyNowStatus, setBuyNowStatus] = useState<string>("");
+  const [showPlaceOrderButton, setShowPlaceOrderButton] = useState<boolean>(true);
+  const [enablePlaceOrderButton, setEnablePlaceOrderButton] = useState<boolean>(false);
+  const [showPlaceOrderApproveButton, setShowPlaceOrderApproveButton] = useState<boolean>(false);
+  const [enablePlaceOrderApproveButton, setEnablePlaceOrderApproveButton] = useState<boolean>(false);
+  const [showPlaceOrderStatus, setShowPlaceOrderStatus] = useState<boolean>(false);
+  const [placeOrderStatus, setPlaceOrderStatus] = useState<string>("");
+  const [showPlaceOrderLoader, setShowPlaceOrderLoader] = useState<boolean>(false);
 
   useEffect(() => {
     if (buyNowAssetAmountString === "") {
@@ -73,21 +104,24 @@ function BuyAsset({
 
     setSellOrders((assetWithOrders.orders
       .filter(order => order.type === "Sell" && order.cancelledAtTimestamp.toString() === "0" && order.filledAtTimestamp.toString() === "0"))
-      .sort((firstOrder, secondOrder) => (firstOrder.price).gt(secondOrder.price) ? 0 : -1));
+      .sort((firstOrder, secondOrder) => {
+        if ((firstOrder.price).gt(secondOrder.price)) {
+          return 0;
+        } else if ((firstOrder.price).lt(secondOrder.price)) {
+          return -1;
+        } else {
+          if ((firstOrder.id).lt(secondOrder.id)) {
+            return -1;
+          } else {
+            return 0;
+          }
+        }
+      }));
   }, [assetWithOrders]);
-
 
   useEffect(() => {
     setPlaceOrderTokenAmount(placeOrderPrice.mul(BigNumber.from(placeOrderAssetAmount.toString())));
   }, [placeOrderPrice, placeOrderAssetAmount]);
-
-  const [showBuyNowButton, setShowBuyNowButton] = useState<boolean>(false);
-  const [enableBuyNowButton, setEnableBuyNowButton] = useState<boolean>(false);
-  const [showBuyNowApproveButton, setShowBuyNowApproveButton] = useState<boolean>(false);
-  const [enableBuyNowApproveButton, setEnableBuyNowApproveButton] = useState<boolean>(false);
-  const [showBuyNowLoader, setShowBuyNowLoader] = useState<boolean>(false);
-  const [showBuyNowStatus, setShowBuyNowStatus] = useState<boolean>(false);
-  const [buyNowStatus, setBuyNowStatus] = useState<string>("");
 
   useEffect(() => {
     if (buyNowTokenAmount === undefined || supportedTokenAllowance === undefined || supportedTokenBalance === undefined) return;
@@ -156,14 +190,6 @@ function BuyAsset({
     }
   }, [buyNowTokenAmount, supportedTokenAllowance, supportedTokenBalance, buyNowUnfilledAssetAmount, buyNowAssetAmount, buyNowPending]);
 
-
-  const [showPlaceOrderButton, setShowPlaceOrderButton] = useState<boolean>(true);
-  const [enablePlaceOrderButton, setEnablePlaceOrderButton] = useState<boolean>(false);
-  const [showPlaceOrderApproveButton, setShowPlaceOrderApproveButton] = useState<boolean>(false);
-  const [enablePlaceOrderApproveButton, setEnablePlaceOrderApproveButton] = useState<boolean>(false);
-  const [showPlaceOrderStatus, setShowPlaceOrderStatus] = useState<boolean>(false);
-  const [placeOrderStatus, setPlaceOrderStatus] = useState<string>("");
-  const [showPlaceOrderLoader, setShowPlaceOrderLoader] = useState<boolean>(false);
   useEffect(() => {
     if (supportedTokenBalance === undefined || supportedTokenAllowance === undefined) return;
 
@@ -220,8 +246,6 @@ function BuyAsset({
       setPlaceOrderStatus("");
     }
   }, [placeOrderTokenAmount, supportedTokenAllowance, supportedTokenBalance, placeOrderPending]);
-
-
 
   useEffect(() => {
     if (sellOrders === undefined) return;

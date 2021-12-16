@@ -5,10 +5,29 @@ import { ethers, BigNumber } from "ethers";
 import { useTransaction } from "../web3/transactions";
 import { useWeb3 } from '../web3';
 import Button from "./Button";
-import TradeAssetStatus from "./TradeAssetStatus";
 import { InputNumber, InputAmount } from "./Input";
 import Loader from "./Loader";
 import { Content, Content__factory } from '../assets/typechain';
+
+function TradeAssetStatus({
+  show,
+  status
+}: {
+  show: boolean,
+  status: string
+}) {
+  if (show) {
+    return (
+      <div className="flex justify-center mx-3 h-6 text-black200">
+        {status}
+      </div>
+    );
+  } else {
+    return (
+      <div className="flex justify-center mx-3 h-6 text-black200" />
+    );
+  }
+}
 
 function SellAsset({
   show,
@@ -112,7 +131,20 @@ function SellAsset({
 
     setBuyOrders((assetWithOrders.orders
       .filter(order => order.type === "Buy" && order.cancelledAtTimestamp.toString() === "0" && order.filledAtTimestamp.toString() === "0"))
-      .sort((firstOrder, secondOrder) => (firstOrder.price).lt(secondOrder.price) ? 0 : -1));
+      .sort((firstOrder, secondOrder) => {
+        if ((firstOrder.price).lt(secondOrder.price)) {
+          return 0;
+        } else if ((firstOrder.price).gt(secondOrder.price)) {
+          return -1;
+        } else {
+          if ((firstOrder.id).lt(secondOrder.id)) {
+            return -1;
+          } else {
+            return 0;
+          }
+        }
+      }));
+
   }, [assetWithOrders]);
 
   useEffect(() => {

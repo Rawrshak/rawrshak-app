@@ -107,12 +107,36 @@ function OrderBook({
 
     setBuyOrders((assetWithOrders.orders
       .filter(order => order.type === "Buy" && Number(order.cancelledAtTimestamp) === 0 && Number(order.filledAtTimestamp) === 0))
-      .sort((firstOrder, secondOrder) => firstOrder.price.lt(secondOrder.price) ? 0 : -1)
+      .sort((firstOrder, secondOrder) => {
+        if ((firstOrder.price).lt(secondOrder.price)) {
+          return 0;
+        } else if ((firstOrder.price).gt(secondOrder.price)) {
+          return -1;
+        } else {
+          if ((firstOrder.id).lt(secondOrder.id)) {
+            return -1;
+          } else {
+            return 0;
+          }
+        }
+      })
       .splice(0, 6));
 
     setSellOrders((assetWithOrders.orders
       .filter(order => order.type === "Sell" && Number(order.cancelledAtTimestamp) === 0 && Number(order.filledAtTimestamp) === 0))
-      .sort((firstOrder, secondOrder) => firstOrder.price.gt(secondOrder.price) ? 0 : -1)
+      .sort((firstOrder, secondOrder) => {
+        if ((firstOrder.price).gt(secondOrder.price)) {
+          return 0;
+        } else if ((firstOrder.price).lt(secondOrder.price)) {
+          return -1;
+        } else {
+          if ((firstOrder.id).lt(secondOrder.id)) {
+            return -1;
+          } else {
+            return 0;
+          }
+        }
+      })
       .splice(0, 6));
 
   }, [assetWithOrders]);
