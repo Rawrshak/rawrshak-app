@@ -6,8 +6,8 @@ function Inventory() {
 
   if (inventoryAssetsWithOrders === undefined) {
     return (
-      <div className="container flex justify-center mt-6">
-        <div className="container mx-lg">
+      <div className="flex mt-6">
+        <div className="flex">
           <div className="text-offWhite text-xxxl">
             My Inventory
           </div>
@@ -19,19 +19,17 @@ function Inventory() {
     );
   } else {
     return (
-      <div className="container flex justify-center mt-6">
-        <div className="container mx-lg">
-          <div className="text-offWhite text-xxxl">
-            My Inventory
-          </div>
-          <div className="flex flex-wrap mt-6">
-            {inventoryAssetsWithOrders.map((inventoryAssetWithOrders) => (
-              <InventoryAssetCard
-                key={inventoryAssetWithOrders.id}
-                assetWithOrders={inventoryAssetWithOrders}
-              />
-            ))}
-          </div>
+      <div className="flex flex-col">
+        <div className="text-offWhite text-xxxl ml-4">
+          My Inventory
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          {inventoryAssetsWithOrders.map((inventoryAssetWithOrders) => (
+            <InventoryAssetCard
+              key={inventoryAssetWithOrders.id}
+              assetWithOrders={inventoryAssetWithOrders}
+            />
+          ))}
         </div>
       </div>
     );
