@@ -56,7 +56,7 @@ function GameView({
             <div className="flex text-offWhite text-xxxl mx-4">
               Featured Collections
             </div>
-            <div className="flex flex-grow flex-wrap">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
               {contentsWithMetadata.map(contentWithMetadata => (
                 <GameCard
                   key={contentWithMetadata.id}
