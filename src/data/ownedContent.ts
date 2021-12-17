@@ -22,6 +22,7 @@ const useOwnedContent = (contentsSubgraphEndpoint: string | undefined) => {
             contractAddress
             contractUri
             name
+            game
             creator
             creatorAddress
             owner
@@ -40,11 +41,6 @@ const useOwnedContent = (contentsSubgraphEndpoint: string | undefined) => {
                 id
               }
               imageUri
-              parentContract {
-                id
-                creator
-                game
-              }
             }
           }
         }
@@ -73,10 +69,10 @@ const useOwnedContent = (contentsSubgraphEndpoint: string | undefined) => {
               subtype: asset.subtype,
               tags: newTags,
               imageUri: asset.imageUri,
-              parentContract: asset.parentContract.id,
+              parentContract: contentManager.content.id,
               balance: undefined,
-              creator: asset.parentContract.creator,
-              game: asset.parentContract.game,
+              creator: contentManager.content.creator,
+              game: contentManager.content.game,
               orders: [],
             }
             return newAsset;
@@ -86,6 +82,7 @@ const useOwnedContent = (contentsSubgraphEndpoint: string | undefined) => {
             contractAddress: contentManager.content.contractAddress,
             contractUri: contentManager.content.contractUri,
             name: contentManager.content.name,
+            game: contentManager.content.game,
             creator: contentManager.content.creator,
             creatorAddress: contentManager.content.creatorAddress,
             owner: contentManager.content.owner,

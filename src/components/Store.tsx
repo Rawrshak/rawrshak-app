@@ -6,7 +6,7 @@ import DeveloperContentCard from "./DeveloperContentCard";
 import DeveloperAssetCard from "./DeveloperAssetCard";
 import DeveloperAssetModal from "./DeveloperAssetModal";
 import CreateSmartContractModal from "./CreateSmartContractModal";
-import CreateAssetModal from "./CreateAssetModal";
+import CreateAssetModal from "./createAssetModal/CreateAssetModal";
 import { ContentManager, ContentManager__factory } from '../assets/typechain';
 import Button from "./Button";
 import Image from './Image';

@@ -15,6 +15,7 @@ const useAllContent = (contentsSubgraphEndpoint: string | undefined) => {
           contractAddress
           contractUri
           name
+          game
           creator
           creatorAddress
           game
@@ -76,6 +77,7 @@ const useAllContent = (contentsSubgraphEndpoint: string | undefined) => {
             contractAddress: content.contractAddress,
             contractUri: content.contractUri,
             name: content.name,
+            game: content.game,
             creator: content.creator,
             creatorAddress: content.creatorAddress,
             owner: content.owner.id,

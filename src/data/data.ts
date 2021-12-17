@@ -58,6 +58,7 @@ export interface ContentData {
   contractAddress: string,
   contractUri: string,
   name: string,
+  game: string,
   creator: string,
   owner: string,
   managerAddress: string,
