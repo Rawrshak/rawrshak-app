@@ -26,8 +26,8 @@ interface ExchangeInterface extends ethers.utils.Interface {
     "claimOrders(uint256[])": FunctionFragment;
     "claimRoyalties()": FunctionFragment;
     "claimableRoyalties()": FunctionFragment;
-    "fillBuyOrder(uint256[],uint256)": FunctionFragment;
-    "fillSellOrder(uint256[],uint256)": FunctionFragment;
+    "fillBuyOrder(uint256[],uint256,uint256)": FunctionFragment;
+    "fillSellOrder(uint256[],uint256,uint256)": FunctionFragment;
     "getOrder(uint256)": FunctionFragment;
     "initialize(address,address,address)": FunctionFragment;
     "nftsEscrow()": FunctionFragment;
@@ -61,11 +61,11 @@ interface ExchangeInterface extends ethers.utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "fillBuyOrder",
-    values: [BigNumberish[], BigNumberish]
+    values: [BigNumberish[], BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "fillSellOrder",
-    values: [BigNumberish[], BigNumberish]
+    values: [BigNumberish[], BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "getOrder",
@@ -325,12 +325,14 @@ export class Exchange extends BaseContract {
     fillBuyOrder(
       _orderIds: BigNumberish[],
       amountToSell: BigNumberish,
+      maxSpend: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
     fillSellOrder(
       _orderIds: BigNumberish[],
       amountToBuy: BigNumberish,
+      maxSpend: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
 
@@ -432,12 +434,14 @@ export class Exchange extends BaseContract {
   fillBuyOrder(
     _orderIds: BigNumberish[],
     amountToSell: BigNumberish,
+    maxSpend: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
   fillSellOrder(
     _orderIds: BigNumberish[],
     amountToBuy: BigNumberish,
+    maxSpend: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
 
@@ -532,12 +536,14 @@ export class Exchange extends BaseContract {
     fillBuyOrder(
       _orderIds: BigNumberish[],
       amountToSell: BigNumberish,
+      maxSpend: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
     fillSellOrder(
       _orderIds: BigNumberish[],
       amountToBuy: BigNumberish,
+      maxSpend: BigNumberish,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -848,12 +854,14 @@ export class Exchange extends BaseContract {
     fillBuyOrder(
       _orderIds: BigNumberish[],
       amountToSell: BigNumberish,
+      maxSpend: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
     fillSellOrder(
       _orderIds: BigNumberish[],
       amountToBuy: BigNumberish,
+      maxSpend: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
 
@@ -926,12 +934,14 @@ export class Exchange extends BaseContract {
     fillBuyOrder(
       _orderIds: BigNumberish[],
       amountToSell: BigNumberish,
+      maxSpend: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 
     fillSellOrder(
       _orderIds: BigNumberish[],
       amountToBuy: BigNumberish,
+      maxSpend: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
 

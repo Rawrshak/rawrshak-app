@@ -20,12 +20,13 @@ const _abi = [
         type: "address",
       },
       {
+        indexed: false,
+        internalType: "uint256[]",
+        name: "tokenIds",
+        type: "uint256[]",
+      },
+      {
         components: [
-          {
-            internalType: "uint256",
-            name: "tokenId",
-            type: "uint256",
-          },
           {
             internalType: "string",
             name: "publicDataUri",
@@ -66,11 +67,6 @@ const _abi = [
       {
         components: [
           {
-            internalType: "uint256",
-            name: "tokenId",
-            type: "uint256",
-          },
-          {
             internalType: "string",
             name: "publicDataUri",
             type: "string",
@@ -104,6 +100,19 @@ const _abi = [
     name: "addAssetBatch",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "assetCounter",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
   {
@@ -204,25 +213,6 @@ const _abi = [
         internalType: "string",
         name: "",
         type: "string",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "_tokenId",
-        type: "uint256",
-      },
-    ],
-    name: "ids",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
       },
     ],
     stateMutability: "view",

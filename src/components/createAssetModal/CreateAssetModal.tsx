@@ -15,7 +15,7 @@ import axios from 'axios';
 import Modal from '../Modal';
 import Button from '../Button';
 import Loader from '../Loader';
-import { InputNumber, InputAmount } from '../Input';
+import { InputAmount } from '../Input';
 import { ContentManager } from '../../assets/typechain';
 import { useTransaction } from "../../web3/transactions";
 import { useWeb3 } from '../../web3';
@@ -95,7 +95,6 @@ function CreateAssetModal({
   const [pinataApiSecret, setPinataApiSecret] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [tokenId, setTokenId] = useState<string>("0");
   const [imageUri, setImageUri] = useState<string>("https://arweave.net/");
   const [tags, setTags] = useState<string[]>([""]);
   const [type, setType] = useState<string>("audio");
@@ -342,7 +341,6 @@ function CreateAssetModal({
           console.log("URI: ", response.data.IpfsHash);
           const hiddenDataUri: string = "";
           transaction(() => contentManagerContract.addAssetBatch([{
-            tokenId: tokenId,
             publicDataUri: response.data.IpfsHash,
             hiddenDataUri: hiddenDataUri,
             maxSupply: maxSupply,
@@ -364,7 +362,6 @@ function CreateAssetModal({
   };
 
   const createAssetSuccess = () => {
-    setTokenId("");
     setName("");
     setDescription("");
     setImageUri("");
@@ -397,12 +394,7 @@ function CreateAssetModal({
           <div className="flex flex-grow col-span-8 my-2">
             <textarea value={pinataApiSecret} onChange={(e) => { setPinataApiSecret(e.target.value) }} className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2 h-14" />
           </div>
-          <div className="col-span-4 my-3 mr-2 text-right">
-            Token ID
-          </div>
-          <div className="flex flex-grow col-span-8 my-2">
-            <InputNumber value={tokenId} onChange={(e: string) => { setTokenId(e) }} className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2" disabled={false} />
-          </div>
+
           <div className="col-span-4 my-3 mr-2 text-right">
             Name
           </div>

@@ -297,7 +297,7 @@ function BuyAsset({
 
     setBuyNowPending(true);
 
-    transaction(() => exchange.fillSellOrder(buyNowOrderIdsToFill, buyNowAssetAmount), "Transaction pending", "Transaction failed", "Transaction succeeded", undefined, () => resetValues(), () => setBuyNowPending(false));
+    transaction(() => exchange.fillSellOrder(buyNowOrderIdsToFill, buyNowAssetAmount, buyNowTokenAmount), "Transaction pending", "Transaction failed", "Transaction succeeded", undefined, () => resetValues(), () => setBuyNowPending(false));
   };
 
   const buyNowApprove = (approveAmountBn: BigNumber | undefined) => {

@@ -25,7 +25,6 @@ interface IContentManagerInterface extends ethers.utils.Interface {
     "addAssetBatch(tuple[])": FunctionFragment;
     "content()": FunctionFragment;
     "contentStorage()": FunctionFragment;
-    "mintBatch((address,uint256[],uint256[],uint256,address,bytes))": FunctionFragment;
     "registerOperators(tuple[])": FunctionFragment;
     "setContractRoyalty(address,uint24)": FunctionFragment;
     "setHiddenUriBatch(tuple[])": FunctionFragment;
@@ -41,7 +40,6 @@ interface IContentManagerInterface extends ethers.utils.Interface {
     functionFragment: "addAssetBatch",
     values: [
       {
-        tokenId: BigNumberish;
         publicDataUri: string;
         hiddenDataUri: string;
         maxSupply: BigNumberish;
@@ -54,19 +52,6 @@ interface IContentManagerInterface extends ethers.utils.Interface {
   encodeFunctionData(
     functionFragment: "contentStorage",
     values?: undefined
-  ): string;
-  encodeFunctionData(
-    functionFragment: "mintBatch",
-    values: [
-      {
-        to: string;
-        tokenIds: BigNumberish[];
-        amounts: BigNumberish[];
-        nonce: BigNumberish;
-        signer: string;
-        signature: BytesLike;
-      }
-    ]
   ): string;
   encodeFunctionData(
     functionFragment: "registerOperators",
@@ -108,7 +93,6 @@ interface IContentManagerInterface extends ethers.utils.Interface {
     functionFragment: "contentStorage",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "mintBatch", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "registerOperators",
     data: BytesLike
@@ -181,7 +165,6 @@ export class IContentManager extends BaseContract {
 
     addAssetBatch(
       _assets: {
-        tokenId: BigNumberish;
         publicDataUri: string;
         hiddenDataUri: string;
         maxSupply: BigNumberish;
@@ -194,18 +177,6 @@ export class IContentManager extends BaseContract {
     content(overrides?: CallOverrides): Promise<[string]>;
 
     contentStorage(overrides?: CallOverrides): Promise<[string]>;
-
-    mintBatch(
-      _data: {
-        to: string;
-        tokenIds: BigNumberish[];
-        amounts: BigNumberish[];
-        nonce: BigNumberish;
-        signer: string;
-        signature: BytesLike;
-      },
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<ContractTransaction>;
 
     registerOperators(
       _operators: { operator: string; approved: boolean }[],
@@ -242,7 +213,6 @@ export class IContentManager extends BaseContract {
 
   addAssetBatch(
     _assets: {
-      tokenId: BigNumberish;
       publicDataUri: string;
       hiddenDataUri: string;
       maxSupply: BigNumberish;
@@ -255,18 +225,6 @@ export class IContentManager extends BaseContract {
   content(overrides?: CallOverrides): Promise<string>;
 
   contentStorage(overrides?: CallOverrides): Promise<string>;
-
-  mintBatch(
-    _data: {
-      to: string;
-      tokenIds: BigNumberish[];
-      amounts: BigNumberish[];
-      nonce: BigNumberish;
-      signer: string;
-      signature: BytesLike;
-    },
-    overrides?: Overrides & { from?: string | Promise<string> }
-  ): Promise<ContractTransaction>;
 
   registerOperators(
     _operators: { operator: string; approved: boolean }[],
@@ -303,7 +261,6 @@ export class IContentManager extends BaseContract {
 
     addAssetBatch(
       _assets: {
-        tokenId: BigNumberish;
         publicDataUri: string;
         hiddenDataUri: string;
         maxSupply: BigNumberish;
@@ -316,18 +273,6 @@ export class IContentManager extends BaseContract {
     content(overrides?: CallOverrides): Promise<string>;
 
     contentStorage(overrides?: CallOverrides): Promise<string>;
-
-    mintBatch(
-      _data: {
-        to: string;
-        tokenIds: BigNumberish[];
-        amounts: BigNumberish[];
-        nonce: BigNumberish;
-        signer: string;
-        signature: BytesLike;
-      },
-      overrides?: CallOverrides
-    ): Promise<void>;
 
     registerOperators(
       _operators: { operator: string; approved: boolean }[],
@@ -367,7 +312,6 @@ export class IContentManager extends BaseContract {
 
     addAssetBatch(
       _assets: {
-        tokenId: BigNumberish;
         publicDataUri: string;
         hiddenDataUri: string;
         maxSupply: BigNumberish;
@@ -380,18 +324,6 @@ export class IContentManager extends BaseContract {
     content(overrides?: CallOverrides): Promise<BigNumber>;
 
     contentStorage(overrides?: CallOverrides): Promise<BigNumber>;
-
-    mintBatch(
-      _data: {
-        to: string;
-        tokenIds: BigNumberish[];
-        amounts: BigNumberish[];
-        nonce: BigNumberish;
-        signer: string;
-        signature: BytesLike;
-      },
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<BigNumber>;
 
     registerOperators(
       _operators: { operator: string; approved: boolean }[],
@@ -431,7 +363,6 @@ export class IContentManager extends BaseContract {
 
     addAssetBatch(
       _assets: {
-        tokenId: BigNumberish;
         publicDataUri: string;
         hiddenDataUri: string;
         maxSupply: BigNumberish;
@@ -444,18 +375,6 @@ export class IContentManager extends BaseContract {
     content(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     contentStorage(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    mintBatch(
-      _data: {
-        to: string;
-        tokenIds: BigNumberish[];
-        amounts: BigNumberish[];
-        nonce: BigNumberish;
-        signer: string;
-        signature: BytesLike;
-      },
-      overrides?: Overrides & { from?: string | Promise<string> }
-    ): Promise<PopulatedTransaction>;
 
     registerOperators(
       _operators: { operator: string; approved: boolean }[],

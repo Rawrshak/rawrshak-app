@@ -248,7 +248,12 @@ const _abi = [
       },
       {
         internalType: "uint256",
-        name: "amountToBuy",
+        name: "amountToSell",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "maxSpend",
         type: "uint256",
       },
     ],
@@ -266,7 +271,12 @@ const _abi = [
       },
       {
         internalType: "uint256",
-        name: "amountToSell",
+        name: "amountToBuy",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "maxSpend",
         type: "uint256",
       },
     ],

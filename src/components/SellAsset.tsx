@@ -340,7 +340,7 @@ function SellAsset({
 
     setSellNowPending(true);
 
-    transaction(() => exchange.fillBuyOrder(sellNowOrderIdsToFill, sellNowAssetAmount), "Transaction pending", "Transaction failed", "Transaction succeeded", undefined, () => resetValues(), () => setSellNowPending(false));
+    transaction(() => exchange.fillBuyOrder(sellNowOrderIdsToFill, sellNowAssetAmount, sellNowTokenAmount), "Transaction pending", "Transaction failed", "Transaction succeeded", undefined, () => resetValues(), () => setSellNowPending(false));
   };
 
   const sellNowApprove = () => {

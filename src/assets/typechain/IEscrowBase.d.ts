@@ -11,6 +11,7 @@ import {
   PopulatedTransaction,
   BaseContract,
   ContractTransaction,
+  Overrides,
   CallOverrides,
 } from "ethers";
 import { BytesLike } from "@ethersproject/bytes";
@@ -18,25 +19,34 @@ import { Listener, Provider } from "@ethersproject/providers";
 import { FunctionFragment, EventFragment, Result } from "@ethersproject/abi";
 import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 
-interface IERC2981Interface extends ethers.utils.Interface {
+interface IEscrowBaseInterface extends ethers.utils.Interface {
   functions: {
-    "royaltyInfo(uint256,uint256)": FunctionFragment;
+    "MANAGER_ROLE()": FunctionFragment;
+    "registerManager(address)": FunctionFragment;
   };
 
   encodeFunctionData(
-    functionFragment: "royaltyInfo",
-    values: [BigNumberish, BigNumberish]
+    functionFragment: "MANAGER_ROLE",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "registerManager",
+    values: [string]
   ): string;
 
   decodeFunctionResult(
-    functionFragment: "royaltyInfo",
+    functionFragment: "MANAGER_ROLE",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "registerManager",
     data: BytesLike
   ): Result;
 
   events: {};
 }
 
-export class IERC2981 extends BaseContract {
+export class IEscrowBase extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
@@ -77,51 +87,47 @@ export class IERC2981 extends BaseContract {
     toBlock?: string | number | undefined
   ): Promise<Array<TypedEvent<EventArgsArray & EventArgsObject>>>;
 
-  interface: IERC2981Interface;
+  interface: IEscrowBaseInterface;
 
   functions: {
-    royaltyInfo(
-      _tokenId: BigNumberish,
-      _salePrice: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<
-      [string, BigNumber] & { receiver: string; royaltyAmount: BigNumber }
-    >;
+    MANAGER_ROLE(overrides?: CallOverrides): Promise<[string]>;
+
+    registerManager(
+      _manager: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
+    ): Promise<ContractTransaction>;
   };
 
-  royaltyInfo(
-    _tokenId: BigNumberish,
-    _salePrice: BigNumberish,
-    overrides?: CallOverrides
-  ): Promise<
-    [string, BigNumber] & { receiver: string; royaltyAmount: BigNumber }
-  >;
+  MANAGER_ROLE(overrides?: CallOverrides): Promise<string>;
+
+  registerManager(
+    _manager: string,
+    overrides?: Overrides & { from?: string | Promise<string> }
+  ): Promise<ContractTransaction>;
 
   callStatic: {
-    royaltyInfo(
-      _tokenId: BigNumberish,
-      _salePrice: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<
-      [string, BigNumber] & { receiver: string; royaltyAmount: BigNumber }
-    >;
+    MANAGER_ROLE(overrides?: CallOverrides): Promise<string>;
+
+    registerManager(_manager: string, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {};
 
   estimateGas: {
-    royaltyInfo(
-      _tokenId: BigNumberish,
-      _salePrice: BigNumberish,
-      overrides?: CallOverrides
+    MANAGER_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
+
+    registerManager(
+      _manager: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    royaltyInfo(
-      _tokenId: BigNumberish,
-      _salePrice: BigNumberish,
-      overrides?: CallOverrides
+    MANAGER_ROLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    registerManager(
+      _manager: string,
+      overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
   };
 }

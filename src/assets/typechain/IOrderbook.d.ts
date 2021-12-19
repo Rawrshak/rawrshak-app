@@ -26,7 +26,7 @@ interface IOrderbookInterface extends ethers.utils.Interface {
     "exists(uint256)": FunctionFragment;
     "fillOrders(uint256[],uint256[])": FunctionFragment;
     "getOrder(uint256)": FunctionFragment;
-    "getOrderAmounts(uint256[])": FunctionFragment;
+    "getOrderAmounts(uint256[],uint256,uint256)": FunctionFragment;
     "getPaymentTotals(uint256[],uint256[])": FunctionFragment;
     "ordersLength()": FunctionFragment;
     "placeOrder(((address,uint256),address,address,uint256,uint256,bool))": FunctionFragment;
@@ -58,7 +58,7 @@ interface IOrderbookInterface extends ethers.utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "getOrderAmounts",
-    values: [BigNumberish[]]
+    values: [BigNumberish[], BigNumberish, BigNumberish]
   ): string;
   encodeFunctionData(
     functionFragment: "getPaymentTotals",
@@ -239,8 +239,15 @@ export class IOrderbook extends BaseContract {
 
     getOrderAmounts(
       _orderIds: BigNumberish[],
+      amountToFill: BigNumberish,
+      maxSpend: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<[BigNumber[]] & { orderAmounts: BigNumber[] }>;
+    ): Promise<
+      [BigNumber[], BigNumber] & {
+        orderAmounts: BigNumber[];
+        amountFilled: BigNumber;
+      }
+    >;
 
     getPaymentTotals(
       _orderIds: BigNumberish[],
@@ -338,8 +345,15 @@ export class IOrderbook extends BaseContract {
 
   getOrderAmounts(
     _orderIds: BigNumberish[],
+    amountToFill: BigNumberish,
+    maxSpend: BigNumberish,
     overrides?: CallOverrides
-  ): Promise<BigNumber[]>;
+  ): Promise<
+    [BigNumber[], BigNumber] & {
+      orderAmounts: BigNumber[];
+      amountFilled: BigNumber;
+    }
+  >;
 
   getPaymentTotals(
     _orderIds: BigNumberish[],
@@ -437,8 +451,15 @@ export class IOrderbook extends BaseContract {
 
     getOrderAmounts(
       _orderIds: BigNumberish[],
+      amountToFill: BigNumberish,
+      maxSpend: BigNumberish,
       overrides?: CallOverrides
-    ): Promise<BigNumber[]>;
+    ): Promise<
+      [BigNumber[], BigNumber] & {
+        orderAmounts: BigNumber[];
+        amountFilled: BigNumber;
+      }
+    >;
 
     getPaymentTotals(
       _orderIds: BigNumberish[],
@@ -519,6 +540,8 @@ export class IOrderbook extends BaseContract {
 
     getOrderAmounts(
       _orderIds: BigNumberish[],
+      amountToFill: BigNumberish,
+      maxSpend: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
@@ -594,6 +617,8 @@ export class IOrderbook extends BaseContract {
 
     getOrderAmounts(
       _orderIds: BigNumberish[],
+      amountToFill: BigNumberish,
+      maxSpend: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

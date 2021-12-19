@@ -28,11 +28,6 @@ const _abi = [
       {
         components: [
           {
-            internalType: "uint256",
-            name: "tokenId",
-            type: "uint256",
-          },
-          {
             internalType: "string",
             name: "publicDataUri",
             type: "string",
@@ -92,51 +87,6 @@ const _abi = [
       },
     ],
     stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        components: [
-          {
-            internalType: "address",
-            name: "to",
-            type: "address",
-          },
-          {
-            internalType: "uint256[]",
-            name: "tokenIds",
-            type: "uint256[]",
-          },
-          {
-            internalType: "uint256[]",
-            name: "amounts",
-            type: "uint256[]",
-          },
-          {
-            internalType: "uint256",
-            name: "nonce",
-            type: "uint256",
-          },
-          {
-            internalType: "address",
-            name: "signer",
-            type: "address",
-          },
-          {
-            internalType: "bytes",
-            name: "signature",
-            type: "bytes",
-          },
-        ],
-        internalType: "struct LibAsset.MintData",
-        name: "_data",
-        type: "tuple",
-      },
-    ],
-    name: "mintBatch",
-    outputs: [],
-    stateMutability: "nonpayable",
     type: "function",
   },
   {

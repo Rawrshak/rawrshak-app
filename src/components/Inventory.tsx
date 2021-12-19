@@ -7,7 +7,7 @@ function Inventory() {
   if (inventoryAssetsWithOrders === undefined) {
     return (
       <div className="flex mt-6">
-        <div className="flex">
+        <div className="flex flex-col">
           <div className="text-offWhite text-xxxl">
             My Inventory
           </div>

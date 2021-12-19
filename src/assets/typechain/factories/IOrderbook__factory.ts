@@ -150,6 +150,16 @@ const _abi = [
         name: "_orderIds",
         type: "uint256[]",
       },
+      {
+        internalType: "uint256",
+        name: "amountToFill",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "maxSpend",
+        type: "uint256",
+      },
     ],
     name: "getOrderAmounts",
     outputs: [
@@ -157,6 +167,11 @@ const _abi = [
         internalType: "uint256[]",
         name: "orderAmounts",
         type: "uint256[]",
+      },
+      {
+        internalType: "uint256",
+        name: "amountFilled",
+        type: "uint256",
       },
     ],
     stateMutability: "view",

@@ -21,6 +21,7 @@ import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 interface LibContractHashInterface extends ethers.utils.Interface {
   functions: {
     "CONTRACT_CONTENT_FACTORY()": FunctionFragment;
+    "CONTRACT_DAI_TOKEN()": FunctionFragment;
     "CONTRACT_ERC20_ESCROW()": FunctionFragment;
     "CONTRACT_EXCHANGE()": FunctionFragment;
     "CONTRACT_EXCHANGE_FEE_ESCROW()": FunctionFragment;
@@ -35,6 +36,10 @@ interface LibContractHashInterface extends ethers.utils.Interface {
 
   encodeFunctionData(
     functionFragment: "CONTRACT_CONTENT_FACTORY",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "CONTRACT_DAI_TOKEN",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -80,6 +85,10 @@ interface LibContractHashInterface extends ethers.utils.Interface {
 
   decodeFunctionResult(
     functionFragment: "CONTRACT_CONTENT_FACTORY",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "CONTRACT_DAI_TOKEN",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -172,6 +181,8 @@ export class LibContractHash extends BaseContract {
   functions: {
     CONTRACT_CONTENT_FACTORY(overrides?: CallOverrides): Promise<[string]>;
 
+    CONTRACT_DAI_TOKEN(overrides?: CallOverrides): Promise<[string]>;
+
     CONTRACT_ERC20_ESCROW(overrides?: CallOverrides): Promise<[string]>;
 
     CONTRACT_EXCHANGE(overrides?: CallOverrides): Promise<[string]>;
@@ -195,6 +206,8 @@ export class LibContractHash extends BaseContract {
 
   CONTRACT_CONTENT_FACTORY(overrides?: CallOverrides): Promise<string>;
 
+  CONTRACT_DAI_TOKEN(overrides?: CallOverrides): Promise<string>;
+
   CONTRACT_ERC20_ESCROW(overrides?: CallOverrides): Promise<string>;
 
   CONTRACT_EXCHANGE(overrides?: CallOverrides): Promise<string>;
@@ -217,6 +230,8 @@ export class LibContractHash extends BaseContract {
 
   callStatic: {
     CONTRACT_CONTENT_FACTORY(overrides?: CallOverrides): Promise<string>;
+
+    CONTRACT_DAI_TOKEN(overrides?: CallOverrides): Promise<string>;
 
     CONTRACT_ERC20_ESCROW(overrides?: CallOverrides): Promise<string>;
 
@@ -244,6 +259,8 @@ export class LibContractHash extends BaseContract {
   estimateGas: {
     CONTRACT_CONTENT_FACTORY(overrides?: CallOverrides): Promise<BigNumber>;
 
+    CONTRACT_DAI_TOKEN(overrides?: CallOverrides): Promise<BigNumber>;
+
     CONTRACT_ERC20_ESCROW(overrides?: CallOverrides): Promise<BigNumber>;
 
     CONTRACT_EXCHANGE(overrides?: CallOverrides): Promise<BigNumber>;
@@ -267,6 +284,10 @@ export class LibContractHash extends BaseContract {
 
   populateTransaction: {
     CONTRACT_CONTENT_FACTORY(
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    CONTRACT_DAI_TOKEN(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

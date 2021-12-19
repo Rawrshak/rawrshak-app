@@ -22,12 +22,12 @@ import type { TypedEventFilter, TypedEvent, TypedListener } from "./common";
 interface IContentStorageInterface extends ethers.utils.Interface {
   functions: {
     "addAssetBatch(tuple[])": FunctionFragment;
+    "assetCounter()": FunctionFragment;
     "contractUri()": FunctionFragment;
     "getContractRoyalty()": FunctionFragment;
     "getLatestUriVersion(uint256,bool)": FunctionFragment;
     "getRoyalty(uint256)": FunctionFragment;
     "hiddenUri(uint256,uint256)": FunctionFragment;
-    "ids(uint256)": FunctionFragment;
     "maxSupply(uint256)": FunctionFragment;
     "setContractRoyalty(address,uint24)": FunctionFragment;
     "setHiddenUriBatch(tuple[])": FunctionFragment;
@@ -42,7 +42,6 @@ interface IContentStorageInterface extends ethers.utils.Interface {
     functionFragment: "addAssetBatch",
     values: [
       {
-        tokenId: BigNumberish;
         publicDataUri: string;
         hiddenDataUri: string;
         maxSupply: BigNumberish;
@@ -50,6 +49,10 @@ interface IContentStorageInterface extends ethers.utils.Interface {
         royaltyRate: BigNumberish;
       }[]
     ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "assetCounter",
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "contractUri",
@@ -71,7 +74,6 @@ interface IContentStorageInterface extends ethers.utils.Interface {
     functionFragment: "hiddenUri",
     values: [BigNumberish, BigNumberish]
   ): string;
-  encodeFunctionData(functionFragment: "ids", values: [BigNumberish]): string;
   encodeFunctionData(
     functionFragment: "maxSupply",
     values: [BigNumberish]
@@ -116,6 +118,10 @@ interface IContentStorageInterface extends ethers.utils.Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(
+    functionFragment: "assetCounter",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
     functionFragment: "contractUri",
     data: BytesLike
   ): Result;
@@ -129,7 +135,6 @@ interface IContentStorageInterface extends ethers.utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "getRoyalty", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "hiddenUri", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "ids", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "maxSupply", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "setContractRoyalty",
@@ -155,7 +160,7 @@ interface IContentStorageInterface extends ethers.utils.Interface {
   decodeFunctionResult(functionFragment: "uri", data: BytesLike): Result;
 
   events: {
-    "AssetsAdded(address,tuple[])": EventFragment;
+    "AssetsAdded(address,uint256[],tuple[])": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "AssetsAdded"): EventFragment;
@@ -164,8 +169,8 @@ interface IContentStorageInterface extends ethers.utils.Interface {
 export type AssetsAddedEvent = TypedEvent<
   [
     string,
-    ([BigNumber, string, string, BigNumber, string, number] & {
-      tokenId: BigNumber;
+    BigNumber[],
+    ([string, string, BigNumber, string, number] & {
       publicDataUri: string;
       hiddenDataUri: string;
       maxSupply: BigNumber;
@@ -174,8 +179,8 @@ export type AssetsAddedEvent = TypedEvent<
     })[]
   ] & {
     parent: string;
-    assets: ([BigNumber, string, string, BigNumber, string, number] & {
-      tokenId: BigNumber;
+    tokenIds: BigNumber[];
+    assets: ([string, string, BigNumber, string, number] & {
       publicDataUri: string;
       hiddenDataUri: string;
       maxSupply: BigNumber;
@@ -231,7 +236,6 @@ export class IContentStorage extends BaseContract {
   functions: {
     addAssetBatch(
       _assets: {
-        tokenId: BigNumberish;
         publicDataUri: string;
         hiddenDataUri: string;
         maxSupply: BigNumberish;
@@ -240,6 +244,8 @@ export class IContentStorage extends BaseContract {
       }[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<ContractTransaction>;
+
+    assetCounter(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     contractUri(overrides?: CallOverrides): Promise<[string]>;
 
@@ -261,8 +267,6 @@ export class IContentStorage extends BaseContract {
       _version: BigNumberish,
       overrides?: CallOverrides
     ): Promise<[string]>;
-
-    ids(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<[boolean]>;
 
     maxSupply(
       _tokenId: BigNumberish,
@@ -314,7 +318,6 @@ export class IContentStorage extends BaseContract {
 
   addAssetBatch(
     _assets: {
-      tokenId: BigNumberish;
       publicDataUri: string;
       hiddenDataUri: string;
       maxSupply: BigNumberish;
@@ -323,6 +326,8 @@ export class IContentStorage extends BaseContract {
     }[],
     overrides?: Overrides & { from?: string | Promise<string> }
   ): Promise<ContractTransaction>;
+
+  assetCounter(overrides?: CallOverrides): Promise<BigNumber>;
 
   contractUri(overrides?: CallOverrides): Promise<string>;
 
@@ -344,8 +349,6 @@ export class IContentStorage extends BaseContract {
     _version: BigNumberish,
     overrides?: CallOverrides
   ): Promise<string>;
-
-  ids(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
 
   maxSupply(
     _tokenId: BigNumberish,
@@ -394,7 +397,6 @@ export class IContentStorage extends BaseContract {
   callStatic: {
     addAssetBatch(
       _assets: {
-        tokenId: BigNumberish;
         publicDataUri: string;
         hiddenDataUri: string;
         maxSupply: BigNumberish;
@@ -403,6 +405,8 @@ export class IContentStorage extends BaseContract {
       }[],
       overrides?: CallOverrides
     ): Promise<void>;
+
+    assetCounter(overrides?: CallOverrides): Promise<BigNumber>;
 
     contractUri(overrides?: CallOverrides): Promise<string>;
 
@@ -424,8 +428,6 @@ export class IContentStorage extends BaseContract {
       _version: BigNumberish,
       overrides?: CallOverrides
     ): Promise<string>;
-
-    ids(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
 
     maxSupply(
       _tokenId: BigNumberish,
@@ -476,14 +478,15 @@ export class IContentStorage extends BaseContract {
   };
 
   filters: {
-    "AssetsAdded(address,tuple[])"(
+    "AssetsAdded(address,uint256[],tuple[])"(
       parent?: string | null,
+      tokenIds?: null,
       assets?: null
     ): TypedEventFilter<
       [
         string,
-        ([BigNumber, string, string, BigNumber, string, number] & {
-          tokenId: BigNumber;
+        BigNumber[],
+        ([string, string, BigNumber, string, number] & {
           publicDataUri: string;
           hiddenDataUri: string;
           maxSupply: BigNumber;
@@ -493,8 +496,8 @@ export class IContentStorage extends BaseContract {
       ],
       {
         parent: string;
-        assets: ([BigNumber, string, string, BigNumber, string, number] & {
-          tokenId: BigNumber;
+        tokenIds: BigNumber[];
+        assets: ([string, string, BigNumber, string, number] & {
           publicDataUri: string;
           hiddenDataUri: string;
           maxSupply: BigNumber;
@@ -506,12 +509,13 @@ export class IContentStorage extends BaseContract {
 
     AssetsAdded(
       parent?: string | null,
+      tokenIds?: null,
       assets?: null
     ): TypedEventFilter<
       [
         string,
-        ([BigNumber, string, string, BigNumber, string, number] & {
-          tokenId: BigNumber;
+        BigNumber[],
+        ([string, string, BigNumber, string, number] & {
           publicDataUri: string;
           hiddenDataUri: string;
           maxSupply: BigNumber;
@@ -521,8 +525,8 @@ export class IContentStorage extends BaseContract {
       ],
       {
         parent: string;
-        assets: ([BigNumber, string, string, BigNumber, string, number] & {
-          tokenId: BigNumber;
+        tokenIds: BigNumber[];
+        assets: ([string, string, BigNumber, string, number] & {
           publicDataUri: string;
           hiddenDataUri: string;
           maxSupply: BigNumber;
@@ -536,7 +540,6 @@ export class IContentStorage extends BaseContract {
   estimateGas: {
     addAssetBatch(
       _assets: {
-        tokenId: BigNumberish;
         publicDataUri: string;
         hiddenDataUri: string;
         maxSupply: BigNumberish;
@@ -545,6 +548,8 @@ export class IContentStorage extends BaseContract {
       }[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<BigNumber>;
+
+    assetCounter(overrides?: CallOverrides): Promise<BigNumber>;
 
     contractUri(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -566,8 +571,6 @@ export class IContentStorage extends BaseContract {
       _version: BigNumberish,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
-
-    ids(_tokenId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
     maxSupply(
       _tokenId: BigNumberish,
@@ -620,7 +623,6 @@ export class IContentStorage extends BaseContract {
   populateTransaction: {
     addAssetBatch(
       _assets: {
-        tokenId: BigNumberish;
         publicDataUri: string;
         hiddenDataUri: string;
         maxSupply: BigNumberish;
@@ -629,6 +631,8 @@ export class IContentStorage extends BaseContract {
       }[],
       overrides?: Overrides & { from?: string | Promise<string> }
     ): Promise<PopulatedTransaction>;
+
+    assetCounter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     contractUri(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -650,11 +654,6 @@ export class IContentStorage extends BaseContract {
     hiddenUri(
       _tokenId: BigNumberish,
       _version: BigNumberish,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    ids(
-      _tokenId: BigNumberish,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

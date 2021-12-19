@@ -35,7 +35,7 @@ interface IContentInterface extends ethers.utils.Interface {
     "supportsInterface(bytes4)": FunctionFragment;
     "totalSupply(uint256)": FunctionFragment;
     "uri(uint256,uint256)": FunctionFragment;
-    "userMintNonce()": FunctionFragment;
+    "userMintNonce(address)": FunctionFragment;
   };
 
   encodeFunctionData(
@@ -107,7 +107,7 @@ interface IContentInterface extends ethers.utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "userMintNonce",
-    values?: undefined
+    values: [string]
   ): string;
 
   decodeFunctionResult(functionFragment: "balanceOf", data: BytesLike): Result;
@@ -381,7 +381,10 @@ export class IContent extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[string]>;
 
-    userMintNonce(overrides?: CallOverrides): Promise<[BigNumber]>;
+    userMintNonce(
+      _user: string,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
   };
 
   balanceOf(
@@ -474,7 +477,7 @@ export class IContent extends BaseContract {
     overrides?: CallOverrides
   ): Promise<string>;
 
-  userMintNonce(overrides?: CallOverrides): Promise<BigNumber>;
+  userMintNonce(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   callStatic: {
     balanceOf(
@@ -567,7 +570,7 @@ export class IContent extends BaseContract {
       overrides?: CallOverrides
     ): Promise<string>;
 
-    userMintNonce(overrides?: CallOverrides): Promise<BigNumber>;
+    userMintNonce(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   filters: {
@@ -857,7 +860,7 @@ export class IContent extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
-    userMintNonce(overrides?: CallOverrides): Promise<BigNumber>;
+    userMintNonce(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -949,6 +952,9 @@ export class IContent extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
-    userMintNonce(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userMintNonce(
+      _user: string,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
   };
 }

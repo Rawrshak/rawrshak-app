@@ -14,17 +14,17 @@ function DeveloperContentCard({
   } else {
 
     return (
-      <div className="flex w-64 h-44 m-3 bg-black rounded-xl cursor-pointer" onClick={() => openSmartContract(smartContract)} >
-        <div className="flex h-38">
-          <Image src={smartContract.imageUri} className="object-cover h-44 w-64 rounded-xl opacity-95" type="content" />
-        </div>
-        <div className="flex flex-grow absolute justify-center h-6 w-64">
-          <div className="flex text-offWhite text-sm mt-1 h-6 truncate ...">
+      <div className="flex flex-col flex-grow h-44 m-3 bg-black400 rounded-xl cursor-pointer" onClick={() => openSmartContract(smartContract)}>
+        <div className="grid grid-cols-5">
+          <div className="col-span-4 h-6 text-offWhite text-sm ml-4 mt-1 truncate ...">
             {smartContract.name}
           </div>
         </div>
-        <div className="flex absolute text-offWhite text-sm mt-36 ml-4 h-6 truncate ...">
-          Assets: {smartContract.assets.length}
+        <div className="flex justify-center h-28 text-offWhite text-xxl mt-1 mx-4 rounded-xl">
+          <Image src={smartContract.imageUri} className="flex object-scale-down" type="content" />
+        </div>
+        <div className="h-5 text-offWhite text-sm mx-4 mt-1 truncate ...">
+          Assets: {Number(smartContract.assets.length)}
         </div>
       </div>
     );

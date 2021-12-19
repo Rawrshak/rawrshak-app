@@ -33,6 +33,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.OwnableUpgradeable__factory>;
     getContractFactory(
+      name: "IERC2981Upgradeable",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IERC2981Upgradeable__factory>;
+    getContractFactory(
       name: "PausableUpgradeable",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.PausableUpgradeable__factory>;
@@ -169,10 +173,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IContractUri__factory>;
     getContractFactory(
-      name: "IERC2981",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.IERC2981__factory>;
-    getContractFactory(
       name: "Erc20Escrow",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.Erc20Escrow__factory>;
@@ -192,6 +192,10 @@ declare module "hardhat/types/runtime" {
       name: "IErc20Escrow",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IErc20Escrow__factory>;
+    getContractFactory(
+      name: "IEscrowBase",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IEscrowBase__factory>;
     getContractFactory(
       name: "IExchange",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -289,14 +293,6 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.MockToken__factory>;
     getContractFactory(
-      name: "RawrToken",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.RawrToken__factory>;
-    getContractFactory(
-      name: "TokenBase",
-      signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.TokenBase__factory>;
-    getContractFactory(
       name: "LibContractHash",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.LibContractHash__factory>;
@@ -330,6 +326,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.OwnableUpgradeable>;
+    getContractAt(
+      name: "IERC2981Upgradeable",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IERC2981Upgradeable>;
     getContractAt(
       name: "PausableUpgradeable",
       address: string,
@@ -501,11 +502,6 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.IContractUri>;
     getContractAt(
-      name: "IERC2981",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.IERC2981>;
-    getContractAt(
       name: "Erc20Escrow",
       address: string,
       signer?: ethers.Signer
@@ -530,6 +526,11 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.IErc20Escrow>;
+    getContractAt(
+      name: "IEscrowBase",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IEscrowBase>;
     getContractAt(
       name: "IExchange",
       address: string,
@@ -650,16 +651,6 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.MockToken>;
-    getContractAt(
-      name: "RawrToken",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.RawrToken>;
-    getContractAt(
-      name: "TokenBase",
-      address: string,
-      signer?: ethers.Signer
-    ): Promise<Contracts.TokenBase>;
     getContractAt(
       name: "LibContractHash",
       address: string,

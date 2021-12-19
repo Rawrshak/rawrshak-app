@@ -26,7 +26,7 @@ function SmartContractAssets({ activeContent }: { activeContent: ContentDataWith
     );
   } else {
     return (
-      <div className="flex flex-wrap mt-6">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         <DeveloperAssetModal show={showAssetModal} setShow={setShowAssetModal} assetWithOrders={openedAsset} content={activeContent} />
         {activeContent.assets.map((asset) => (
           <DeveloperAssetCard key={asset.id} asset={asset} openAsset={openAsset} />
@@ -65,7 +65,7 @@ function AssetsView({
           {`< Back to smart contracts`}
         </div>
         <div className="flex mt-8 mx-3">
-          <Image src={activeContent.imageUri} className="object-cover h-44 w-64 rounded-xl opacity-95" type="content" />
+          <Image src={activeContent.imageUri} className="flex" type="content" />
         </div>
         <div className="flex text-xxxl mx-3">
           {activeContent.name}
@@ -122,7 +122,7 @@ function OwnedSmartContracts({
     return (null);
   } else {
     return (
-      <div className="flex flex-wrap mt-6">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {ownedContentWithMetadata.map((content) => (
           <DeveloperContentCard
             key={content.id}
