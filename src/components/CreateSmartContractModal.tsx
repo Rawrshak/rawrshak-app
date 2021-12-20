@@ -26,7 +26,7 @@ function CreateSmartContractModal({
   const [description, setDescription] = useState<string>("");
   const [imageUri, setImageUri] = useState<string>("https://arweave.net/");
   const [creator, setCreator] = useState<string>("");
-  const [owner, setOwner] = useState<string>("");
+  const [game, setGame] = useState<string>("");
   const [tags, setTags] = useState<string[]>([""]);
   const [royaltyAccount, setRoyaltyAccount] = useState<string>("");
   const [royaltyRateString, setRoyaltyRateString] = useState<string>("0");
@@ -55,22 +55,22 @@ function CreateSmartContractModal({
       name: name,
       description: description,
       image: imageUri,
+      game: game,
       creator: creator,
-      owner: owner,
       tags: tags
     }
 
     setContentJson(newContentJson);
-  }, [name, description, imageUri, creator, owner, tags]);
+  }, [name, description, imageUri, creator, game, tags]);
 
   useEffect(() => {
-    if (name !== "" && description !== "" && imageUri !== "" && creator !== "" && owner !== "" && royaltyAccount !== "") {
+    if (name !== "" && description !== "" && imageUri !== "" && creator !== "" && game !== "" && royaltyAccount !== "") {
       setCreateButtonEnabled(true);
     } else {
       setCreateButtonEnabled(false);
     }
 
-  }, [name, description, imageUri, creator, owner, royaltyAccount]);
+  }, [name, description, imageUri, creator, game, royaltyAccount]);
 
   useEffect(() => {
     if (transactionPending) {
@@ -91,7 +91,7 @@ function CreateSmartContractModal({
     setName("");
     setDescription("");
     setCreator("");
-    setOwner("");
+    setGame("");
     setTags([""]);
     setRoyaltyAccount("");
     setRoyaltyRateString("0");
@@ -187,10 +187,10 @@ function CreateSmartContractModal({
             <input value={creator} onChange={(e) => { setCreator(e.target.value) }} type="text" className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2" />
           </div>
           <div className="col-span-4 my-3 mr-2 text-right">
-            Owner
+            Game
           </div>
           <div className="flex flex-grow col-span-8 my-2">
-            <input value={owner} onChange={(e) => { setOwner(e.target.value) }} type="text" className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2" />
+            <input value={game} onChange={(e) => { setGame(e.target.value) }} type="text" className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2" />
           </div>
           <div className="col-span-4 mt-3 mr-2 text-right">
             Tags

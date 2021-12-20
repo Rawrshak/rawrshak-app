@@ -127,7 +127,7 @@ export interface ContentJson {
   description: string,
   image: string,
   creator: string,
-  owner: string,
+  game: string,
   tags: string[]
 }
 
