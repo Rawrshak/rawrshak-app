@@ -3,6 +3,7 @@ import Home from "./Home";
 import Inventory from "./Inventory";
 import Marketplace from "./Marketplace";
 import Store from "./Store";
+import Orders from "./Orders";
 
 function Body() {
   return (
@@ -19,6 +20,9 @@ function Body() {
         </Route>
         <Route path="/store">
           <Store />
+        </Route>
+        <Route path="/orders">
+          <Orders />
         </Route>
       </Switch>
     </div>

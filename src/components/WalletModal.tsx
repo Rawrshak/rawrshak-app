@@ -7,6 +7,7 @@ import Button from './Button';
 import { useWeb3 } from '../web3';
 import { connect } from '../web3/providers';
 import { useData } from '../data';
+import RightArrow from '../assets/icons/RightArrow';
 
 function truncate(fullStr: string, strLen: number, separator: string = "...") {
   if (fullStr.length <= strLen) return fullStr;
@@ -47,6 +48,11 @@ function WalletModal({
     changeIsDevMode(false);
     setShow(false);
     history.push('/');
+  }
+
+  const toOrders = () => {
+    setShow(false);
+    history.push('/orders');
   }
 
   return (
@@ -93,6 +99,14 @@ function WalletModal({
             enabledClassName="flex flex-grow justify-center text-chartreuse500 text-lg bg-black400 rounded-lg h-24 w-48 m-2 pt-8"
             disabledClassName="flex flex-grow justify-center text-black400 text-lg bg-chartreuse500 rounded-lg h-24 w-48 m-2 pt-8"
           />
+        </div>
+        <div className="grid grid-cols-2 text-offWhite text-lg cursor-pointer bg-black450 h-12 mx-4 mt-8 rounded-sm" onClick={() => toOrders()}>
+          <div className="flex justify-start ml-4 mt-2" >
+            My Orders
+          </div>
+          <div className="flex justify-end mr-4 mt-3">
+            <RightArrow />
+          </div>
         </div>
       </div>
     </SlidingPane>

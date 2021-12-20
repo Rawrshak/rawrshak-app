@@ -28,6 +28,7 @@ const useAssetOrders = (allAssets: Asset[] | undefined, exchangeContract: Exchan
           price: BigNumber.from(order.price),
           amountOrdered: BigNumber.from(order.amount),
           amountFilled: BigNumber.from("0"),
+          amountClaimed: BigNumber.from("0"),
           status: "Ready",
           createdAtTimestamp: BigNumber.from(block.timestamp),
           filledAtTimestamp: BigNumber.from("0"),
@@ -69,6 +70,7 @@ const useAssetOrders = (allAssets: Asset[] | undefined, exchangeContract: Exchan
             price
             amountOrdered
             amountFilled
+            amountClaimed
             status
             createdAtTimestamp
             filledAtTimestamp
@@ -98,6 +100,7 @@ const useAssetOrders = (allAssets: Asset[] | undefined, exchangeContract: Exchan
               price: BigNumber.from(order.price),
               amountOrdered: BigNumber.from(order.amountOrdered),
               amountFilled: BigNumber.from(order.amountFilled),
+              amountClaimed: BigNumber.from(order.amountClaimed),
               status: order.status,
               createdAtTimestamp: BigNumber.from(order.createdAtTimestamp),
               filledAtTimestamp: BigNumber.from(order.filledAtTimestamp),

@@ -14,6 +14,8 @@ import { useSupportedToken } from './supportedToken';
 import { useSupportedTokenBalance } from './supportedTokenBalance';
 import { useSupportedTokenAllowance } from './supportedTokenAllowance';
 import { useFeaturedContent } from './featuredContent';
+import { useOwnedOrders } from './ownedOrders';
+import { useOrdersWithAssetMetadata } from './ordersWithAssetMetadata';
 import {
   AddressResolver,
   ContentFactory,
@@ -106,11 +108,18 @@ export interface Order {
   price: BigNumber,
   amountOrdered: BigNumber,
   amountFilled: BigNumber,
+  amountClaimed: BigNumber,
   status: string,
   createdAtTimestamp: BigNumber,
   filledAtTimestamp: BigNumber,
   cancelledAtTimestamp: BigNumber,
   lastClaimedAtTimestamp: BigNumber,
+}
+
+export interface OrderWithAssetMetadata extends Order {
+  assetId: string,
+  assetName: string | undefined,
+  assetGame: string | undefined,
 }
 
 export interface ContentJson {
@@ -205,6 +214,7 @@ export interface Data {
   ownedContentWithMetadata: ContentDataWithMetadata[] | undefined,
   allContentWithMetadata: ContentDataWithMetadata[] | undefined,
   featuredContentWithMetadata: ContentDataWithMetadata[] | undefined,
+  ownedOrders: OrderWithAssetMetadata[] | undefined,
 };
 
 function useSystemData() {
@@ -238,6 +248,8 @@ function useSystemData() {
   const allContentWithMetadata = useContentWithMetadata(allContent);
   const allContentWithMetadataAndOrders = useContentWithMetadataAndOrders(allContentWithMetadata, assetsWithOrders);
   const featuredContentWithMetadata = useFeaturedContent(allContentWithMetadataAndOrders);
+  const ownedOrders = useOwnedOrders(exchangeSubgraphEndpoint);
+  const ownedOrdersWithAssetMetadata = useOrdersWithAssetMetadata(ownedOrders, assetsWithOrders);
 
   const data: Data = {
     systemContracts: {
@@ -263,6 +275,7 @@ function useSystemData() {
     ownedContentWithMetadata: ownedContentWithMetadata,
     allContentWithMetadata: allContentWithMetadataAndOrders,
     featuredContentWithMetadata: featuredContentWithMetadata,
+    ownedOrders: ownedOrdersWithAssetMetadata,
   }
 
   console.log("data: ", data);
