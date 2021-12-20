@@ -114,23 +114,20 @@ function AssetCard({
       <TradeAssetModal show={showTradeAssetModal} setShow={setShowTradeAssetModal} initialBuyMode={initialBuyMode} assetWithOrders={assetWithOrders} />
       <AssetModal show={showAssetModal} setShow={setShowAssetModal} assetWithOrders={assetWithOrders} tradeAsset={openTradeAssetModal} />
       <div className="flex flex-col flex-grow h-120 m-3 assetCardBackground rounded-xl">
-        <div className="grid grid-cols-8 h-8 my-2 ml-4 mr-3">
+        <div className="grid grid-cols-8 h-10 my-2 ml-4 mr-3">
           <div className="col-span-7 text-offWhite text-sm mt-1 truncate ...">
             {assetWithOrders.game}
           </div>
           <div className="col-span-1">
-            <img onClick={() => openAssetModal()} className="absolute self-end cursor-pointer p-3" src={Ellipsis} alt="Ellipsis" />
+            <img
+              src={typeIcon}
+              alt=" "
+              className={"h-8 mt-1"}
+            />
           </div>
         </div>
-        <div onClick={() => openAssetModal()} className="flex h-64 text-offWhite text-xxl p-6 rounded-xl justify-center">
+        <div onClick={() => openAssetModal()} className="flex h-72 text-offWhite text-xxl p-6 rounded-xl justify-center">
           <Image src={assetWithOrders.imageUri} className="flex cursor-pointer object-contain" type="content" />
-        </div>
-        <div className="flex mx-8 h-8">
-          <img
-            src={typeIcon}
-            alt=" "
-            className={"h-8"}
-          />
         </div>
         <div className="text-offWhite h-8 text-xxl mx-8 mt-2 truncate ...">
           {assetWithOrders.name}
