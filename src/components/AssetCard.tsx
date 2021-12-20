@@ -2,7 +2,6 @@ import { useData } from '../data';
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { AssetWithOrders } from "../data/data";
-import Ellipsis from '../assets/images/ellipsis.png'
 import Image from "./Image";
 import TradeAssetModal from "./TradeAssetModal";
 import AssetModal from "./AssetModal";
