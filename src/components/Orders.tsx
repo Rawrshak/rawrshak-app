@@ -27,7 +27,7 @@ function FilterOptions({
 
   if (show) {
     return (
-      <div className="overflow-visible w-52 h-32 bg-black450 rounded-lg z-50">
+      <div className="flex flex-col overflow-visible bg-black450 rounded-lg z-50">
         <div className="text-offWhite text-sm pt-3 my-3 mx-3">
           Filter
         </div>
@@ -61,7 +61,7 @@ function SelectedOrdersActions({
 
   if (show) {
     return (
-      <div className="overflow-visible w-52 h-32 bg-black450 rounded-lg z-50">
+      <div className="flex flex-col overflow-visible bg-black450 rounded-lg z-50">
         <div className="text-offWhite text-sm pt-3 my-3 mx-3">
           Actions
         </div>
@@ -92,7 +92,7 @@ function SingleOrderActions({
 
   if (show) {
     return (
-      <div className="overflow-visible w-36 h-28 bg-black450 rounded-lg z-50">
+      <div className="flex flex-col overflow-visible bg-black450 rounded-lg z-50">
         <div className="text-sm my-2 mx-3">
           Actions
         </div>
