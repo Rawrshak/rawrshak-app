@@ -27,7 +27,6 @@ const useOrdersWithAssetMetadata = (orders: OrderWithAssetMetadata[] | undefined
       return newOrder;
     });
 
-    console.log("NEW ORDERS: ", newOrders);
     setOwnedOrders(newOrders);
 
 

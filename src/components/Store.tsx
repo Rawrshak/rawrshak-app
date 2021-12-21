@@ -10,6 +10,8 @@ import CreateAssetModal from "./createAssetModal/CreateAssetModal";
 import { ContentManager, ContentManager__factory } from '../assets/typechain';
 import Button from "./Button";
 import Image from './Image';
+import { ethers, BigNumber } from "ethers";
+import { useTransaction } from "../web3/transactions";
 
 function SmartContractAssets({ activeContent }: { activeContent: ContentDataWithMetadata | undefined }) {
   const [showAssetModal, setShowAssetModal] = useState<boolean>(false);
@@ -48,8 +50,6 @@ function AssetsView({
   const { signerOrProvider } = useWeb3();
   const [activeContentManagerContract, setActiveContentManagerContract] = useState<ContentManager>();
   const [showCreateAssetModal, setShowCreateAssetModal] = useState<boolean>(false);
-
-  console.log("activeContent: ", activeContent);
 
   useEffect(() => {
     if (activeContent === undefined || signerOrProvider === undefined) return;
@@ -146,7 +146,11 @@ function SmartContractsView({
   setShowAssetsView: React.Dispatch<React.SetStateAction<boolean>>
   show: boolean
 }) {
+  const { claimableRoyalties, supportedToken, systemContracts: { exchange } } = useData();
   const [showSmartContractModal, setShowSmartContractModal] = useState(false);
+  const [transaction] = useTransaction();
+  const { account } = useWeb3();
+
 
   const openSmartContract = (smartContract: ContentDataWithMetadata) => {
     if (!ownedContentWithMetadata) return;
@@ -154,10 +158,40 @@ function SmartContractsView({
     setActiveSmartContract(smartContract);
     setShowAssetsView(true);
   }
+
+  const collectRoyalties = () => {
+    if (exchange === undefined || account === undefined) return;
+
+    transaction(() => exchange.claimRoyalties(), "Transaction pending", "Transaction failed", "Transaction succeeded", undefined, undefined, undefined);
+  }
+
   if (show) {
     return (
-      <>
-        <div className="flex justify-end mt-6">
+      <div className="flex flex-col flex-grow">
+        <div className="grid grid-cols-2">
+          <div className="text-offWhite text-xxxl ml-4 my-4 mb-4">
+            Store
+          </div>
+          {claimableRoyalties !== undefined && supportedToken !== undefined && <div className="flex justify-end mr-4 mt-8 mb-2">
+
+            <div className="flex flex-row bg-black450 rounded-lg py-2 px-4 justify-center">
+              <div className="flex text-base text-offWhite mt-1">
+                Royalties: {`${Number(ethers.utils.formatUnits(claimableRoyalties, supportedToken.decimals))} ${supportedToken.symbol}`}
+              </div>
+              <Button
+                label="COLLECT"
+                onClick={() => collectRoyalties()}
+                enabled={claimableRoyalties.gt(BigNumber.from("0"))}
+                show={true}
+                enabledClassName="flex justify-center text-chartreuse500 text-sm border-chartreuse500 border-2 py-1 px-4 rounded-lg ml-3"
+                disabledClassName="flex justify-center text-black300 text-sm border-black300 border-2 py-1 px-4 rounded-lg ml-3"
+              />
+
+            </div>
+          </div>}
+        </div>
+        <hr className="text-neutral800 mx-4" />
+        <div className="flex justify-end mt-6 mr-4">
           <Button
             label="NEW SMART CONTRACT"
             onClick={() => setShowSmartContractModal(true)}
@@ -175,7 +209,7 @@ function SmartContractsView({
           ownedContentWithMetadata={ownedContentWithMetadata}
           openSmartContract={openSmartContract}
         />
-      </>
+      </div>
     );
   } else {
     return (null);
@@ -192,7 +226,7 @@ function Store() {
   }, [ownedContentWithMetadata]);
 
   return (
-    <div className="container">
+    <div className="flex">
       <AssetsView
         setShowAssetsView={setShowAssetsView}
         activeContent={activeSmartContract}

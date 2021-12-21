@@ -14,6 +14,8 @@ import {
   Erc20Escrow__factory,
   NftEscrow,
   NftEscrow__factory,
+  RoyaltyManager,
+  RoyaltyManager__factory
 } from '../assets/typechain';
 
 const useAddressResolverContract = () => {
@@ -130,6 +132,26 @@ const useNftEscrowContract = (addressResolver: AddressResolver | undefined) => {
   return nftEscrowContract;
 }
 
+const useRoyaltyManagerContract = (addressResolver: AddressResolver | undefined) => {
+  const { signerOrProvider } = useWeb3();
+  const [royaltyManagerContract, setRoyaltyManagerContract] = useState<RoyaltyManager>();
+
+  useEffect(() => {
+    if (!addressResolver || !signerOrProvider) {
+      setRoyaltyManagerContract(undefined);
+      return;
+    }
+
+    addressResolver.getAddress("0x2c7e992e") // The bytes32 ID for the Royalty Manager contract
+      .then((royaltyManagerContract) => {
+        setRoyaltyManagerContract(RoyaltyManager__factory.connect(royaltyManagerContract, signerOrProvider))
+      })
+      .catch(console.error);
+  }, [addressResolver, signerOrProvider]);
+
+  return royaltyManagerContract;
+}
+
 export {
   useAddressResolverContract,
   useContentFactoryContract,
@@ -137,4 +159,5 @@ export {
   useRawrTokenContract,
   useErc20EscrowContract,
   useNftEscrowContract,
+  useRoyaltyManagerContract,
 }

@@ -10,7 +10,6 @@ const useOwnedOrders = (exchangeSubgraphEndpoint: string | undefined) => {
 
   useEffect(() => {
     const updateOrders = () => {
-      console.log("Updating orders");
 
       const ordersQuery = `
       query {
@@ -65,7 +64,6 @@ const useOwnedOrders = (exchangeSubgraphEndpoint: string | undefined) => {
             return newOrder;
           });
 
-          console.log("Owned orders: ", newOrders);
           setOwnedOrders(newOrders);
         })
         .catch(err => {

@@ -16,13 +16,15 @@ import { useSupportedTokenAllowance } from './supportedTokenAllowance';
 import { useFeaturedContent } from './featuredContent';
 import { useOwnedOrders } from './ownedOrders';
 import { useOrdersWithAssetMetadata } from './ordersWithAssetMetadata';
+import { useClaimableRoyalties } from './claimableRoyalties';
 import {
   AddressResolver,
   ContentFactory,
   Exchange,
   ERC20PresetMinterPauserUpgradeable,
   Erc20Escrow,
-  NftEscrow
+  NftEscrow,
+  RoyaltyManager
 } from '../assets/typechain';
 import {
   useAddressResolverContract,
@@ -31,6 +33,7 @@ import {
   useRawrTokenContract,
   useErc20EscrowContract,
   useNftEscrowContract,
+  useRoyaltyManagerContract
 } from './systemContracts';
 import {
   useContentsSubgraphEndpoint,
@@ -197,7 +200,8 @@ export interface Data {
     exchange: Exchange | undefined,
     rawrToken: ERC20PresetMinterPauserUpgradeable | undefined,
     erc20Escrow: Erc20Escrow | undefined,
-    nftEscrow: NftEscrow | undefined
+    nftEscrow: NftEscrow | undefined,
+    royaltyManager: RoyaltyManager | undefined
   },
   contentsSubgraphEndpoint: string | undefined,
   exchangeSubgraphEndpoint: string | undefined,
@@ -215,6 +219,7 @@ export interface Data {
   allContentWithMetadata: ContentDataWithMetadata[] | undefined,
   featuredContentWithMetadata: ContentDataWithMetadata[] | undefined,
   ownedOrders: OrderWithAssetMetadata[] | undefined,
+  claimableRoyalties: BigNumber | undefined,
 };
 
 function useSystemData() {
@@ -226,6 +231,7 @@ function useSystemData() {
   const rawrTokenContract = useRawrTokenContract(addressResolverContract);
   const erc20EscrowContract = useErc20EscrowContract(addressResolverContract);
   const nftEscrowContract = useNftEscrowContract(addressResolverContract);
+  const royaltyManagerContract = useRoyaltyManagerContract(addressResolverContract);
   const contentsSubgraphEndpoint = useContentsSubgraphEndpoint();
   const exchangeSubgraphEndpoint = useExchangeSubgraphEndpoint();
   const curatedTags = useCuratedTags();
@@ -250,6 +256,7 @@ function useSystemData() {
   const featuredContentWithMetadata = useFeaturedContent(allContentWithMetadataAndOrders);
   const ownedOrders = useOwnedOrders(exchangeSubgraphEndpoint);
   const ownedOrdersWithAssetMetadata = useOrdersWithAssetMetadata(ownedOrders, assetsWithOrders);
+  const claimableRoyalties = useClaimableRoyalties(royaltyManagerContract, erc20EscrowContract, supportedToken);
 
   const data: Data = {
     systemContracts: {
@@ -259,6 +266,7 @@ function useSystemData() {
       rawrToken: rawrTokenContract,
       erc20Escrow: erc20EscrowContract,
       nftEscrow: nftEscrowContract,
+      royaltyManager: royaltyManagerContract
     },
     contentsSubgraphEndpoint: contentsSubgraphEndpoint,
     exchangeSubgraphEndpoint: exchangeSubgraphEndpoint,
@@ -276,6 +284,7 @@ function useSystemData() {
     allContentWithMetadata: allContentWithMetadataAndOrders,
     featuredContentWithMetadata: featuredContentWithMetadata,
     ownedOrders: ownedOrdersWithAssetMetadata,
+    claimableRoyalties: claimableRoyalties
   }
 
   console.log("data: ", data);
