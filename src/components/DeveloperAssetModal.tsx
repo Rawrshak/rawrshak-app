@@ -129,7 +129,7 @@ function AssetModal({
             <div className="text-offWhite text-sm">
               Supply: {Number(assetWithOrders.currentSupply)} / {Number(assetWithOrders.maxSupply)}
             </div>
-            <div className="text-offWhite text-sm">
+            <div className="break-all text-offWhite text-sm">
               URI: {assetUri}
             </div>
           </div>
@@ -142,7 +142,7 @@ function AssetModal({
               <InputNumber
                 value={mintAmountString}
                 onChange={(e) => { setMintAmountString(e) }}
-                className="bg-neutral700 focus:outline-none rounded py-1 px-2 mr-2"
+                className="bg-black400 focus:outline-none rounded py-1 px-2 mr-2"
                 disabled={false}
               />
             </div>

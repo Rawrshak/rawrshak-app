@@ -60,7 +60,7 @@ function InventoryAssetCard({
             />
           </div>
         </div>
-        <div className="flex justify-center h-24 text-offWhite text-xxl mt-1 mx-4 rounded-xl">
+        <div className="flex justify-center h-28 text-offWhite text-xxl mt-1 mx-4 rounded-xl">
           <img src={assetWithOrders.imageUri} alt="Rawrshak Asset" className="flex object-scale-down" />
         </div>
         <div className="h-5 text-offWhite text-sm mx-4">

@@ -184,7 +184,6 @@ function Orders() {
   const [transaction] = useTransaction();
 
   const toggleOrderSelected = (orderId: BigNumber) => {
-    console.log("Toggling");
     if (!selectedOrderIds.includes(orderId)) {
       setSelectedOrderIds([...selectedOrderIds, orderId]);
     } else {
@@ -210,7 +209,6 @@ function Orders() {
     if (exchange === undefined) return;
 
     setShowActions(false);
-    console.log("Claiming Orders: ", selectedOrderIds);
     transaction(() => exchange.claimOrders(selectedOrderIds), "Transaction pending", "Transaction failed", "Transaction succeeded", undefined, undefined, undefined);
   }
 
@@ -218,7 +216,6 @@ function Orders() {
     if (exchange === undefined) return;
 
     setShowActions(false);
-    console.log("Cancelling Orders: ", selectedOrderIds);
     transaction(() => exchange.cancelOrders(selectedOrderIds), "Transaction pending", "Transaction failed", "Transaction succeeded", undefined, undefined, undefined);
   }
 
@@ -232,10 +229,16 @@ function Orders() {
 
     if (orderTypeToShow === "buy") {
       setTypeFilteredOrders(ownedOrders.filter(order => order.type === "Buy"));
+      setShowFilledOrders(false);
+      setShowCancelledOrders(false);
     } else if (orderTypeToShow === "sell") {
       setTypeFilteredOrders(ownedOrders.filter(order => order.type === "Sell"));
+      setShowFilledOrders(false);
+      setShowCancelledOrders(false);
     } else {
-      setTypeFilteredOrders([]);
+      setTypeFilteredOrders(ownedOrders.filter(order => !(order.cancelledAtTimestamp.eq("0") && order.filledAtTimestamp.eq("0"))));
+      setShowFilledOrders(true);
+      setShowCancelledOrders(true);
     }
   }, [ownedOrders, orderTypeToShow]);
 
@@ -243,18 +246,16 @@ function Orders() {
     let newStatusFilteredOrders = typeFilteredOrders.map(order => (order));
 
     if (!showFilledOrders) {
-      newStatusFilteredOrders = newStatusFilteredOrders.filter(order => order.filledAtTimestamp !== BigNumber.from("0"));
+      newStatusFilteredOrders = newStatusFilteredOrders.filter(order => (order.filledAtTimestamp.eq("0")));
     }
 
     if (!showCancelledOrders) {
-      newStatusFilteredOrders = newStatusFilteredOrders.filter(order => order.cancelledAtTimestamp !== BigNumber.from("0"));
+      newStatusFilteredOrders = newStatusFilteredOrders.filter(order => (order.cancelledAtTimestamp.eq("0")));
     }
 
     setStatusFilteredOrders(newStatusFilteredOrders);
 
   }, [typeFilteredOrders, showFilledOrders, showCancelledOrders]);
-
-  console.log("Owned orders: ", ownedOrders);
 
   return (
     <div className="flex flex-grow mt-6">

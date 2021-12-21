@@ -9,7 +9,10 @@ const useOwnedOrders = (exchangeSubgraphEndpoint: string | undefined) => {
   const [ownedOrders, setOwnedOrders] = useState<OrderWithAssetMetadata[] | undefined>();
 
   useEffect(() => {
-    const ordersQuery = `
+    const updateOrders = () => {
+      console.log("Updating orders");
+
+      const ordersQuery = `
       query {
         orders(where: {owner: "${account?.toLowerCase()}"}) {
           id
@@ -33,42 +36,51 @@ const useOwnedOrders = (exchangeSubgraphEndpoint: string | undefined) => {
       }
     `;
 
-    const client = new ApolloClient({
-      uri: exchangeSubgraphEndpoint,
-      cache: new InMemoryCache(),
-    });
-
-    client.query({
-      query: gql(ordersQuery)
-    })
-      .then((data) => {
-        const newOrders: OrderWithAssetMetadata[] = data.data.orders.map((order: any) => {
-          const newOrder: OrderWithAssetMetadata = {
-            id: BigNumber.from(order.id),
-            type: order.type,
-            price: BigNumber.from(order.price),
-            amountOrdered: BigNumber.from(order.amountOrdered),
-            amountFilled: BigNumber.from(order.amountFilled),
-            amountClaimed: BigNumber.from(order.amountClaimed),
-            status: order.status,
-            createdAtTimestamp: BigNumber.from(order.createdAtTimestamp),
-            filledAtTimestamp: BigNumber.from(order.filledAtTimestamp),
-            cancelledAtTimestamp: BigNumber.from(order.cancelledAtTimestamp),
-            lastClaimedAtTimestamp: BigNumber.from(order.lastClaimedAtTimestamp),
-            assetId: order.asset.id,
-            assetName: undefined,
-            assetGame: undefined,
-          }
-          return newOrder;
-        });
-
-        console.log("Owned orders: ", newOrders);
-        setOwnedOrders(newOrders);
-      })
-      .catch(err => {
-        console.error("Error fetching GraphQL data: ", err);
-        setOwnedOrders(undefined);
+      const client = new ApolloClient({
+        uri: exchangeSubgraphEndpoint,
+        cache: new InMemoryCache(),
       });
+
+      client.query({
+        query: gql(ordersQuery)
+      })
+        .then((data) => {
+          const newOrders: OrderWithAssetMetadata[] = data.data.orders.map((order: any) => {
+            const newOrder: OrderWithAssetMetadata = {
+              id: BigNumber.from(order.id),
+              type: order.type,
+              price: BigNumber.from(order.price),
+              amountOrdered: BigNumber.from(order.amountOrdered),
+              amountFilled: BigNumber.from(order.amountFilled),
+              amountClaimed: BigNumber.from(order.amountClaimed),
+              status: order.status,
+              createdAtTimestamp: BigNumber.from(order.createdAtTimestamp),
+              filledAtTimestamp: BigNumber.from(order.filledAtTimestamp),
+              cancelledAtTimestamp: BigNumber.from(order.cancelledAtTimestamp),
+              lastClaimedAtTimestamp: BigNumber.from(order.lastClaimedAtTimestamp),
+              assetId: order.asset.id,
+              assetName: undefined,
+              assetGame: undefined,
+            }
+            return newOrder;
+          });
+
+          console.log("Owned orders: ", newOrders);
+          setOwnedOrders(newOrders);
+        })
+        .catch(err => {
+          console.error("Error fetching GraphQL data: ", err);
+          setOwnedOrders(undefined);
+        });
+    }
+
+    updateOrders();
+
+    const interval = setInterval(() => {
+      updateOrders();
+    }, 30000);
+    return () => clearInterval(interval);
+
   }, [exchangeSubgraphEndpoint, account]);
 
   return ownedOrders;
