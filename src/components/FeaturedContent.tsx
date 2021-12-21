@@ -56,7 +56,7 @@ function GameView({
             <div className="flex text-offWhite text-xxxl mx-4">
               Featured Collections
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
               {contentsWithMetadata.map(contentWithMetadata => (
                 <GameCard
                   key={contentWithMetadata.id}
@@ -96,21 +96,18 @@ function AssetsView({
           <div onClick={() => backToGameView()} className="flex text-offWhite text-sm m-2 cursor-pointer">
             {`< Marketplace`}
           </div>
-          <div className="flex">
+          <div className="flex ml-2">
             <Image
               src={contentWithMetadata.imageUri}
-              className="object-cover h-44 w-64 rounded-xl"
+              className="object-scale-down h-44 rounded-xl"
               type="content"
             />
           </div>
-          <div className="flex text-offWhite text-xxl m-2">
+          <div className="flex text-offWhite text-xxl mt-1 ml-4">
             {contentWithMetadata.name}
           </div>
-          <div className="flex text-offWhite text-sm m-2">
+          <div className="flex text-offWhite text-sm mt-1 ml-4">
             {contentWithMetadata.description}
-          </div>
-          <div className="flex text-offWhite text-sm m-2">
-            Assets: {contentWithMetadata.assets.length}
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {contentWithMetadata.assets.map(asset => (

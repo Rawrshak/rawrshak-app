@@ -1,6 +1,5 @@
 import { useData } from '../data';
 import { OrderWithAssetMetadata } from '../data/data';
-import { BigNumber } from 'ethers';
 import moment from 'moment';
 import Ellipsis from '../assets/images/ellipsis.png';
 import Filter from '../assets/images/filter.png';
@@ -8,6 +7,7 @@ import DownArrow from '../assets/images/downArrow.png';
 import { useEffect, useState } from 'react';
 import Button from './Button';
 import { useTransaction } from "../web3/transactions";
+import { ethers, BigNumber } from "ethers";
 
 function FilterOptions({
   show,
@@ -125,6 +125,7 @@ function Order({
   cancelOrder: (orderId: BigNumber) => void
 }) {
   const [showAction, setShowAction] = useState<boolean>(false);
+  const { supportedToken } = useData();
 
   const claim = () => {
     if (order === undefined) return;
@@ -138,6 +139,16 @@ function Order({
 
     setShowAction(false);
     cancelOrder(order.id);
+  }
+
+  const claimableAmount = () => {
+    if (order === undefined || supportedToken === undefined) return;
+
+    if (order.type === "Buy") {
+      return (`${Number(order.amountFilled.sub(order.amountClaimed))} NFTs`);
+    } else {
+      return (`${Number(ethers.utils.formatUnits(order.amountFilled.sub(order.amountClaimed).mul(order.price), supportedToken.decimals))} ${supportedToken.symbol}`);
+    }
   }
 
   if (order === undefined) {
@@ -159,7 +170,7 @@ function Order({
           {Number(order.amountFilled)} / {Number(order.amountOrdered)}
         </div>
         <div className="flex text-offWhite my-3">
-          {Number(order.amountFilled.sub(order.amountClaimed))}
+          {claimableAmount()}
         </div>
         <div className="flex text-offWhite my-3">
           <img onClick={() => setShowAction(!showAction)} className="cursor-pointer p-3 h-7" src={Ellipsis} alt="Ellipsis" />

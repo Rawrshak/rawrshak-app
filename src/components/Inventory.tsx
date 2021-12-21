@@ -23,7 +23,7 @@ function Inventory() {
         <div className="text-offWhite text-xxxl ml-4">
           My Inventory
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
           {inventoryAssetsWithOrders.map((inventoryAssetWithOrders) => (
             <InventoryAssetCard
               key={inventoryAssetWithOrders.id}
