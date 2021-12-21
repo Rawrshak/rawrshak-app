@@ -36,7 +36,7 @@ const useInventoryAssets = (contentsSubgraphEndpoint: string | undefined) => {
                   parentContract {
                     id
                     creator
-                    game
+                    name
                   }         
                 }
                 amount
@@ -70,7 +70,7 @@ const useInventoryAssets = (contentsSubgraphEndpoint: string | undefined) => {
                 parentContract: assetBalance.asset.parentContract.id,
                 balance: assetBalance.amount,
                 creator: assetBalance.asset.parentContract.creator,
-                game: assetBalance.asset.parentContract.game,
+                game: assetBalance.asset.parentContract.name,
               }
 
               return newAsset;
