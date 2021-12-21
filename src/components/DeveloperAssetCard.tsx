@@ -9,7 +9,7 @@ function DeveloperAssetCard({
   openAsset: (asset: Asset) => void
 }) {
   return (
-    <div className="flex flex-col flex-grow h-44 m-3 bg-black400 rounded-xl cursor-pointer" onClick={() => openAsset(asset)}>
+    <div className="flex flex-col flex-grow h-44 m-3 bg-black450 rounded-xl cursor-pointer" onClick={() => openAsset(asset)}>
       <div className="grid grid-cols-5">
         <div className="col-span-4 h-6 text-offWhite text-sm ml-4 mt-1 truncate ...">
           {asset.name}

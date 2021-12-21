@@ -59,40 +59,42 @@ function AssetsView({
 
   if (show && activeContent !== undefined) {
     return (
-      <div className="text-offWhite text-xsm">
+      <div className="flex flex-col flex-grow text-offWhite text-xsm">
         <CreateAssetModal show={showCreateAssetModal} setShow={setShowCreateAssetModal} contentManagerContract={activeContentManagerContract} />
-        <div onClick={() => setShowAssetsView(false)} className="cursor-pointer">
+        <div onClick={() => setShowAssetsView(false)} className="text-lg ml-4 cursor-pointer">
           {`< Back to smart contracts`}
         </div>
-        <div className="flex mt-8 mx-3">
-          <Image src={activeContent.imageUri} className="flex" type="content" />
-        </div>
-        <div className="flex text-xxxl mx-3">
-          {activeContent.name}
-        </div>
-        <div className="flex text-sm mx-3">
-          Description: {activeContent.description}
-        </div>
-        <div className="flex text-sm mx-3">
-          URI: {activeContent.contractUri}
-        </div>
-        <div className="flex text-sm mx-3">
-          Contract Address: {activeContent.contractAddress}
-        </div>
-        <div className="flex text-sm mx-3">
-          Creator Address: {activeContent.creatorAddress}
-        </div>
-        <div className="flex text-sm mx-3">
-          Creator: {activeContent.creator}
-        </div>
-        <div className="flex text-sm mx-3">
-          Owner: {activeContent.owner}
+        <div className="flex flex-col bg-black450 rounded-lg px-6 py-4 m-4">
+          <div className="flex">
+            <Image src={activeContent.imageUri} className="flex" type="content" />
+          </div>
+          <div className="flex text-xxxl">
+            {activeContent.name}
+          </div>
+          <div className="flex text-sm">
+            Description: {activeContent.description}
+          </div>
+          <div className="flex text-sm">
+            URI: {activeContent.contractUri}
+          </div>
+          <div className="flex text-sm">
+            Contract Address: {activeContent.contractAddress}
+          </div>
+          <div className="flex text-sm">
+            Creator Address: {activeContent.creatorAddress}
+          </div>
+          <div className="flex text-sm">
+            Creator: {activeContent.creator}
+          </div>
+          <div className="flex text-sm">
+            Owner: {activeContent.owner}
+          </div>
         </div>
         <div className="grid grid-cols-2 mt-12 mb-4">
           <div className="text-offWhite text-xl ml-4">
             {activeContent.assets.length} {activeContent.assets.length === 1 ? "Asset" : "Assets"}
           </div>
-          <div className="flex justify-end">
+          <div className="flex justify-end mx-4">
             <Button
               label="NEW ASSET"
               onClick={() => setShowCreateAssetModal(true)}
@@ -168,11 +170,11 @@ function SmartContractsView({
   if (show) {
     return (
       <div className="flex flex-col flex-grow">
-        <div className="grid grid-cols-2">
-          <div className="text-offWhite text-xxxl ml-4 my-4 mb-4">
+        <div className="grid grid-cols-2 mb-2">
+          <div className="text-offWhite text-xxxl ml-4 mt-2">
             Store
           </div>
-          {claimableRoyalties !== undefined && supportedToken !== undefined && <div className="flex justify-end mr-4 mt-8 mb-2">
+          {claimableRoyalties !== undefined && supportedToken !== undefined && <div className="flex justify-end mr-4">
 
             <div className="flex flex-row bg-black450 rounded-lg py-2 px-4 justify-center">
               <div className="flex text-base text-offWhite mt-1">
@@ -226,7 +228,7 @@ function Store() {
   }, [ownedContentWithMetadata]);
 
   return (
-    <div className="flex">
+    <div className="flex flex-grow">
       <AssetsView
         setShowAssetsView={setShowAssetsView}
         activeContent={activeSmartContract}

@@ -109,14 +109,14 @@ function WalletModal({
               disabledClassName="flex flex-grow justify-center text-black400 text-lg bg-chartreuse500 rounded-lg h-24 w-48 m-2 pt-8"
             />
           </div>
-          <div className="grid grid-cols-2 text-offWhite text-lg cursor-pointer bg-black450 h-12 mx-4 mt-8 rounded-sm" onClick={() => toOrders()}>
+          {web3.account && <div className="grid grid-cols-2 text-offWhite text-lg cursor-pointer bg-black450 h-12 mx-4 mt-8 rounded-sm" onClick={() => toOrders()}>
             <div className="flex justify-start ml-4 mt-2" >
               My Orders
             </div>
             <div className="flex justify-end mr-4 mt-3">
               <RightArrow />
             </div>
-          </div>
+          </div>}
         </div>
       </SlidingPane>
     </>
