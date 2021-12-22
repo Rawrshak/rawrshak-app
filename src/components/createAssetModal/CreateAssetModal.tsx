@@ -453,7 +453,8 @@ function CreateAssetModal({
           static3dObjectFilesMetadata={static3dObjectFilesMetadata}
           textFileMetadata={textFileMetadata}
           subtype={subtype}
-          setSubType={setSubtype}
+          setSubtype={setSubtype}
+          subtypeEditable={true}
           setAudioFilesMetadata={setAudioFilesMetadata}
           setImageFilesMetadata={setImageFilesMetadata}
           setStatic3dObjectFilesMetadata={setStatic3dObjectFilesMetadata}

@@ -44,14 +44,64 @@ function TextFile({
   );
 }
 
+function TextAssetSubtype({
+  subtype,
+  setSubtype,
+  subtypeEditable
+}: {
+  subtype: string,
+  setSubtype: React.Dispatch<React.SetStateAction<string>>,
+  subtypeEditable: boolean
+}) {
+  if (subtypeEditable) {
+    return (
+      <div className="col-span-8 my-2">
+        <select
+          onChange={(e) => setSubtype(e.target.value)}
+          name="assetType"
+          className="bg-neutral700 focus:outline-none rounded py-1 px-2">
+          <option value="title">
+            Title
+          </option>
+          <option value="lore">
+            Lore
+          </option>
+          <option value="custom">
+            Custom
+          </option>
+        </select>
+      </div>
+    );
+  } else {
+    let subtypeText;
+    if (subtype === "title") {
+      subtypeText = "Title"
+    } else if (subtype === "lore") {
+      subtypeText = "Lore";
+    } else if (subtype === "custom") {
+      subtypeText = "Custom";
+    }
+
+    return (
+      <div className="col-span-8 ml-1 my-3">
+        {subtypeText}
+      </div>
+    );
+  }
+}
+
 function TextAsset({
   textFileMetadata,
   setTextFileMetadata,
-  setSubType
+  subtype,
+  setSubtype,
+  subtypeEditable
 }: {
   textFileMetadata: TextFileMetadata,
   setTextFileMetadata: React.Dispatch<React.SetStateAction<TextFileMetadata>>,
-  setSubType: React.Dispatch<React.SetStateAction<string>>,
+  subtype: string,
+  setSubtype: React.Dispatch<React.SetStateAction<string>>,
+  subtypeEditable: boolean
 }) {
 
   return (
@@ -60,24 +110,8 @@ function TextAsset({
         <div className="col-span-4 my-3 mr-2 text-right">
           Text Asset SubType
         </div>
-        <div className="col-span-8 my-2">
-          <select
-            onChange={(e) => setSubType(e.target.value)}
-            name="assetType"
-            className="bg-neutral700 focus:outline-none rounded py-1 px-2">
-            <option value="title">
-              Title
-            </option>
-            <option value="lore">
-              Lore
-            </option>
-            <option value="custom">
-              Custom
-            </option>
-          </select>
-        </div>
+        <TextAssetSubtype subtype={subtype} setSubtype={setSubtype} subtypeEditable={subtypeEditable} />
       </div>
-
       <TextFile
         textFileMetadata={textFileMetadata}
         setTextFileMetadata={setTextFileMetadata}

@@ -17,7 +17,8 @@ function AssetTypes({
   static3dObjectFilesMetadata,
   textFileMetadata,
   subtype,
-  setSubType,
+  setSubtype,
+  subtypeEditable,
   setAudioFilesMetadata,
   setImageFilesMetadata,
   setStatic3dObjectFilesMetadata,
@@ -29,7 +30,8 @@ function AssetTypes({
   static3dObjectFilesMetadata: Static3dObjectFileMetadata[],
   textFileMetadata: TextFileMetadata,
   subtype: string,
-  setSubType: React.Dispatch<React.SetStateAction<string>>,
+  setSubtype: React.Dispatch<React.SetStateAction<string>>,
+  subtypeEditable: boolean,
   setAudioFilesMetadata: React.Dispatch<React.SetStateAction<AudioFileMetadata[]>>,
   setImageFilesMetadata: React.Dispatch<React.SetStateAction<ImageFileMetadata[]>>,
   setStatic3dObjectFilesMetadata: React.Dispatch<React.SetStateAction<Static3dObjectFileMetadata[]>>,
@@ -41,7 +43,8 @@ function AssetTypes({
         audioFilesMetadata={audioFilesMetadata}
         setAudioFilesMetadata={setAudioFilesMetadata}
         subtype={subtype}
-        setSubType={setSubType}
+        setSubtype={setSubtype}
+        subtypeEditable={subtypeEditable}
       />);
   } else if (assetType === "image") {
     return (
@@ -49,7 +52,8 @@ function AssetTypes({
         imageFilesMetadata={imageFilesMetadata}
         setImageFilesMetadata={setImageFilesMetadata}
         subtype={subtype}
-        setSubType={setSubType}
+        setSubtype={setSubtype}
+        subtypeEditable={subtypeEditable}
       />
     );
   } else if (assetType === "static3dobject") {
@@ -57,15 +61,18 @@ function AssetTypes({
       <Static3dObjectAsset
         static3dObjectFilesMetadata={static3dObjectFilesMetadata}
         setStatic3dObjectFilesMetadata={setStatic3dObjectFilesMetadata}
-        setSubType={setSubType}
+        setSubtype={setSubtype}
         subtype={subtype}
+        subtypeEditable={subtypeEditable}
       />);
   } else {
     return (
       <TextAsset
         textFileMetadata={textFileMetadata}
         setTextFileMetadata={setTextFileMetadata}
-        setSubType={setSubType}
+        setSubtype={setSubtype}
+        subtype={subtype}
+        subtypeEditable={subtypeEditable}
       />
     );
   }

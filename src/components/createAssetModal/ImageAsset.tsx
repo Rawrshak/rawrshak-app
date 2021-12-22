@@ -94,16 +94,71 @@ function ImageFile({
   );
 }
 
+function ImageAssetSubtype({
+  subtype,
+  setSubtype,
+  subtypeEditable
+}: {
+  subtype: string,
+  setSubtype: React.Dispatch<React.SetStateAction<string>>,
+  subtypeEditable: boolean
+}) {
+  if (subtypeEditable) {
+    return (
+      <div className="col-span-8 my-2">
+        <select
+          onChange={(e) => setSubtype(e.target.value)}
+          name="assetType"
+          className="bg-neutral700 focus:outline-none rounded py-1 px-2"
+          value={subtype}
+        >
+          <option value="square">
+            Square
+          </option>
+          <option value="horizontal-banner">
+            Horizontal Banner
+          </option>
+          <option value="vertical-banner">
+            Vertical Banner
+          </option>
+          <option value="custom">
+            Custom
+          </option>
+        </select>
+      </div>
+    );
+  } else {
+    let subtypeText;
+    if (subtype === "square") {
+      subtypeText = "Square"
+    } else if (subtype === "horizontal-banner") {
+      subtypeText = "Horizontal Banner";
+    } else if (subtype === "vertical-baner") {
+      subtypeText = "Vertical Banner";
+    } else if (subtype === "custom") {
+      subtypeText = "Custom";
+    }
+
+    return (
+      <div className="col-span-8 ml-1 my-3">
+        {subtypeText}
+      </div>
+    );
+  }
+}
+
 function ImageAsset({
   imageFilesMetadata,
   setImageFilesMetadata,
   subtype,
-  setSubType
+  setSubtype,
+  subtypeEditable
 }: {
   imageFilesMetadata: ImageFileMetadata[],
   setImageFilesMetadata: React.Dispatch<React.SetStateAction<ImageFileMetadata[]>>,
   subtype: string,
-  setSubType: React.Dispatch<React.SetStateAction<string>>
+  setSubtype: React.Dispatch<React.SetStateAction<string>>,
+  subtypeEditable: boolean
 }) {
 
   const updateImageFileMetadata = (index: number, imageFileMetadata: ImageFileMetadata) => {
@@ -133,27 +188,7 @@ function ImageAsset({
         <div className="col-span-4 my-3 mr-2 text-right">
           Image SubType
         </div>
-        <div className="col-span-8 my-2">
-          <select
-            onChange={(e) => setSubType(e.target.value)}
-            name="assetType"
-            className="bg-neutral700 focus:outline-none rounded py-1 px-2"
-            value={subtype}
-          >
-            <option value="square">
-              Square
-            </option>
-            <option value="horizontal-banner">
-              Horizontal Banner
-            </option>
-            <option value="vertical-banner">
-              Vertical Banner
-            </option>
-            <option value="custom">
-              Custom
-            </option>
-          </select>
-        </div>
+        <ImageAssetSubtype subtype={subtype} setSubtype={setSubtype} subtypeEditable={subtypeEditable} />
       </div>
       {imageFilesMetadata.map((imageFile, index) => (
         <React.Fragment key={index}>

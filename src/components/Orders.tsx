@@ -157,7 +157,13 @@ function Order({
     return (
       <div className="grid grid-cols-6 h-16">
         <div className="flex text-offWhite my-3">
-          <input checked={selected} onChange={(e) => { toggleSelected(order.id) }} type="checkbox" className="bg-neutral700 focus:outline-none rounded mt-1 mr-2" />
+          {order.cancelledAtTimestamp.eq(BigNumber.from("0")) && order.amountClaimed.lt(order.amountOrdered) &&
+            <input
+              checked={selected}
+              onChange={(e) => { toggleSelected(order.id) }}
+              type="checkbox"
+              className="bg-neutral700 focus:outline-none rounded mt-1 mr-2"
+            />}
           {order.assetName}
         </div>
         <div className="flex text-offWhite my-3">

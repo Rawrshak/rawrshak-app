@@ -478,7 +478,8 @@ function UpdateAssetModal({
           static3dObjectFilesMetadata={static3dObjectFilesMetadata}
           textFileMetadata={textFileMetadata}
           subtype={subtype}
-          setSubType={setSubtype}
+          setSubtype={setSubtype}
+          subtypeEditable={false}
           setAudioFilesMetadata={setAudioFilesMetadata}
           setImageFilesMetadata={setImageFilesMetadata}
           setStatic3dObjectFilesMetadata={setStatic3dObjectFilesMetadata}

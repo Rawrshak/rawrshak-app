@@ -170,17 +170,70 @@ function AudioFile({
   );
 }
 
+function AudioAssetSubtype({
+  subtype,
+  setSubtype,
+  subtypeEditable
+}: {
+  subtype: string,
+  setSubtype: React.Dispatch<React.SetStateAction<string>>,
+  subtypeEditable: boolean
+}) {
+  if (subtypeEditable) {
+    return (
+      <div className="col-span-8 my-2">
+        <select
+          onChange={(e) => setSubtype(e.target.value)}
+          name="assetType"
+          className="bg-neutral700 focus:outline-none rounded py-1 px-2"
+          value={subtype}>
+          <option value="sound-effect">
+            Sound Effect
+          </option>
+          <option value="shout">
+            Shout
+          </option>
+          <option value="character-line">
+            Character Line
+          </option>
+          <option value="background-music">
+            Background Music
+          </option>
+        </select>
+      </div>
+    );
+  } else {
+    let subtypeText;
+    if (subtype === "sound-effect") {
+      subtypeText = "Sound Effect"
+    } else if (subtype === "shout") {
+      subtypeText = "Shout";
+    } else if (subtype === "character-line") {
+      subtypeText = "Character Line";
+    } else if (subtype === "background-music") {
+      subtypeText = "Background Music";
+    }
+
+    return (
+      <div className="col-span-8 ml-1 my-3">
+        {subtypeText}
+      </div>
+    );
+  }
+}
 
 function AudioAsset({
   audioFilesMetadata,
   setAudioFilesMetadata,
   subtype,
-  setSubType
+  setSubtype,
+  subtypeEditable
 }: {
   audioFilesMetadata: AudioFileMetadata[],
   setAudioFilesMetadata: React.Dispatch<React.SetStateAction<AudioFileMetadata[]>>,
   subtype: string,
-  setSubType: React.Dispatch<React.SetStateAction<string>>,
+  setSubtype: React.Dispatch<React.SetStateAction<string>>,
+  subtypeEditable: boolean
 }) {
   const updateAudioFileMetadata = (index: number, audioFileMetadata: AudioFileMetadata) => {
     const newAudioFilesMetadata = audioFilesMetadata.map(audioFile => { return { ...audioFile } });
@@ -210,26 +263,7 @@ function AudioAsset({
         <div className="col-span-4 my-3 mr-2 text-right">
           Audio Asset SubType
         </div>
-        <div className="col-span-8 my-2">
-          <select
-            onChange={(e) => setSubType(e.target.value)}
-            name="assetType"
-            className="bg-neutral700 focus:outline-none rounded py-1 px-2"
-            value={subtype}>
-            <option value="sound-effect">
-              Sound Effect
-            </option>
-            <option value="shout">
-              Shout
-            </option>
-            <option value="character-line">
-              Character Line
-            </option>
-            <option value="background-music">
-              Background Music
-            </option>
-          </select>
-        </div>
+        <AudioAssetSubtype subtype={subtype} setSubtype={setSubtype} subtypeEditable={subtypeEditable} />
       </div>
       {audioFilesMetadata.map((audioFile, index) => (
         <React.Fragment key={index}>

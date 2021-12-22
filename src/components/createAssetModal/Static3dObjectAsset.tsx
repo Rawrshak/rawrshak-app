@@ -165,16 +165,60 @@ function Static3dObject({
   );
 }
 
+function Static3dObjectAssetSubtype({
+  subtype,
+  setSubtype,
+  subtypeEditable
+}: {
+  subtype: string,
+  setSubtype: React.Dispatch<React.SetStateAction<string>>,
+  subtypeEditable: boolean
+}) {
+  if (subtypeEditable) {
+    return (
+      <div className="col-span-8 my-2">
+        <select
+          onChange={(e) => setSubtype(e.target.value)}
+          name="assetType"
+          className="bg-neutral700 focus:outline-none rounded py-1 px-2"
+          value={subtype}>
+          <option value="trophy">
+            Trophy
+          </option>
+          <option value="decoration">
+            Decoration
+          </option>
+        </select>
+      </div>
+    );
+  } else {
+    let subtypeText;
+    if (subtype === "trophy") {
+      subtypeText = "Trophy"
+    } else if (subtype === "decoration") {
+      subtypeText = "Decoration";
+    }
+
+    return (
+      <div className="col-span-8 ml-1 my-3">
+        {subtypeText}
+      </div>
+    );
+  }
+}
+
 function Static3dObjectAsset({
   static3dObjectFilesMetadata,
   setStatic3dObjectFilesMetadata,
   subtype,
-  setSubType
+  setSubtype,
+  subtypeEditable
 }: {
   static3dObjectFilesMetadata: Static3dObjectFileMetadata[],
   setStatic3dObjectFilesMetadata: React.Dispatch<React.SetStateAction<Static3dObjectFileMetadata[]>>,
   subtype: string,
-  setSubType: React.Dispatch<React.SetStateAction<string>>
+  setSubtype: React.Dispatch<React.SetStateAction<string>>,
+  subtypeEditable: boolean
 }) {
 
   const updateStatic3dObjectFileMetadata = (index: number, static3dObjectFileMetadata: Static3dObjectFileMetadata) => {
@@ -204,20 +248,7 @@ function Static3dObjectAsset({
         <div className="col-span-4 my-3 mr-2 text-right">
           Asset SubType
         </div>
-        <div className="col-span-8 my-2">
-          <select
-            onChange={(e) => setSubType(e.target.value)}
-            name="assetType"
-            className="bg-neutral700 focus:outline-none rounded py-1 px-2"
-            value={subtype}>
-            <option value="trophy">
-              Trophy
-            </option>
-            <option value="decoration">
-              Decoration
-            </option>
-          </select>
-        </div>
+        <Static3dObjectAssetSubtype subtype={subtype} setSubtype={setSubtype} subtypeEditable={subtypeEditable} />
       </div>
       {static3dObjectFilesMetadata.map((static3dObjectFile, index) => (
         <React.Fragment key={index}>
