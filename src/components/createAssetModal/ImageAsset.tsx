@@ -76,7 +76,8 @@ function ImageFile({
           <select
             onChange={(e) => updateContentType(e.target.value)}
             name="assetType"
-            className="bg-neutral700 focus:outline-none rounded py-1 px-2">
+            className="bg-neutral700 focus:outline-none rounded py-1 px-2"
+            value={imageFileMetadata.contentType}>
             <option value="png">
               png
             </option>
@@ -96,10 +97,12 @@ function ImageFile({
 function ImageAsset({
   imageFilesMetadata,
   setImageFilesMetadata,
+  subtype,
   setSubType
 }: {
   imageFilesMetadata: ImageFileMetadata[],
   setImageFilesMetadata: React.Dispatch<React.SetStateAction<ImageFileMetadata[]>>,
+  subtype: string,
   setSubType: React.Dispatch<React.SetStateAction<string>>
 }) {
 
@@ -131,12 +134,17 @@ function ImageAsset({
           Image SubType
         </div>
         <div className="col-span-8 my-2">
-          <select onChange={(e) => setSubType(e.target.value)} name="assetType" className="bg-neutral700 focus:outline-none rounded py-1 px-2">
-            <option value="Square">
+          <select
+            onChange={(e) => setSubType(e.target.value)}
+            name="assetType"
+            className="bg-neutral700 focus:outline-none rounded py-1 px-2"
+            value={subtype}
+          >
+            <option value="square">
               Square
             </option>
-            <option value="HorizontalBanner">
-              HorizontalBanner
+            <option value="horizontal-banner">
+              Horizontal Banner
             </option>
           </select>
         </div>

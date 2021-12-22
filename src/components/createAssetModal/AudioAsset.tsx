@@ -80,7 +80,9 @@ function AudioFile({
           <select
             onChange={(e) => updateEngine(e.target.value)}
             name="assetType"
-            className="bg-neutral700 focus:outline-none rounded py-1 px-2">
+            className="bg-neutral700 focus:outline-none rounded py-1 px-2"
+            value={audioFileMetadata.engine}
+          >
             <option value="unity">
               Unity
             </option>
@@ -96,7 +98,9 @@ function AudioFile({
           <select
             onChange={(e) => updateCompression(e.target.value)}
             name="assetType"
-            className="bg-neutral700 focus:outline-none rounded py-1 px-2">
+            className="bg-neutral700 focus:outline-none rounded py-1 px-2"
+            value={audioFileMetadata.compression}
+          >
             <option value="compressed">
               Compressed
             </option>
@@ -118,7 +122,9 @@ function AudioFile({
           <select
             onChange={(e) => updateContentType(e.target.value)}
             name="assetType"
-            className="bg-neutral700 focus:outline-none rounded py-1 px-2">
+            className="bg-neutral700 focus:outline-none rounded py-1 px-2"
+            value={audioFileMetadata.contentType}
+          >
             <option value="wav">
               WAV
             </option>
@@ -168,10 +174,12 @@ function AudioFile({
 function AudioAsset({
   audioFilesMetadata,
   setAudioFilesMetadata,
+  subtype,
   setSubType
 }: {
   audioFilesMetadata: AudioFileMetadata[],
   setAudioFilesMetadata: React.Dispatch<React.SetStateAction<AudioFileMetadata[]>>,
+  subtype: string,
   setSubType: React.Dispatch<React.SetStateAction<string>>,
 }) {
   const updateAudioFileMetadata = (index: number, audioFileMetadata: AudioFileMetadata) => {
@@ -206,7 +214,8 @@ function AudioAsset({
           <select
             onChange={(e) => setSubType(e.target.value)}
             name="assetType"
-            className="bg-neutral700 focus:outline-none rounded py-1 px-2">
+            className="bg-neutral700 focus:outline-none rounded py-1 px-2"
+            value={subtype}>
             <option value="sound-effect">
               Sound Effect
             </option>

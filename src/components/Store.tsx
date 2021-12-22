@@ -12,14 +12,26 @@ import Button from "./Button";
 import Image from './Image';
 import { ethers, BigNumber } from "ethers";
 import { useTransaction } from "../web3/transactions";
+import UpdateAssetModal from './createAssetModal/UpdateAssetModal';
 
-function SmartContractAssets({ activeContent }: { activeContent: ContentDataWithMetadata | undefined }) {
+function SmartContractAssets({
+  activeContent,
+  openUpdateAssetModal
+}: {
+  activeContent: ContentDataWithMetadata | undefined,
+  openUpdateAssetModal: (asset: Asset | undefined) => void
+}) {
   const [showAssetModal, setShowAssetModal] = useState<boolean>(false);
   const [openedAsset, setOpenedAsset] = useState<Asset>();
 
   const openAsset = (asset: Asset) => {
     setShowAssetModal(true);
     setOpenedAsset(asset);
+  }
+
+  const _openUpdateAssetModal = (asset: Asset | undefined) => {
+    setShowAssetModal(false);
+    openUpdateAssetModal(openedAsset);
   }
 
   if (activeContent === undefined) {
@@ -29,7 +41,7 @@ function SmartContractAssets({ activeContent }: { activeContent: ContentDataWith
   } else {
     return (
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        <DeveloperAssetModal show={showAssetModal} setShow={setShowAssetModal} assetWithOrders={openedAsset} content={activeContent} />
+        <DeveloperAssetModal show={showAssetModal} setShow={setShowAssetModal} assetWithOrders={openedAsset} content={activeContent} openUpdateAssetModal={() => _openUpdateAssetModal(openedAsset)} />
         {activeContent.assets.map((asset) => (
           <DeveloperAssetCard key={asset.id} asset={asset} openAsset={openAsset} />
         ))}
@@ -50,6 +62,13 @@ function AssetsView({
   const { signerOrProvider } = useWeb3();
   const [activeContentManagerContract, setActiveContentManagerContract] = useState<ContentManager>();
   const [showCreateAssetModal, setShowCreateAssetModal] = useState<boolean>(false);
+  const [showUpdateAssetModal, setShowUpdateAssetModal] = useState<boolean>(false);
+  const [assetToUpdate, setAssetToUpdate] = useState<Asset | undefined>();
+
+  const openUpdateAssetModal = (asset: Asset | undefined) => {
+    setShowUpdateAssetModal(true);
+    setAssetToUpdate(asset);
+  }
 
   useEffect(() => {
     if (activeContent === undefined || signerOrProvider === undefined) return;
@@ -61,6 +80,7 @@ function AssetsView({
     return (
       <div className="flex flex-col flex-grow text-offWhite text-xsm">
         <CreateAssetModal show={showCreateAssetModal} setShow={setShowCreateAssetModal} contentManagerContract={activeContentManagerContract} />
+        <UpdateAssetModal show={showUpdateAssetModal} setShow={setShowUpdateAssetModal} contentManagerContract={activeContentManagerContract} asset={assetToUpdate} />
         <div onClick={() => setShowAssetsView(false)} className="text-lg ml-4 cursor-pointer">
           {`< Back to smart contracts`}
         </div>
@@ -105,7 +125,7 @@ function AssetsView({
             />
           </div>
         </div>
-        <SmartContractAssets activeContent={activeContent} />
+        <SmartContractAssets activeContent={activeContent} openUpdateAssetModal={openUpdateAssetModal} />
       </div >
     );
   } else {

@@ -16,6 +16,7 @@ function AssetTypes({
   imageFilesMetadata,
   static3dObjectFilesMetadata,
   textFileMetadata,
+  subtype,
   setSubType,
   setAudioFilesMetadata,
   setImageFilesMetadata,
@@ -27,6 +28,7 @@ function AssetTypes({
   imageFilesMetadata: ImageFileMetadata[],
   static3dObjectFilesMetadata: Static3dObjectFileMetadata[],
   textFileMetadata: TextFileMetadata,
+  subtype: string,
   setSubType: React.Dispatch<React.SetStateAction<string>>,
   setAudioFilesMetadata: React.Dispatch<React.SetStateAction<AudioFileMetadata[]>>,
   setImageFilesMetadata: React.Dispatch<React.SetStateAction<ImageFileMetadata[]>>,
@@ -38,6 +40,7 @@ function AssetTypes({
       <AudioAsset
         audioFilesMetadata={audioFilesMetadata}
         setAudioFilesMetadata={setAudioFilesMetadata}
+        subtype={subtype}
         setSubType={setSubType}
       />);
   } else if (assetType === "image") {
@@ -45,6 +48,7 @@ function AssetTypes({
       <ImageAsset
         imageFilesMetadata={imageFilesMetadata}
         setImageFilesMetadata={setImageFilesMetadata}
+        subtype={subtype}
         setSubType={setSubType}
       />
     );
@@ -54,6 +58,7 @@ function AssetTypes({
         static3dObjectFilesMetadata={static3dObjectFilesMetadata}
         setStatic3dObjectFilesMetadata={setStatic3dObjectFilesMetadata}
         setSubType={setSubType}
+        subtype={subtype}
       />);
   } else {
     return (

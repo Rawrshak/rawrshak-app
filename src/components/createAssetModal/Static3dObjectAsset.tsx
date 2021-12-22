@@ -73,7 +73,8 @@ function Static3dObject({
           <select
             onChange={(e) => updateEngine(e.target.value)}
             name="assetType"
-            className="bg-neutral700 focus:outline-none rounded py-1 px-2">
+            className="bg-neutral700 focus:outline-none rounded py-1 px-2"
+            value={static3dObjectFileMetadata.engine}>
             <option value="unity">
               Unity
             </option>
@@ -89,7 +90,8 @@ function Static3dObject({
           <select
             onChange={(e) => updatePlatform(e.target.value)}
             name="assetType"
-            className="bg-neutral700 focus:outline-none rounded py-1 px-2">
+            className="bg-neutral700 focus:outline-none rounded py-1 px-2"
+            value={static3dObjectFileMetadata.platform}>
             <option value="windows">
               Windows
             </option>
@@ -111,7 +113,8 @@ function Static3dObject({
           <select
             onChange={(e) => updateRenderPipeline(e.target.value)}
             name="assetType"
-            className="bg-neutral700 focus:outline-none rounded py-1 px-2">
+            className="bg-neutral700 focus:outline-none rounded py-1 px-2"
+            value={static3dObjectFileMetadata.renderPipeline}>
             <option value="brp">
               BRP
             </option>
@@ -124,7 +127,8 @@ function Static3dObject({
           <select
             onChange={(e) => updateFidelity(e.target.value)}
             name="assetType"
-            className="bg-neutral700 focus:outline-none rounded py-1 px-2">
+            className="bg-neutral700 focus:outline-none rounded py-1 px-2"
+            value={static3dObjectFileMetadata.fidelity}>
             <option value="low">
               Low
             </option>
@@ -143,7 +147,8 @@ function Static3dObject({
           <select
             onChange={(e) => updateShape(e.target.value)}
             name="assetType"
-            className="bg-neutral700 focus:outline-none rounded py-1 px-2">
+            className="bg-neutral700 focus:outline-none rounded py-1 px-2"
+            value={static3dObjectFileMetadata.shape}>
             <option value="horizontal">
               Horizontal
             </option>
@@ -163,10 +168,12 @@ function Static3dObject({
 function Static3dObjectAsset({
   static3dObjectFilesMetadata,
   setStatic3dObjectFilesMetadata,
+  subtype,
   setSubType
 }: {
   static3dObjectFilesMetadata: Static3dObjectFileMetadata[],
   setStatic3dObjectFilesMetadata: React.Dispatch<React.SetStateAction<Static3dObjectFileMetadata[]>>,
+  subtype: string,
   setSubType: React.Dispatch<React.SetStateAction<string>>
 }) {
 
@@ -201,7 +208,8 @@ function Static3dObjectAsset({
           <select
             onChange={(e) => setSubType(e.target.value)}
             name="assetType"
-            className="bg-neutral700 focus:outline-none rounded py-1 px-2">
+            className="bg-neutral700 focus:outline-none rounded py-1 px-2"
+            value={subtype}>
             <option value="trophy">
               Trophy
             </option>

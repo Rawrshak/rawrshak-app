@@ -17,11 +17,13 @@ function AssetModal({
   setShow,
   assetWithOrders,
   content,
+  openUpdateAssetModal
 }: {
   show: boolean;
   setShow: React.Dispatch<React.SetStateAction<boolean>>,
   assetWithOrders: AssetWithOrders | Asset | undefined,
   content: ContentDataWithMetadata | undefined,
+  openUpdateAssetModal: (asset: Asset) => void
 }) {
   const [mintAmount, setMintAmount] = useState<BigNumber>();
   const [mintAmountString, setMintAmountString] = useState<string>("");
@@ -156,6 +158,16 @@ function AssetModal({
                 disabledClassName="bg-chartreuse500 text-neutral900 text-xsm mr-4 px-6 py-2 rounded-md"
               />
               <Loader show={transactionPending} />
+            </div>
+            <div className="flex text-offWhite text-sm my-1">
+              <Button
+                label="Edit Metadata"
+                onClick={() => openUpdateAssetModal(assetWithOrders)}
+                enabled={true}
+                show={true}
+                enabledClassName="bg-chartreuse500 text-neutral900 text-xsm mr-4 px-6 py-2 rounded-md"
+                disabledClassName="bg-chartreuse500 text-neutral900 text-xsm mr-4 px-6 py-2 rounded-md"
+              />
             </div>
           </div>
         </div>

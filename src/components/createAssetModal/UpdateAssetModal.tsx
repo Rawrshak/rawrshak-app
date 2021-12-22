@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { BigNumber } from "ethers";
 import {
   PublicAssetMetadata,
   AudioFileMetadata,
@@ -9,28 +8,31 @@ import {
   AudioAssetMetadata,
   ImageAssetMetadata,
   Static3dObjectAssetMetadata,
-  TextAssetMetadata
+  TextAssetMetadata,
+  Asset
 } from "../../data/data";
 import axios from 'axios';
 import Modal from '../Modal';
 import Button from '../Button';
 import Loader from '../Loader';
-import { InputAmount } from '../Input';
-import { ContentManager } from '../../assets/typechain';
+import { ContentManager, Content, Content__factory } from '../../assets/typechain';
 import { useTransaction } from "../../web3/transactions";
 import { useWeb3 } from '../../web3';
 import AssetTypes from './AssetTypes';
 
-function CreateAssetModal({
+function UpdateAssetModal({
   show,
   setShow,
-  contentManagerContract
+  contentManagerContract,
+  asset
 }: {
   show: boolean,
   setShow: React.Dispatch<React.SetStateAction<boolean>>,
-  contentManagerContract: ContentManager | undefined
+  contentManagerContract: ContentManager | undefined,
+  asset: Asset | undefined
 }) {
-  const web3 = useWeb3();
+  const urlPrefix = 'https://gateway.pinata.cloud/ipfs/';
+  const { signerOrProvider } = useWeb3();
 
   const [pinataApiKey, setPinataApiKey] = useState<string>("");
   const [pinataApiSecret, setPinataApiSecret] = useState<string>("");
@@ -41,14 +43,15 @@ function CreateAssetModal({
   const [type, setType] = useState<string>("audio");
   const [subtype, setSubtype] = useState<string>("sound-effect");
   const [nsfw, setNsfw] = useState<boolean>(false);
-  const [maxSupply, setMaxSupply] = useState<BigNumber>(BigNumber.from("0"));
-  const [royaltyReceiver, setRoyaltyReceiver] = useState<string>("");
   const [statusMessage, setStatusMessage] = useState<string>("");
   const [showStatusMessage, setShowStatusMessage] = useState<boolean>(false);
   const [transaction] = useTransaction();
   const [transactionPending, setTransactionPending] = useState<boolean>(false);
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const [showCreateButton, setShowCreateButton] = useState<boolean>(false);
+  const [contentContract, setContentContract] = useState<Content>();
+  const [oldAssetUri, setOldAssetUri] = useState<string>();
+  const [oldJson, setOldJson] = useState<any>();
 
   const [publicAssetMetadata, setPublicAssetMetadata] = useState<PublicAssetMetadata>(
     {
@@ -112,13 +115,96 @@ function CreateAssetModal({
   const [static3dObjectAssetMetadata, setStatic3dObjectAssetMetadata] = useState<Static3dObjectAssetMetadata>();
   const [textAssetMetadata, setTextAssetMetadata] = useState<TextAssetMetadata>();
 
-  const [royaltyRateString, setRoyaltyRateString] = useState<string>("0");
-  const updateRoyaltyRateString = (royaltyRateString: string) => {
-    if (Number(royaltyRateString) > 100) {
-      royaltyRateString = "100";
+  useEffect(() => {
+    if (asset === undefined || signerOrProvider === undefined) return;
+
+    setContentContract(Content__factory.connect(asset.parentContract, signerOrProvider));
+  }, [asset, signerOrProvider]);
+
+  useEffect(() => {
+    if (contentContract === undefined || asset === undefined) return;
+
+    contentContract["uri(uint256)"](asset.tokenId)
+      .then(uri => {
+        setOldAssetUri(uri);
+      })
+      .catch((error) => console.error(error));
+  }, [asset, contentContract]);
+
+  useEffect(() => {
+    fetch(urlPrefix + oldAssetUri)
+      .then(response => response.json())
+      .then(data => {
+        setOldJson(data);
+      })
+      .catch(error => console.error(error));
+
+  }, [oldAssetUri]);
+
+  useEffect(() => {
+    if (oldJson === undefined) return;
+
+    setType(oldJson.type);
+    setName(oldJson.name);
+    setDescription(oldJson.description);
+    setImageUri(oldJson.image);
+    setTags(oldJson.tags);
+    setNsfw(oldJson.nsfw);
+    setSubtype(oldJson.subtype);
+
+    if (oldJson.type === "audio") {
+      const newAudioFilesMetadata: AudioFileMetadata[] = oldJson.assetProperties.map((audioFileJson: any) => {
+        const newAudioFileMetadata: AudioFileMetadata = {
+          name: audioFileJson.name,
+          engine: audioFileJson.engine,
+          compression: audioFileJson.compression,
+          uri: audioFileJson.uri,
+          contentType: audioFileJson.contentType,
+          duration: audioFileJson.duration,
+          channelCount: audioFileJson.channelCount,
+          sampleRate: audioFileJson.sampleRate,
+        }
+        return newAudioFileMetadata;
+      });
+
+      setAudioFilesMetadata(newAudioFilesMetadata);
+
+    } else if (oldJson.type === "image") {
+      const newImageFilesMetadata: ImageFileMetadata[] = oldJson.assetProperties.map((imageFileJson: any) => {
+        const newImageFileMetadata: ImageFileMetadata = {
+          uri: imageFileJson.uri,
+          height: imageFileJson.height,
+          width: imageFileJson.width,
+          contentType: imageFileJson.contentType,
+        }
+        return newImageFileMetadata;
+      });
+      setImageFilesMetadata(newImageFilesMetadata);
+
+    } else if (oldJson.type === "static3dobject") {
+      const newStatic3dObjectFilesMetadata: Static3dObjectFileMetadata[] = oldJson.assetProperties.map((static3dObjectFileJson: any) => {
+        const newStatic3dObjectFileMetadata: Static3dObjectFileMetadata = {
+          name: static3dObjectFileJson.name,
+          engine: static3dObjectFileJson.engine,
+          platform: static3dObjectFileJson.platform,
+          renderPipeline: static3dObjectFileJson.renderPipeline,
+          fidelity: static3dObjectFileJson.fidelity,
+          shape: static3dObjectFileJson.shape,
+          uri: static3dObjectFileJson.uri,
+        }
+        return newStatic3dObjectFileMetadata;
+      });
+      setStatic3dObjectFilesMetadata(newStatic3dObjectFilesMetadata);
+    } else if (oldJson.type === "text") {
+      const newTextFileMetadata: TextFileMetadata = {
+        title: oldJson.assetProperties.title,
+        description: oldJson.assetProperties.description
+      }
+      setTextFileMetadata(newTextFileMetadata);
+    } else {
+      return;
     }
-    setRoyaltyRateString(royaltyRateString);
-  }
+  }, [oldJson]);
 
   useEffect(() => {
     if (transactionPending) {
@@ -134,17 +220,6 @@ function CreateAssetModal({
       setShowStatusMessage(false);
     }
   }, [transactionPending]);
-
-  useEffect(() => {
-    if (web3.account === undefined) return;
-
-    setRoyaltyReceiver(web3.account);
-  }, [web3.account]);
-
-  const [royaltyRate, setRoyaltyRate] = useState<BigNumber>(BigNumber.from("0"));
-  useEffect(() => {
-    setRoyaltyRate(BigNumber.from(Number(royaltyRateString) * 10000));
-  }, [royaltyRateString]);
 
   useEffect(() => {
     const newAudioAssetMetadata: AudioAssetMetadata = {
@@ -221,18 +296,6 @@ function CreateAssetModal({
   }, [name, description, imageUri, tags, type, subtype, nsfw]);
 
   useEffect(() => {
-    if (type === "audio") {
-      setSubtype("sound-effect");
-    } else if (type === "image") {
-      setSubtype("square");
-    } else if (type === "static3dobject") {
-      setSubtype("trophy");
-    } else {
-      setSubtype("title");
-    }
-  }, [type]);
-
-  useEffect(() => {
     let jsonToPin;
 
     if (type === "audio") {
@@ -278,38 +341,35 @@ function CreateAssetModal({
         }
       })
       .then(response => {
-        setTimeout(() => {
-          console.log("URI: ", response.data.IpfsHash);
-          const hiddenDataUri: string = "";
-          transaction(() => contentManagerContract.addAssetBatch([{
-            publicDataUri: response.data.IpfsHash,
-            hiddenDataUri: hiddenDataUri,
-            maxSupply: maxSupply,
-            royaltyReceiver: royaltyReceiver,
-            royaltyRate: royaltyRate
-          }]),
-            "Transaction pending",
-            "Transaction failed",
-            "Transaction succeeded",
-            () => setTransactionPending(false),
-            () => createAssetSuccess(),
-            () => setTransactionPending(false)
-          );
-        }, 60000);
+        if (asset !== undefined && asset.tokenId !== undefined) {
+          setTimeout(() => {
+            console.log("URI: ", response.data.IpfsHash);
+
+            transaction(() => contentManagerContract.setPublicUriBatch([{
+              tokenId: asset?.tokenId,
+              uri: response.data.IpfsHash
+            }]),
+              "Transaction pending",
+              "Transaction failed",
+              "Transaction succeeded",
+              () => setTransactionPending(false),
+              () => updateAssetSuccess(),
+              () => setTransactionPending(false)
+            );
+
+          }, 60000);
+        }
       })
       .catch(function (error) {
         console.error(error);
       });
   };
 
-  const createAssetSuccess = () => {
+  const updateAssetSuccess = () => {
     setName("");
     setDescription("");
     setImageUri("");
     setTags([""]);
-    setMaxSupply(BigNumber.from("0"));
-    setRoyaltyReceiver("");
-    setRoyaltyRateString("0");
     setNsfw(false);
     setType("audio");
 
@@ -320,7 +380,10 @@ function CreateAssetModal({
     <Modal isOpen={show} setIsOpen={setShow}>
       <div className="flex flex-col">
         <div className="flex justify-center text-xl mb-4">
-          Create Asset
+          Updating Asset
+        </div>
+        <div className="flex justify-center text-lg mb-4">
+          {asset?.name}
         </div>
         <div className="grid grid-cols-12">
           <div className="col-span-4 my-3 mr-2 text-right">
@@ -335,12 +398,11 @@ function CreateAssetModal({
           <div className="flex flex-grow col-span-8 my-2">
             <textarea value={pinataApiSecret} onChange={(e) => { setPinataApiSecret(e.target.value) }} className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2 h-14" />
           </div>
-
           <div className="col-span-4 my-3 mr-2 text-right">
             Name
           </div>
-          <div className="flex flex-grow col-span-8 my-2">
-            <input value={name} onChange={(e) => { setName(e.target.value) }} type="text" className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2" />
+          <div className="flex flex-grow col-span-8 my-3 mx-2">
+            {name}
           </div>
           <div className="col-span-4 my-3 mr-2 text-right">
             Description
@@ -397,30 +459,6 @@ function CreateAssetModal({
             />
           </div>
           <div className="col-span-4 my-3 mr-2 text-right">
-            Max Supply
-          </div>
-          <div className="flex flex-grow col-span-8 my-2">
-            <input value={maxSupply?.toString()} onChange={(e) => { setMaxSupply(BigNumber.from(e.target.value)) }} type="text" className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2" />
-          </div>
-          <div className="col-span-4 my-3 mr-2 text-right">
-            Royalty Receiver Address
-          </div>
-          <div className="flex flex-grow col-span-8 my-2">
-            <textarea value={royaltyReceiver} onChange={(e) => { setRoyaltyReceiver(e.target.value) }} className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2 h-14" />
-          </div>
-          <div className="col-span-4 my-3 mr-2 text-right">
-            Royalty Rate (%)
-          </div>
-          <div className="flex flex-grow col-span-8 my-2">
-            <InputAmount
-              value={royaltyRateString}
-              decimals={2}
-              onChange={(e) => updateRoyaltyRateString(e)}
-              className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2"
-              disabled={false}
-            />
-          </div>
-          <div className="col-span-4 my-3 mr-2 text-right">
             NSFW
           </div>
           <div className="col-span-8 my-2 mt-3">
@@ -429,21 +467,8 @@ function CreateAssetModal({
           <div className="col-span-4 my-3 mr-2 text-right">
             Asset Type
           </div>
-          <div className="col-span-8 my-2">
-            <select onChange={(e) => setType(e.target.value)} name="assetType" className="bg-neutral700 focus:outline-none rounded py-1 px-2">
-              <option value="audio">
-                Audio
-              </option>
-              <option value="image">
-                Image
-              </option>
-              <option value="static3dobject">
-                Static 3D Object
-              </option>
-              <option value="text">
-                Text
-              </option>
-            </select>
+          <div className="col-span-8 mx-1 my-3">
+            {type.charAt(0).toUpperCase() + type.slice(1)}
           </div>
         </div>
         <AssetTypes
@@ -465,7 +490,7 @@ function CreateAssetModal({
           </div>}
           <div className="flex justify-center">
             <Button
-              label="Create Asset"
+              label="Update Asset"
               onClick={() => uploadAndDeploy()}
               enabled={true}
               show={showCreateButton}
@@ -480,4 +505,4 @@ function CreateAssetModal({
   );
 }
 
-export default CreateAssetModal;
+export default UpdateAssetModal;
