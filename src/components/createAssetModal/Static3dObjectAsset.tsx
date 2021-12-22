@@ -213,6 +213,9 @@ function Static3dObjectAsset({
             <option value="trophy">
               Trophy
             </option>
+            <option value="decoration">
+              Decoration
+            </option>
           </select>
         </div>
       </div>

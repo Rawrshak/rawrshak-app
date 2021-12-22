@@ -71,6 +71,9 @@ function TextAsset({
             <option value="lore">
               Lore
             </option>
+            <option value="custom">
+              Custom
+            </option>
           </select>
         </div>
       </div>

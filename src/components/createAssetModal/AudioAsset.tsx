@@ -125,10 +125,10 @@ function AudioFile({
             className="bg-neutral700 focus:outline-none rounded py-1 px-2"
             value={audioFileMetadata.contentType}
           >
-            <option value="wav">
+            <option value="audio/wav">
               WAV
             </option>
-            <option value="mp3">
+            <option value="audio/mp3">
               MP3
             </option>
           </select>
@@ -218,6 +218,12 @@ function AudioAsset({
             value={subtype}>
             <option value="sound-effect">
               Sound Effect
+            </option>
+            <option value="shout">
+              Shout
+            </option>
+            <option value="character-line">
+              Character Line
             </option>
             <option value="background-music">
               Background Music

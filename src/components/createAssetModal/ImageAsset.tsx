@@ -79,13 +79,13 @@ function ImageFile({
             className="bg-neutral700 focus:outline-none rounded py-1 px-2"
             value={imageFileMetadata.contentType}>
             <option value="png">
-              png
+              image/png
             </option>
             <option value="jpg">
-              jpg
+              image/jpg
             </option>
             <option value="svg">
-              svg
+              image/svg
             </option>
           </select>
         </div>
@@ -145,6 +145,12 @@ function ImageAsset({
             </option>
             <option value="horizontal-banner">
               Horizontal Banner
+            </option>
+            <option value="vertical-banner">
+              Vertical Banner
+            </option>
+            <option value="custom">
+              Custom
             </option>
           </select>
         </div>

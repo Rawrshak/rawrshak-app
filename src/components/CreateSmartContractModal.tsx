@@ -64,7 +64,7 @@ function CreateSmartContractModal({
   }, [name, description, imageUri, creator, game, tags]);
 
   useEffect(() => {
-    if (name !== "" && description !== "" && imageUri !== "" && creator !== "" && game !== "" && royaltyAccount !== "") {
+    if (name !== "" && description !== "" && imageUri !== "" && creator !== "" && royaltyAccount !== "") {
       setCreateButtonEnabled(true);
     } else {
       setCreateButtonEnabled(false);

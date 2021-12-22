@@ -107,7 +107,7 @@ function AssetsView({
             Creator: {activeContent.creator}
           </div>
           <div className="flex text-sm">
-            Owner: {activeContent.owner}
+            Game: {activeContent.game}
           </div>
         </div>
         <div className="grid grid-cols-2 mt-12 mb-4">

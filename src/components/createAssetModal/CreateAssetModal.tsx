@@ -69,7 +69,7 @@ function CreateAssetModal({
         engine: "unity",
         compression: "compressed",
         uri: "https://arweave.net/",
-        contentType: "wav",
+        contentType: "audio/wav",
         duration: 0,
         channelCount: 0,
         sampleRate: 0,
@@ -82,7 +82,7 @@ function CreateAssetModal({
         uri: "https://arweave.net/",
         height: 0,
         width: 0,
-        contentType: "png",
+        contentType: "image/png",
       }
     ]
   );
