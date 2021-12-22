@@ -86,6 +86,9 @@ function AudioFile({
             <option value="unity">
               Unity
             </option>
+            <option value="unreal">
+              Unreal
+            </option>
             <option value="none">
               None
             </option>
@@ -103,6 +106,12 @@ function AudioFile({
           >
             <option value="compressed">
               Compressed
+            </option>
+            <option value="pcm">
+              PCM
+            </option>
+            <option value="adpcm">
+              ADPCM
             </option>
             <option value="raw">
               Raw
@@ -130,6 +139,12 @@ function AudioFile({
             </option>
             <option value="audio/mp3">
               MP3
+            </option>
+            <option value="audio/ogg">
+              OGG
+            </option>
+            <option value="audio/aiff">
+              AIFF
             </option>
           </select>
         </div>

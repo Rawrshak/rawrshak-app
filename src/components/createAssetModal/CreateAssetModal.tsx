@@ -94,7 +94,7 @@ function CreateAssetModal({
         platform: "windows",
         renderPipeline: "brp",
         fidelity: "low",
-        shape: "horizontal",
+        shape: "horizontalx",
         uri: "https://arweave.net/",
       }
     ]

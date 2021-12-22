@@ -78,6 +78,9 @@ function Static3dObject({
             <option value="unity">
               Unity
             </option>
+            <option value="unreal">
+              Unreal
+            </option>
             <option value="none">
               None
             </option>
@@ -118,6 +121,12 @@ function Static3dObject({
             <option value="brp">
               BRP
             </option>
+            <option value="urp">
+              URP
+            </option>
+            <option value="hdrp">
+              HDRP
+            </option>
           </select>
         </div>
         <div className="col-span-4 my-3 mr-2 text-right">
@@ -149,8 +158,23 @@ function Static3dObject({
             name="assetType"
             className="bg-neutral700 focus:outline-none rounded py-1 px-2"
             value={static3dObjectFileMetadata.shape}>
-            <option value="horizontal">
-              Horizontal
+            <option value="horizontalx">
+              Horizontal X
+            </option>
+            <option value="horizontaly">
+              Horizontal Y
+            </option>
+            <option value="horizontalz">
+              Horizontal Z
+            </option>
+            <option value="small">
+              Small
+            </option>
+            <option value="medium">
+              Medium
+            </option>
+            <option value="large">
+              Large
             </option>
           </select>
         </div>
