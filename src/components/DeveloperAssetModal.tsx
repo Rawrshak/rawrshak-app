@@ -117,7 +117,6 @@ function AssetModal({
               ))}
             </div>
           </div>
-
           <div className="flex flex-grow flex-col bg-black450 mx-4 my-2 px-4 py-2 rounded-lg">
             <div className="text-offWhite text-sm">
               Token ID: {assetWithOrders.tokenId}
@@ -135,7 +134,6 @@ function AssetModal({
               URI: {assetUri}
             </div>
           </div>
-
           <div className="flex flex-grow flex-col bg-black450 mx-4 my-2 px-4 py-2 rounded-lg">
             <div className="text-offWhite text-sm">
               Mint Quantity
@@ -169,6 +167,7 @@ function AssetModal({
                 disabledClassName="bg-chartreuse500 text-neutral900 text-xsm mr-4 px-6 py-2 rounded-md"
               />
             </div>
+
           </div>
         </div>
       </SlidingPane>

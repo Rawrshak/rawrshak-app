@@ -13,6 +13,7 @@ import Image from './Image';
 import { ethers, BigNumber } from "ethers";
 import { useTransaction } from "../web3/transactions";
 import UpdateAssetModal from './createAssetModal/UpdateAssetModal';
+import UpdateRoyaltyModal from './UpdateRoyaltyModal';
 
 function SmartContractAssets({
   activeContent,
@@ -63,6 +64,7 @@ function AssetsView({
   const [activeContentManagerContract, setActiveContentManagerContract] = useState<ContentManager>();
   const [showCreateAssetModal, setShowCreateAssetModal] = useState<boolean>(false);
   const [showUpdateAssetModal, setShowUpdateAssetModal] = useState<boolean>(false);
+  const [showUpdateRoyaltyModal, setShowUpdateRoyaltyModal] = useState<boolean>(false);
   const [assetToUpdate, setAssetToUpdate] = useState<Asset | undefined>();
 
   const openUpdateAssetModal = (asset: Asset | undefined) => {
@@ -78,55 +80,68 @@ function AssetsView({
 
   if (show && activeContent !== undefined) {
     return (
-      <div className="flex flex-col flex-grow text-offWhite text-xsm">
+      <>
         <CreateAssetModal show={showCreateAssetModal} setShow={setShowCreateAssetModal} contentManagerContract={activeContentManagerContract} />
         <UpdateAssetModal show={showUpdateAssetModal} setShow={setShowUpdateAssetModal} contentManagerContract={activeContentManagerContract} asset={assetToUpdate} />
-        <div onClick={() => setShowAssetsView(false)} className="text-lg ml-4 cursor-pointer">
-          {`< Back to smart contracts`}
-        </div>
-        <div className="flex flex-col bg-black450 rounded-lg px-6 py-4 m-4">
-          <div className="flex">
-            <Image src={activeContent.imageUri} className="flex" type="content" />
+        <UpdateRoyaltyModal show={showUpdateRoyaltyModal} setShow={setShowUpdateRoyaltyModal} activeContent={activeContent} />
+        <div className="flex flex-col flex-grow text-offWhite text-xsm">
+          <div onClick={() => setShowAssetsView(false)} className="text-lg ml-4 cursor-pointer">
+            {`< Back to smart contracts`}
           </div>
-          <div className="flex text-xxxl">
-            {activeContent.name}
+          <div className="flex flex-col bg-black450 rounded-lg px-6 py-4 m-4">
+            <div className="flex">
+              <Image src={activeContent.imageUri} className="flex" type="content" />
+            </div>
+            <div className="flex text-xxxl">
+              {activeContent.name}
+            </div>
+            <div className="flex text-sm">
+              Description: {activeContent.description}
+            </div>
+            <div className="flex text-sm">
+              URI: {activeContent.contractUri}
+            </div>
+            <div className="flex text-sm">
+              Contract Address: {activeContent.contractAddress}
+            </div>
+            <div className="flex text-sm">
+              Creator Address: {activeContent.creatorAddress}
+            </div>
+            <div className="flex text-sm">
+              Creator: {activeContent.creator}
+            </div>
+            <div className="flex text-sm">
+              Game: {activeContent.game}
+            </div>
+            <div className="flex text-offWhite text-sm my-1">
+              <Button
+                label="Edit Royalties"
+                onClick={() => setShowUpdateRoyaltyModal(true)}
+                enabled={true}
+                show={true}
+                enabledClassName="bg-chartreuse500 text-neutral900 text-xsm mr-4 px-6 py-2 rounded-md"
+                disabledClassName="bg-chartreuse500 text-neutral900 text-xsm mr-4 px-6 py-2 rounded-md"
+              />
+            </div>
           </div>
-          <div className="flex text-sm">
-            Description: {activeContent.description}
+          <div className="grid grid-cols-2 mt-12 mb-4">
+            <div className="text-offWhite text-xl ml-4">
+              {activeContent.assets.length} {activeContent.assets.length === 1 ? "Asset" : "Assets"}
+            </div>
+            <div className="flex justify-end mx-4">
+              <Button
+                label="NEW ASSET"
+                onClick={() => setShowCreateAssetModal(true)}
+                enabled={true}
+                show={true}
+                enabledClassName="flex justify-center text-chartreuse500 text-sm border-chartreuse500 border-2 py-2 px-4 rounded-lg w-36"
+                disabledClassName=""
+              />
+            </div>
           </div>
-          <div className="flex text-sm">
-            URI: {activeContent.contractUri}
-          </div>
-          <div className="flex text-sm">
-            Contract Address: {activeContent.contractAddress}
-          </div>
-          <div className="flex text-sm">
-            Creator Address: {activeContent.creatorAddress}
-          </div>
-          <div className="flex text-sm">
-            Creator: {activeContent.creator}
-          </div>
-          <div className="flex text-sm">
-            Game: {activeContent.game}
-          </div>
-        </div>
-        <div className="grid grid-cols-2 mt-12 mb-4">
-          <div className="text-offWhite text-xl ml-4">
-            {activeContent.assets.length} {activeContent.assets.length === 1 ? "Asset" : "Assets"}
-          </div>
-          <div className="flex justify-end mx-4">
-            <Button
-              label="NEW ASSET"
-              onClick={() => setShowCreateAssetModal(true)}
-              enabled={true}
-              show={true}
-              enabledClassName="flex justify-center text-chartreuse500 text-sm border-chartreuse500 border-2 py-2 px-4 rounded-lg w-36"
-              disabledClassName=""
-            />
-          </div>
-        </div>
-        <SmartContractAssets activeContent={activeContent} openUpdateAssetModal={openUpdateAssetModal} />
-      </div >
+          <SmartContractAssets activeContent={activeContent} openUpdateAssetModal={openUpdateAssetModal} />
+        </div >
+      </>
     );
   } else {
     return (null);
