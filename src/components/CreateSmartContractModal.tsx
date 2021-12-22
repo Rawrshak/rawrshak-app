@@ -64,13 +64,13 @@ function CreateSmartContractModal({
   }, [name, description, imageUri, creator, game, tags]);
 
   useEffect(() => {
-    if (name !== "" && description !== "" && imageUri !== "" && creator !== "" && royaltyAccount !== "") {
+    if (name !== "" && description !== "" && imageUri !== "" && creator !== "" && royaltyAccount !== "" && pinataApiKey.length === 20 && pinataApiSecret.length === 64) {
       setCreateButtonEnabled(true);
     } else {
       setCreateButtonEnabled(false);
     }
 
-  }, [name, description, imageUri, creator, game, royaltyAccount]);
+  }, [name, description, imageUri, creator, game, royaltyAccount, pinataApiKey, pinataApiSecret]);
 
   useEffect(() => {
     if (transactionPending) {

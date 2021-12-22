@@ -52,6 +52,7 @@ function UpdateAssetModal({
   const [contentContract, setContentContract] = useState<Content>();
   const [oldAssetUri, setOldAssetUri] = useState<string>();
   const [oldJson, setOldJson] = useState<any>();
+  const [enableUpdateButton, setEnableUpdateButton] = useState<boolean>(false);
 
   const [publicAssetMetadata, setPublicAssetMetadata] = useState<PublicAssetMetadata>(
     {
@@ -114,6 +115,14 @@ function UpdateAssetModal({
   const [imageAssetMetadata, setImageAssetMetadata] = useState<ImageAssetMetadata>();
   const [static3dObjectAssetMetadata, setStatic3dObjectAssetMetadata] = useState<Static3dObjectAssetMetadata>();
   const [textAssetMetadata, setTextAssetMetadata] = useState<TextAssetMetadata>();
+
+  useEffect(() => {
+    if (name !== "" && description !== "" && pinataApiKey.length === 20 && pinataApiSecret.length === 64) {
+      setEnableUpdateButton(true);
+    } else {
+      setEnableUpdateButton(false);
+    }
+  }, [name, description, pinataApiKey.length, pinataApiSecret]);
 
   useEffect(() => {
     if (asset === undefined || signerOrProvider === undefined) return;
@@ -493,7 +502,7 @@ function UpdateAssetModal({
             <Button
               label="Update Asset"
               onClick={() => uploadAndDeploy()}
-              enabled={true}
+              enabled={enableUpdateButton}
               show={showCreateButton}
               enabledClassName="flex bg-chartreuse500 text-neutral900 text-xsm px-6 py-2 rounded-md w-30 justify-center"
               disabledClassName="flex bg-black400 text-black300 text-xsm px-6 py-2 rounded-md w-30 justify-center"

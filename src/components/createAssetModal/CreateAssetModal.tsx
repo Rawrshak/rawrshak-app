@@ -49,6 +49,7 @@ function CreateAssetModal({
   const [transactionPending, setTransactionPending] = useState<boolean>(false);
   const [showLoader, setShowLoader] = useState<boolean>(false);
   const [showCreateButton, setShowCreateButton] = useState<boolean>(false);
+  const [enableCreateButton, setEnableCreateButton] = useState<boolean>(false);
 
   const [publicAssetMetadata, setPublicAssetMetadata] = useState<PublicAssetMetadata>(
     {
@@ -119,6 +120,14 @@ function CreateAssetModal({
     }
     setRoyaltyRateString(royaltyRateString);
   }
+
+  useEffect(() => {
+    if (name !== "" && description !== "" && pinataApiKey.length === 20 && pinataApiSecret.length === 64) {
+      setEnableCreateButton(true);
+    } else {
+      setEnableCreateButton(false);
+    }
+  }, [name, description, pinataApiKey.length, pinataApiSecret]);
 
   useEffect(() => {
     if (transactionPending) {
@@ -468,7 +477,7 @@ function CreateAssetModal({
             <Button
               label="Create Asset"
               onClick={() => uploadAndDeploy()}
-              enabled={true}
+              enabled={enableCreateButton}
               show={showCreateButton}
               enabledClassName="flex bg-chartreuse500 text-neutral900 text-xsm px-6 py-2 rounded-md w-30 justify-center"
               disabledClassName="flex bg-black400 text-black300 text-xsm px-6 py-2 rounded-md w-30 justify-center"
