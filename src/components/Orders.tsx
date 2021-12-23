@@ -67,7 +67,7 @@ function SingleOrderActionsPopover({
       onClickOutside={() => setShowPopover(false)}
       content={
         <div className="flex flex-col overflow-visible bg-black450 rounded-lg z-50">
-          <div className="text-sm my-2 mx-3">
+          <div className="text-sm my-2 mx-3 text-offWhite">
             Actions
           </div>
           <hr className="text-black400 mx-3" />
