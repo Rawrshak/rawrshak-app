@@ -170,7 +170,7 @@ function OwnedSmartContracts({
           />
         )) :
           <div className="flex flex-col flex-grow h-44 m-3 bg-opacity-1 border-black200 border-2 rounded-xl cursor-pointer" onClick={() => setShowSmartContractModal(true)}>
-            <div className="flex text-offWhite text-center text-sm mt-16 m-3">
+            <div className="flex text-offWhite text-center text-sm mt-16 m-3 underline">
               Create your first Smart Contract
             </div>
           </div>
