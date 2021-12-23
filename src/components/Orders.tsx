@@ -8,107 +8,95 @@ import { useEffect, useState } from 'react';
 import Button from './Button';
 import { useTransaction } from "../web3/transactions";
 import { ethers, BigNumber } from "ethers";
+import { Popover } from 'react-tiny-popover';
 
-function FilterOptions({
-  show,
-  setShow,
-  showFilledOrders,
-  showCancelledOrders,
-  setShowFilledOrders,
-  setShowCancelledOrders
-}: {
-  show: boolean,
-  setShow: React.Dispatch<React.SetStateAction<boolean>>,
-  showFilledOrders: boolean,
-  showCancelledOrders: boolean,
-  setShowFilledOrders: React.Dispatch<React.SetStateAction<boolean>>,
-  setShowCancelledOrders: React.Dispatch<React.SetStateAction<boolean>>
-}) {
-
-  if (show) {
-    return (
-      <div className="flex flex-col overflow-visible bg-black450 rounded-lg z-50">
-        <div className="text-offWhite text-sm pt-3 my-3 mx-3">
-          Filter
-        </div>
-        <hr className="text-black400 mx-3 text-xsm" />
-        <div className="text-black200 text-xsm mx-2 my-1 p-1 cursor-pointer">
-          <input checked={showFilledOrders} onChange={(e) => { setShowFilledOrders(!showFilledOrders) }} type="checkbox" className="bg-neutral700 focus:outline-none rounded mt-1 mr-2" />
-          Show Filled Orders
-        </div>
-        <div className="text-black200 text-xsm mx-2 my-1 p-1 cursor-pointer">
-          <input checked={showCancelledOrders} onChange={(e) => { setShowCancelledOrders(!showCancelledOrders) }} type="checkbox" className="bg-neutral700 focus:outline-none rounded mt-1 mr-2" />
-          Show Cancelled Orders
-        </div>
-      </div>
-    );
-  } else {
-    return (null);
-  }
-}
-
-function SelectedOrdersActions({
-  show,
+function SelectedOrdersActionsPopover({
   claim,
   cancel,
   selectedOrderCount
 }: {
-  show: boolean,
   claim: () => void,
   cancel: () => void,
   selectedOrderCount: number
 }) {
+  const [showPopover, setShowPopover] = useState<boolean>(false);
+  return (
 
-  if (show) {
-    return (
-      <div className="flex flex-col overflow-visible bg-black450 rounded-lg z-50">
-        <div className="text-offWhite text-sm pt-3 my-3 mx-3">
-          Actions
+    <Popover
+      isOpen={showPopover}
+      positions={['bottom', 'left', 'top', 'right']} // preferred positions by priority
+      onClickOutside={() => setShowPopover(false)}
+      content={
+        <div className="flex flex-col overflow-visible bg-black450 rounded-lg z-50 m-2">
+          <div className="text-offWhite text-sm pt-3 my-3 mx-3">
+            Actions
+          </div>
+          <hr className="text-black400 mx-3 text-xsm" />
+          <div onClick={() => { claim(); setShowPopover(false); }} className="text-offWhite text-xsm mx-2 my-1 p-1 cursor-pointer">
+            Claim Selected Orders ({selectedOrderCount})
+          </div>
+          <hr className="text-black400 mx-3 text-xsm" />
+          <div onClick={() => { cancel(); setShowPopover(false) }} className="text-semanticRed text-xsm mx-2 my-1 p-1 cursor-pointer">
+            Cancel Selected Orders ({selectedOrderCount})
+          </div>
         </div>
-        <hr className="text-black400 mx-3 text-xsm" />
-        <div onClick={() => claim()} className="text-black200 text-xsm mx-2 my-1 p-1 cursor-pointer">
-          Claim Selected Orders ({selectedOrderCount})
-        </div>
-        <hr className="text-black400 mx-3 text-xsm" />
-        <div onClick={() => cancel()} className="text-semanticRed text-xsm mx-2 my-1 p-1 cursor-pointer">
-          Cancel Selected Orders ({selectedOrderCount})
-        </div>
-      </div>
-    );
-  } else {
-    return (null);
-  }
+      }>
+      <button onClick={() => setShowPopover(!showPopover)} className="flex justify-center text-chartreuse500 text-sm bg-opacity-1 border-chartreuse500 border-2 ml-2 my-2 w-32 py-1 rounded-lg">
+        ACTIONS
+        <img className="ml-2 mt-1" src={DownArrow} alt="DownArrow" />
+      </button>
+    </Popover>
+  );
 }
 
-function SingleOrderActions({
-  show,
+function SingleOrderActionsPopover({
   claim,
-  cancel
+  cancel,
+  order
 }: {
-  show: boolean,
   claim: () => void,
   cancel: () => void,
+  order: OrderWithAssetMetadata | undefined
 }) {
+  const [showPopover, setShowPopover] = useState<boolean>(false);
 
-  if (show) {
-    return (
-      <div className="flex flex-col overflow-visible bg-black450 rounded-lg z-50">
-        <div className="text-sm my-2 mx-3">
-          Actions
+  return (
+    <Popover
+      isOpen={showPopover}
+      positions={['bottom', 'left', 'top', 'right']} // preferred positions by priority
+      onClickOutside={() => setShowPopover(false)}
+      content={
+        <div className="flex flex-col overflow-visible bg-black450 rounded-lg z-50">
+          <div className="text-sm my-2 mx-3">
+            Actions
+          </div>
+          <hr className="text-black400 mx-3" />
+          {order?.amountFilled.gt(order.amountClaimed) ?
+            <div onClick={() => { claim(); setShowPopover(false); }} className="text-offWhite text-xsm mx-2 my-1 p-1 cursor-pointer">
+              Claim This Order
+            </div>
+            :
+            <div className="text-black200 text-xsm mx-2 my-1 p-1">
+              Claim This Order
+            </div>
+          }
+          <hr className="text-black400 mx-3" />
+          {order?.cancelledAtTimestamp.eq(BigNumber.from("0")) ?
+            <div onClick={() => { cancel(); setShowPopover(false); }} className="text-semanticRed text-xsm mx-2 my-1 p-1 cursor-pointer">
+              Cancel This Order
+            </div>
+            :
+            <div className="text-black200 text-xsm mx-2 my-1 p-1">
+              Cancel This Order
+            </div>
+          }
         </div>
-        <hr className="text-black400 mx-3" />
-        <div onClick={() => claim()} className="text-black200 text-xsm mx-2 my-1 p-1 cursor-pointer">
-          Claim This Order
-        </div>
-        <hr className="text-black400 mx-3" />
-        <div onClick={() => cancel()} className="text-semanticRed text-xsm mx-2 my-1 p-1 cursor-pointer">
-          Cancel This Order
-        </div>
+      }>
+      <div className="flex text-offWhite my-3">
+        <img onClick={() => setShowPopover(!showPopover)} className="cursor-pointer p-3 h-7" src={Ellipsis} alt="Ellipsis" />
       </div>
-    );
-  } else {
-    return (null);
-  }
+    </Popover>
+  );
 }
 
 function Order({
@@ -124,20 +112,17 @@ function Order({
   claimOrder: (orderId: BigNumber) => void,
   cancelOrder: (orderId: BigNumber) => void
 }) {
-  const [showAction, setShowAction] = useState<boolean>(false);
   const { supportedToken } = useData();
 
   const claim = () => {
     if (order === undefined) return;
 
-    setShowAction(false);
     claimOrder(order.id);
   }
 
   const cancel = () => {
     if (order === undefined) return;
 
-    setShowAction(false);
     cancelOrder(order.id);
   }
 
@@ -178,13 +163,51 @@ function Order({
         <div className="flex text-offWhite my-3">
           {claimableAmount()}
         </div>
-        <div className="flex text-offWhite my-3">
-          <img onClick={() => setShowAction(!showAction)} className="cursor-pointer p-3 h-7" src={Ellipsis} alt="Ellipsis" />
-          <SingleOrderActions show={showAction} claim={claim} cancel={cancel} />
-        </div>
+        <SingleOrderActionsPopover claim={() => claim()} cancel={() => cancel()} order={order} />
       </div>
     );
   }
+}
+
+function FilterPopover({
+  showFilledOrders,
+  showCancelledOrders,
+  setShowFilledOrders,
+  setShowCancelledOrders
+}: {
+  showFilledOrders: boolean,
+  showCancelledOrders: boolean,
+  setShowFilledOrders: React.Dispatch<React.SetStateAction<boolean>>,
+  setShowCancelledOrders: React.Dispatch<React.SetStateAction<boolean>>
+}) {
+  const [showPopover, setShowPopover] = useState<boolean>(false);
+
+  return (
+    <Popover
+      isOpen={showPopover}
+      positions={['bottom', 'left', 'top', 'right']} // preferred positions by priority
+      onClickOutside={() => setShowPopover(false)}
+      content={
+        <div className="flex flex-col overflow-visible bg-black450 rounded-lg z-50 m-2">
+          <div className="text-offWhite text-sm pt-3 my-3 mx-3">
+            Filter
+          </div>
+          <hr className="text-black400 mx-3 text-xsm" />
+          <div className="text-black200 text-xsm mx-2 my-1 p-1 cursor-pointer">
+            <input checked={showFilledOrders} onChange={(e) => { setShowFilledOrders(!showFilledOrders) }} type="checkbox" className="bg-neutral700 focus:outline-none rounded mt-1 mr-2" />
+            Show Filled Orders
+          </div>
+          <div className="text-black200 text-xsm mx-2 my-1 p-1 cursor-pointer">
+            <input checked={showCancelledOrders} onChange={(e) => { setShowCancelledOrders(!showCancelledOrders) }} type="checkbox" className="bg-neutral700 focus:outline-none rounded mt-1 mr-2" />
+            Show Cancelled Orders
+          </div>
+        </div>
+      }>
+      <div className="flex justify-center border-chartreuse500 border-2 my-2 w-8 py-1 rounded-lg cursor-pointer" onClick={() => setShowPopover(!showPopover)}>
+        <img className="flex my-1" src={Filter} alt="Filter" />
+      </div>
+    </Popover>
+  );
 }
 
 function Orders() {
@@ -192,8 +215,6 @@ function Orders() {
   const [typeFilteredOrders, setTypeFilteredOrders] = useState<OrderWithAssetMetadata[]>([]);
   const [statusFilteredOrders, setStatusFilteredOrders] = useState<OrderWithAssetMetadata[]>([]);
   const [selectedOrderIds, setSelectedOrderIds] = useState<BigNumber[]>([]);
-  const [showActions, setShowActions] = useState<boolean>(false);
-  const [showFilterOptions, setShowFilterOptions] = useState<boolean>(false);
   const [orderTypeToShow, setOrderTypeToShow] = useState<string>("buy");
   const [showFilledOrders, setShowFilledOrders] = useState<boolean>(false);
   const [showCancelledOrders, setShowCancelledOrders] = useState<boolean>(false);
@@ -225,14 +246,12 @@ function Orders() {
   const claimSelectedOrders = () => {
     if (exchange === undefined) return;
 
-    setShowActions(false);
     transaction(() => exchange.claimOrders(selectedOrderIds), "Transaction pending", "Transaction failed", "Transaction succeeded", undefined, undefined, undefined);
   }
 
   const cancelSelectedOrders = () => {
     if (exchange === undefined) return;
 
-    setShowActions(false);
     transaction(() => exchange.cancelOrders(selectedOrderIds), "Transaction pending", "Transaction failed", "Transaction succeeded", undefined, undefined, undefined);
   }
 
@@ -312,26 +331,22 @@ function Orders() {
             />
           </div>
           <div />
-          <div />
+          <div>
+
+
+
+          </div>
           <div className="z-0">
             <div className="flex flex-row">
-              <button onClick={() => setShowFilterOptions(!showFilterOptions)} className="flex justify-center text-chartreuse500 text-sm bg-opacity-1 border-chartreuse500 border-2 my-2 w-8 py-1 rounded-lg">
-                <img className="flex my-1" src={Filter} alt="Filter" />
-              </button>
-              <button onClick={() => setShowActions(!showActions)} className="flex justify-center text-chartreuse500 text-sm bg-opacity-1 border-chartreuse500 border-2 ml-2 my-2 w-32 py-1 rounded-lg">
-                ACTIONS
-                <img className="ml-2 mt-1" src={DownArrow} alt="DownArrow" />
-              </button>
+              <FilterPopover
+                showFilledOrders={showFilledOrders}
+                showCancelledOrders={showCancelledOrders}
+                setShowFilledOrders={setShowFilledOrders}
+                setShowCancelledOrders={setShowCancelledOrders}
+              />
+              <SelectedOrdersActionsPopover claim={claimSelectedOrders} cancel={cancelSelectedOrders} selectedOrderCount={selectedOrderIds.length} />
             </div>
-            <FilterOptions
-              show={showFilterOptions}
-              setShow={setShowFilterOptions}
-              showFilledOrders={showFilledOrders}
-              showCancelledOrders={showCancelledOrders}
-              setShowFilledOrders={setShowFilledOrders}
-              setShowCancelledOrders={setShowCancelledOrders}
-            />
-            <SelectedOrdersActions show={showActions} claim={() => claimSelectedOrders()} cancel={() => cancelSelectedOrders()} selectedOrderCount={selectedOrderIds.length} />
+
           </div>
         </div>
         <div className="grid grid-cols-6 mb-4 text-lg">
