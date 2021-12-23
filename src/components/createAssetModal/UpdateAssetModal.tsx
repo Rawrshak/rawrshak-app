@@ -387,14 +387,14 @@ function UpdateAssetModal({
 
   return (
     <Modal isOpen={show} setIsOpen={setShow}>
-      <div className="flex flex-col">
+      <div className="flex flex-grow flex-col">
         <div className="flex justify-center text-xl mb-4">
           Updating Asset
         </div>
         <div className="flex justify-center text-lg mb-4">
           {asset?.name}
         </div>
-        <div className="grid grid-cols-12">
+        <div className="grid flex-grow grid-cols-12">
           <div className="col-span-4 my-3 mr-2 text-right">
             Pinata API Key
           </div>
@@ -423,7 +423,7 @@ function UpdateAssetModal({
             Image URI
           </div>
           <div className="flex flex-grow col-span-8 my-2">
-            <input value={imageUri} onChange={(e) => { setImageUri(e.target.value) }} type="text" className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2" />
+            <textarea value={imageUri} onChange={(e) => { setImageUri(e.target.value) }} className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2" />
           </div>
           <div className="col-span-4 mt-3 mr-2 text-right">
             Tags
