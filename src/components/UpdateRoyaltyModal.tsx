@@ -92,7 +92,7 @@ function UpdateRoyaltyModal({
   }, [royaltyRateString]);
 
   return (
-    <Modal isOpen={show} setIsOpen={setShow}>
+    <Modal isOpen={show} setIsOpen={setShow} forceOpen={false}>
       <div className="flex flex-col justify-center">
         <div className="flex text-xl justify-center mb-4">
           Updating Contract Royalties
@@ -118,14 +118,14 @@ function UpdateRoyaltyModal({
             />
           </div>
         </div>
-        <div className="flex flex-grow justify-center">
+        <div className="flex flex-grow justify-center mt-4">
           <Button
-            label="Update"
+            label="UPDATE ROYALTIES"
             onClick={() => updateRoyalties()}
             enabled={enableUpdateButton}
             show={!transactionPending}
-            enabledClassName="flex justify-center bg-chartreuse500 text-neutral900 text-xsm px-6 py-2 rounded-md w-24"
-            disabledClassName="flex justify-center bg-black400 text-black300 text-xsm px-6 py-2 rounded-md w-24"
+            enabledClassName="flex justify-center bg-gray border-chartreuse500 border-2 text-chartreuse500 text-xsm px-6 py-2 rounded-md"
+            disabledClassName="flex justify-center bg-gray text-black300 border-black300 border-2 text-xsm px-6 py-2 rounded-md"
           />
           <Loader show={transactionPending} />
         </div>

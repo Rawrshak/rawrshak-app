@@ -5,18 +5,26 @@ import X from '../assets/icons/X';
 function Modal({
   isOpen,
   setIsOpen,
+  forceOpen,
   children,
 }: {
   isOpen: boolean;
-  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setIsOpen: React.Dispatch<React.SetStateAction<boolean>>,
+  forceOpen: boolean,
   children: React.ReactNode,
 }) {
+  const outsideClick = () => {
+    if (!forceOpen) {
+      setIsOpen(false);
+    }
+  }
+
   return (
     <Transition appear show={isOpen} as={Fragment}>
       <Dialog
         as="div"
         className="fixed inset-0 z-10 overflow-y-auto text-white"
-        onClose={() => setIsOpen(false)}
+        onClose={() => outsideClick()}
       >
         <div className="min-h-screen px-4 text-center z-50">
           <Transition.Child

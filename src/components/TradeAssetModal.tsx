@@ -74,7 +74,7 @@ function TradeAssetModal({
 
   if (assetWithOrders === undefined) {
     return (
-      <Modal isOpen={show} setIsOpen={setShow}>
+      <Modal isOpen={show} setIsOpen={setShow} forceOpen={false}>
         <div className="flex flex-col bg-gray">
           <div className="text-offWhite text-xl">
             Asset not found
@@ -84,7 +84,7 @@ function TradeAssetModal({
     );
   } else {
     return (
-      <Modal isOpen={show} setIsOpen={setShow}>
+      <Modal isOpen={show} setIsOpen={setShow} forceOpen={false}>
         <div className="flex flex-col bg-gray">
           <div className="flex flex-grow mb-4 justify-center">
             <img src={assetWithOrders.imageUri} alt="Rawrshak Asset" className="w-44" />

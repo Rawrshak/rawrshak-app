@@ -144,7 +144,7 @@ function CreateSmartContractModal({
   }
 
   return (
-    <Modal isOpen={show} setIsOpen={setShow}>
+    <Modal isOpen={show} setIsOpen={setShow} forceOpen={transactionPending}>
       <div className="flex flex-col">
         <div className="flex text-xl justify-center mb-4">
           Create Content Contract

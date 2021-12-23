@@ -9,7 +9,7 @@ function InstallMetamaskModal({
   setShow: React.Dispatch<React.SetStateAction<boolean>>,
 }) {
   return (
-    <Modal isOpen={show} setIsOpen={setShow}>
+    <Modal isOpen={show} setIsOpen={setShow} forceOpen={false}>
       <div className="flex text-offWhite flex-col bg-gray justify-center">
         <div className="flex justify-center">
           <a

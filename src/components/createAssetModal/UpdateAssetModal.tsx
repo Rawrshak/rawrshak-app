@@ -386,7 +386,7 @@ function UpdateAssetModal({
   }
 
   return (
-    <Modal isOpen={show} setIsOpen={setShow}>
+    <Modal isOpen={show} setIsOpen={setShow} forceOpen={transactionPending}>
       <div className="flex flex-grow flex-col">
         <div className="flex justify-center text-xl mb-4">
           Updating Asset

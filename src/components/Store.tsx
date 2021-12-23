@@ -88,40 +88,46 @@ function AssetsView({
           <div onClick={() => setShowAssetsView(false)} className="text-lg ml-4 cursor-pointer">
             {`< Back to smart contracts`}
           </div>
-          <div className="flex flex-col bg-black450 rounded-lg px-6 py-4 m-4">
-            <div className="flex">
-              <Image src={activeContent.imageUri} className="flex" type="content" />
+          <div className="flex flex-row bg-black450 rounded-lg px-6 py-4 m-4">
+            <div className="flex flex-col flex-grow">
+              <div className="flex">
+                <Image src={activeContent.imageUri} className="flex" type="content" />
+              </div>
+              <div className="flex text-xxxl">
+                {activeContent.name}
+              </div>
+              <div className="flex text-sm">
+                Description: {activeContent.description}
+              </div>
+              <div className="flex text-sm">
+                URI: {activeContent.contractUri}
+              </div>
+              <div className="flex text-sm">
+                Contract Address: {activeContent.contractAddress}
+              </div>
+              <div className="flex text-sm">
+                Creator Address: {activeContent.creatorAddress}
+              </div>
+              <div className="flex text-sm">
+                Creator: {activeContent.creator}
+              </div>
+              <div className="flex text-sm">
+                Game: {activeContent.game}
+              </div>
+
             </div>
-            <div className="flex text-xxxl">
-              {activeContent.name}
-            </div>
-            <div className="flex text-sm">
-              Description: {activeContent.description}
-            </div>
-            <div className="flex text-sm">
-              URI: {activeContent.contractUri}
-            </div>
-            <div className="flex text-sm">
-              Contract Address: {activeContent.contractAddress}
-            </div>
-            <div className="flex text-sm">
-              Creator Address: {activeContent.creatorAddress}
-            </div>
-            <div className="flex text-sm">
-              Creator: {activeContent.creator}
-            </div>
-            <div className="flex text-sm">
-              Game: {activeContent.game}
-            </div>
-            <div className="flex text-offWhite text-sm my-1">
-              <Button
-                label="Edit Royalties"
-                onClick={() => setShowUpdateRoyaltyModal(true)}
-                enabled={true}
-                show={true}
-                enabledClassName="bg-chartreuse500 text-neutral900 text-xsm mr-4 px-6 py-2 rounded-md"
-                disabledClassName="bg-chartreuse500 text-neutral900 text-xsm mr-4 px-6 py-2 rounded-md"
-              />
+            <div className="flex flex-col">
+              <div className="flex flex-grow" />
+              <div className="text-offWhite text-sm my-1 justify-end">
+                <Button
+                  label="EDIT ROYALTIES"
+                  onClick={() => setShowUpdateRoyaltyModal(true)}
+                  enabled={true}
+                  show={true}
+                  enabledClassName="bg-black450 text-chartreuse500 border-chartreuse500 border-2 text-sm px-6 py-2 rounded-md"
+                  disabledClassName="bg-black45000 text-neutral900 text-xsm mr-4 px-6 py-2 rounded-md"
+                />
+              </div>
             </div>
           </div>
           <div className="grid grid-cols-2 mt-12 mb-4">
