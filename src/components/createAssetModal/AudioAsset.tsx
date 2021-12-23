@@ -2,15 +2,18 @@ import React from 'react';
 import { AudioFileMetadata } from "../../data/data";
 import Button from '../Button';
 import { InputNumber } from '../Input';
+import X from '../../assets/icons/X';
 
 function AudioFile({
   audioFileMetadata,
   updateAudioFileMetadata,
-  index
+  index,
+  deleteFile
 }: {
   audioFileMetadata: AudioFileMetadata,
   updateAudioFileMetadata: (index: number, audioFileMetadata: AudioFileMetadata) => void,
-  index: number
+  index: number,
+  deleteFile: (index: number) => void
 }) {
 
   const updateName = (name: string) => {
@@ -63,8 +66,20 @@ function AudioFile({
 
   return (
     <div className="bg-neutral900 pt-1 pb-3 mb-4 rounded-lg">
-      <div className="flex justify-center text-lg">
-        Audio File #{index + 1}
+      <div className="grid grid-cols-8 justify-center">
+        <div className="col-span-1" />
+        <div className="col-span-6 justify-center text-lg">
+          <div className="flex justify-center my-2">
+            Audio File #{index + 1}
+          </div>
+        </div>
+        <div className="flex justify-end mr-2">
+          <div className="col-span-1 justify-end">
+            <button onClick={() => deleteFile(index)} className="focus:outline-none p-1" >
+              <X />
+            </button>
+          </div>
+        </div>
       </div>
       <div className="grid grid-cols-12">
         <div className="col-span-4 my-3 mr-2 text-right">
@@ -272,6 +287,10 @@ function AudioAsset({
     setAudioFilesMetadata(newAudioFilesMetadata);
   }
 
+  const deleteAudioFile = (index: number) => {
+    setAudioFilesMetadata([...audioFilesMetadata.slice(0, index), ...audioFilesMetadata.slice(index + 1, audioFilesMetadata.length)])
+  }
+
   return (
     <div>
       <div className="grid grid-cols-12">
@@ -286,6 +305,7 @@ function AudioAsset({
             audioFileMetadata={audioFile}
             updateAudioFileMetadata={updateAudioFileMetadata}
             index={index}
+            deleteFile={deleteAudioFile}
           />
         </React.Fragment>
       ))}

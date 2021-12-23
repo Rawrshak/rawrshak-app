@@ -2,15 +2,18 @@ import React from 'react';
 import { ImageFileMetadata } from "../../data/data";
 import Button from '../Button';
 import { InputNumber } from '../Input';
+import X from '../../assets/icons/X';
 
 function ImageFile({
   imageFileMetadata,
   updateImageFileMetadata,
-  index
+  index,
+  deleteFile
 }: {
   imageFileMetadata: ImageFileMetadata,
   updateImageFileMetadata: (index: number, imageFileMetadata: ImageFileMetadata) => void,
-  index: number
+  index: number,
+  deleteFile: (index: number) => void
 }) {
   const updateUri = (uri: string) => {
     const newImageFileMetadata = Object.assign({}, imageFileMetadata);
@@ -38,8 +41,20 @@ function ImageFile({
 
   return (
     <div className="bg-neutral900 pt-1 pb-3 mb-4 rounded-lg">
-      <div className="flex justify-center text-lg">
-        Image File #{index + 1}
+      <div className="grid grid-cols-8 justify-center">
+        <div className="col-span-1" />
+        <div className="col-span-6 justify-center text-lg">
+          <div className="flex justify-center my-2">
+            Image File #{index + 1}
+          </div>
+        </div>
+        <div className="flex justify-end mr-2">
+          <div className="col-span-1 justify-end">
+            <button onClick={() => deleteFile(index)} className="focus:outline-none p-1" >
+              <X />
+            </button>
+          </div>
+        </div>
       </div>
       <div className="grid grid-cols-12">
         <div className="col-span-4 my-3 mr-2 text-right">
@@ -182,6 +197,10 @@ function ImageAsset({
     setImageFilesMetadata(newImageFilesMetadata);
   }
 
+  const deleteImageFile = (index: number) => {
+    setImageFilesMetadata([...imageFilesMetadata.slice(0, index), ...imageFilesMetadata.slice(index + 1, imageFilesMetadata.length)]);
+  }
+
   return (
     <div>
       <div className="grid grid-cols-12">
@@ -196,6 +215,7 @@ function ImageAsset({
             imageFileMetadata={imageFile}
             updateImageFileMetadata={updateImageFileMetadata}
             index={index}
+            deleteFile={deleteImageFile}
           />
         </React.Fragment>
       ))}

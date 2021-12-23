@@ -1,15 +1,18 @@
 import React from 'react';
 import { Static3dObjectFileMetadata } from "../../data/data";
 import Button from '../Button';
+import X from '../../assets/icons/X';
 
 function Static3dObject({
   static3dObjectFileMetadata,
   updateStatic3dObjectFileMetadata,
-  index
+  index,
+  deleteFile
 }: {
   static3dObjectFileMetadata: Static3dObjectFileMetadata,
   updateStatic3dObjectFileMetadata: (index: number, static3dObjectFileMetadata: Static3dObjectFileMetadata) => void,
-  index: number
+  index: number,
+  deleteFile: (index: number) => void
 }) {
 
   const updateName = (name: string) => {
@@ -56,8 +59,20 @@ function Static3dObject({
 
   return (
     <div className="bg-neutral900 pt-1 pb-3 mb-4 rounded-lg">
-      <div className="flex justify-center text-lg">
-        Static 3D Object File #{index + 1}
+      <div className="grid grid-cols-8 justify-center">
+        <div className="col-span-1" />
+        <div className="col-span-6 justify-center text-lg">
+          <div className="flex justify-center my-2">
+            Static 3D Object File #{index + 1}
+          </div>
+        </div>
+        <div className="flex justify-end mr-2">
+          <div className="col-span-1 justify-end">
+            <button onClick={() => deleteFile(index)} className="focus:outline-none p-1" >
+              <X />
+            </button>
+          </div>
+        </div>
       </div>
       <div className="grid grid-cols-12">
         <div className="col-span-4 my-3 mr-2 text-right">
@@ -266,6 +281,10 @@ function Static3dObjectAsset({
     setStatic3dObjectFilesMetadata(newStatic3dObjectFilesMetadata);
   }
 
+  const deleteStatic3dObjectFile = (index: number) => {
+    setStatic3dObjectFilesMetadata([...static3dObjectFilesMetadata.slice(0, index), ...static3dObjectFilesMetadata.slice(index + 1, static3dObjectFilesMetadata.length)]);
+  }
+
   return (
     <>
       <div className="grid grid-cols-12">
@@ -280,6 +299,7 @@ function Static3dObjectAsset({
             static3dObjectFileMetadata={static3dObjectFile}
             updateStatic3dObjectFileMetadata={updateStatic3dObjectFileMetadata}
             index={index}
+            deleteFile={deleteStatic3dObjectFile}
           />
         </React.Fragment>
       ))}
