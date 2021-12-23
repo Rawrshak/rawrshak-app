@@ -15,7 +15,7 @@ function Image({
   type: "3d" | "image" | "audio" | "text" | "content",
 }) {
   const [useFallback, setUseFallback] = useState<boolean>(false);
-  const [fallbackImg, setFallbackImg] = useState<string>("");
+  const [fallbackImg, setFallbackImg] = useState<any>();
 
   useEffect(() => {
     if (useFallback) {
@@ -31,10 +31,11 @@ function Image({
         setFallbackImg(content);
       }
     }
-  }, [useFallback, type]);
+  }, [useFallback, type, src]);
 
   useEffect(() => {
-  }, [fallbackImg]);
+    if (src === null) setUseFallback(true);
+  }, [src]);
 
   if (useFallback) {
     return (
