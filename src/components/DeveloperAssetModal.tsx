@@ -52,6 +52,8 @@ function AssetModal({
   useEffect(() => {
     if (mintAmountString !== "") {
       setMintAmount(BigNumber.from(mintAmountString));
+    } else {
+      setMintAmount(BigNumber.from("0"));
     }
   }, [mintAmountString]);
 
@@ -104,20 +106,11 @@ function AssetModal({
           <div className="flex mb-12 justify-center">
             <Image src={assetWithOrders.imageUri} className="flex cursor-pointer" type="content" />
           </div>
-
           <div className="flex flex-grow flex-col bg-black450 mx-4 my-2 px-4 py-2 rounded-lg">
-            <div className="text-offWhite text-lg">
+            <div className="text-offWhite text-lg mb-2">
               {assetWithOrders.name}
             </div>
-            <div className="flex flex-wrap my-1">
-              {assetWithOrders.tags.map(tag => (
-                <div key={tag} className="flex flex-shrink text-offWhite text-sm bg-gray rounded-xl m-1 px-2 py-1 border-2 border-neutral600">
-                  {tag}
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="flex flex-grow flex-col bg-black450 mx-4 my-2 px-4 py-2 rounded-lg">
+
             <div className="text-offWhite text-sm">
               Token ID: {assetWithOrders.tokenId}
             </div>
@@ -133,10 +126,27 @@ function AssetModal({
             <div className="break-all text-offWhite text-sm">
               URI: {assetUri}
             </div>
+            <div className="flex flex-wrap my-2">
+              {assetWithOrders.tags.map(tag => (
+                <div key={tag} className="flex flex-shrink text-offWhite text-sm bg-gray rounded-xl m-1 px-2 py-1 border-2 border-neutral600">
+                  {tag}
+                </div>
+              ))}
+            </div>
+            <div className="flex flex-shrink my-2">
+              <Button
+                label="Edit Metadata"
+                onClick={() => openUpdateAssetModal(assetWithOrders)}
+                enabled={true}
+                show={true}
+                enabledClassName="bg-opacity-1 text-chartreuse500 border-chartreuse500 border-2 text-sm mr-4 px-6 py-1 rounded-md"
+                disabledClassName="bg-opacity-1 text-black200 border-black200 border-2 text-sm mr-4 px-6 py-1 rounded-md"
+              />
+            </div>
           </div>
           <div className="flex flex-grow flex-col bg-black450 mx-4 my-2 px-4 py-2 rounded-lg">
             <div className="text-offWhite text-sm">
-              Mint Quantity
+              Quantity
             </div>
             <div className="flex text-offWhite text-sm my-2">
               <InputNumber
@@ -148,26 +158,19 @@ function AssetModal({
             </div>
             <div className="flex text-offWhite text-sm my-1">
               <Button
-                label="Mint"
+                label="MINT"
                 onClick={mint}
-                enabled={true}
+                enabled={
+                  mintAmount !== undefined &&
+                  mintAmount !== null &&
+                  mintAmount.gt(BigNumber.from("0")) &&
+                  mintAmount.lte(BigNumber.from(assetWithOrders.maxSupply).sub(BigNumber.from(assetWithOrders.currentSupply)))}
                 show={!transactionPending}
-                enabledClassName="bg-chartreuse500 text-neutral900 text-xsm mr-4 px-6 py-2 rounded-md"
-                disabledClassName="bg-chartreuse500 text-neutral900 text-xsm mr-4 px-6 py-2 rounded-md"
+                enabledClassName="bg-opacity-1 text-chartreuse500 border-chartreuse500 border-2 text-sm mr-4 px-6 py-1 rounded-md"
+                disabledClassName="bg-opacity-1 text-black200 border-black200 border-2 text-sm mr-4 px-6 py-1 rounded-md"
               />
               <Loader show={transactionPending} />
             </div>
-            <div className="flex text-offWhite text-sm my-1">
-              <Button
-                label="Edit Metadata"
-                onClick={() => openUpdateAssetModal(assetWithOrders)}
-                enabled={true}
-                show={true}
-                enabledClassName="bg-chartreuse500 text-neutral900 text-xsm mr-4 px-6 py-2 rounded-md"
-                disabledClassName="bg-chartreuse500 text-neutral900 text-xsm mr-4 px-6 py-2 rounded-md"
-              />
-            </div>
-
           </div>
         </div>
       </SlidingPane>

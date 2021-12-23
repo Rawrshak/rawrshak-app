@@ -187,10 +187,6 @@ function ExploreAssets({
             <Tag key={index} tagId={tag ? tag : "Undefined"} selected={selectedTags ? selectedTags.includes(tag) : false} selectTag={selectTag} />
           )) : ""}
         </div>
-        <div className="flex my-1 mx-3">
-
-        </div>
-
         <SelectedAssets
           selectedTags={selectedTags}
         />
