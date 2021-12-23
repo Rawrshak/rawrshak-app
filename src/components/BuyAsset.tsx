@@ -347,7 +347,7 @@ function BuyAsset({
     return (
       <div className="flex flex-col">
         <div className="grid grid-cols-2 bg-black450 my-1 mx-4 p-4 rounded-lg">
-          <div className="flex mx-2 text-lg">
+          <div className="flex mx-2 text-lg text-semanticGreen">
             Instant Buy
           </div>
           <div />
@@ -390,7 +390,7 @@ function BuyAsset({
         </div>
         <div className="bg-black450 my-1 mx-4 p-4 rounded-lg">
           <div className="grid grid-cols-2">
-            <div className="flex mx-2 text-lg">
+            <div className="flex mx-2 text-lg text-semanticGreen">
               Buy Order
             </div>
             <div />

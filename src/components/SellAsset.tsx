@@ -398,7 +398,7 @@ function SellAsset({
     return (
       <div className="flex flex-col">
         <div className="grid grid-cols-2 bg-black450 my-1 mx-4 p-4 rounded-lg">
-          <div className="flex mx-2 text-lg">
+          <div className="flex mx-2 text-lg text-semanticRed">
             Instant Sell
           </div>
           <div />
@@ -441,7 +441,7 @@ function SellAsset({
         </div>
         <div className="bg-black450 my-1 mx-4 p-4 rounded-lg">
           <div className="grid grid-cols-2">
-            <div className="flex mx-2 text-lg">
+            <div className="flex mx-2 text-lg text-semanticRed">
               Sell Order
             </div>
             <div />

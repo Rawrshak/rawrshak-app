@@ -99,22 +99,22 @@ function TradeAssetModal({
             Ecosystem Supply: {Number(assetWithOrders.currentSupply)}
           </div> : null}
           <SupportedTokenBalance />
-          <div className="flex bg-black450 my-1 mx-4 rounded-lg">
+          <div className="flex bg-black my-1 mx-4 rounded-lg">
             <Button
               label="BUY"
               onClick={() => setBuyMode(true)}
               enabled={!buyMode}
               show={true}
-              enabledClassName="flex flex-grow justify-center text-chartreuse500 text-sm bg-black450 m-2 py-2 rounded-lg"
-              disabledClassName="flex flex-grow justify-center text-chartreuse500 text-sm bg-black500 m-2 py-2 rounded-lg"
+              enabledClassName="flex flex-grow justify-center text-semanticGreen text-sm bg-black m-2 py-2 rounded-lg"
+              disabledClassName="flex flex-grow justify-center text-black text-sm bg-semanticGreen m-2 py-2 rounded-lg"
             />
             <Button
               label="SELL"
               onClick={() => setBuyMode(false)}
               enabled={buyMode}
               show={true}
-              enabledClassName="flex flex-grow justify-center text-chartreuse500 text-sm bg-black450 m-2 py-2 rounded-lg"
-              disabledClassName="flex flex-grow justify-center text-chartreuse500 text-sm bg-black500 m-2 py-2 rounded-lg"
+              enabledClassName="flex flex-grow justify-center text-semanticRed text-sm bg-black m-2 py-2 rounded-lg"
+              disabledClassName="flex flex-grow justify-center text-black text-sm bg-semanticRed m-2 py-2 rounded-lg"
             />
           </div>
           <BuyAsset show={buyMode} assetWithOrders={assetWithOrders} />
