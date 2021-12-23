@@ -112,7 +112,7 @@ function AssetCard({
     <>
       <TradeAssetModal show={showTradeAssetModal} setShow={setShowTradeAssetModal} initialBuyMode={initialBuyMode} assetWithOrders={assetWithOrders} />
       <AssetModal show={showAssetModal} setShow={setShowAssetModal} assetWithOrders={assetWithOrders} tradeAsset={openTradeAssetModal} />
-      <div className="flex flex-col flex-grow h-120 m-3 assetCardBackground rounded-xl">
+      <div className="flex flex-col flex-grow h-120 m-3 assetCardBackground rounded-xl cursor-pointer">
         <div className="grid grid-cols-8 h-10 my-2 ml-4 mr-3">
           <div className="col-span-7 text-offWhite text-sm mt-1 truncate ...">
             {assetWithOrders.game}
