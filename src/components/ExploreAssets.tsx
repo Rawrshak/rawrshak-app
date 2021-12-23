@@ -87,11 +87,11 @@ function Tag({
   selectTag: (tag: string, select: boolean) => void
 }) {
   const getClassName = () => {
-    const commonClassNames = "flex flex-shrink text-offWhite text-sm bg-gray rounded-xl m-1 px-3 py-1 border-2 cursor-pointer";
+    const commonClassNames = "flex flex-shrink text-sm bg-gray rounded-xl m-1 px-3 py-1 border-2 cursor-pointer";
     if (selected) {
-      return (commonClassNames + " border-neutral600");
+      return (commonClassNames + " text-chartreuse500 border-chartreuse500 hover:text-offWhite");
     } else {
-      return (commonClassNames + " border-gray");
+      return (commonClassNames + " text-offWhite border-black200 hover:text-chartreuse500");
     }
   }
 
@@ -167,12 +167,18 @@ function ExploreAssets({
           Explore Assets
         </div>
         <div className="flex">
-          <div className="flex flex-grow bg-black450 text-offWhite mb-2 mx-4 py-2 pl-3 pr-2 rounded-lg">
+          <div className="flex flex-grow text-offWhite mb-2 ml-1 py-2 pl-3 pr-2 rounded-lg">
             <div className="flex text-offWhite text-sm mt-1 mr-2">
-              Search All Tags
+              All Tags
             </div>
-            <div className="flex flex-grow">
-              <input value={searchTerm} onChange={(e) => { setSearchTerm(e.target.value) }} type="text" className="flex flex-grow text-offWhite bg-black400 focus:outline-none rounded py-1 px-2" />
+            <div className="flex">
+              <input value={searchTerm} onChange={(e) => { setSearchTerm(e.target.value) }} type="text" className="flex text-offWhite bg-black450 focus:outline-none rounded py-1 px-2 w-96" />
+            </div>
+            <div onClick={() => { selectAllTags() }} className="flex flex-shrink text-offWhite text-sm rounded-xl ml-4 m-1 px-3 py-1 cursor-pointer underline">
+              Select All
+            </div>
+            <div onClick={() => { deselectAllTags() }} className="flex flex-shrink text-offWhite text-sm rounded-xl m-1 px-3 py-1 cursor-pointer underline">
+              Clear
             </div>
           </div>
         </div>
@@ -182,12 +188,7 @@ function ExploreAssets({
           )) : ""}
         </div>
         <div className="flex my-1 mx-3">
-          <div onClick={() => { selectAllTags() }} className="flex flex-shrink text-chartreuse500 text-sm bg-gray rounded-xl m-1 px-3 py-1 border-2 cursor-pointer border-chartreuse500">
-            Select All
-          </div>
-          <div onClick={() => { deselectAllTags() }} className="flex flex-shrink text-chartreuse500 text-sm bg-gray rounded-xl m-1 px-3 py-1 border-2 cursor-pointer border-chartreuse500">
-            Deselect All
-          </div>
+
         </div>
 
         <SelectedAssets
