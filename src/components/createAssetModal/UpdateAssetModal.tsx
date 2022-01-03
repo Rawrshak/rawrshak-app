@@ -405,7 +405,7 @@ function UpdateAssetModal({
             Pinata API Secret
           </div>
           <div className="flex flex-grow col-span-8 my-2">
-            <textarea value={pinataApiSecret} onChange={(e) => { setPinataApiSecret(e.target.value) }} className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2 h-14" />
+            <input value={pinataApiSecret} onChange={(e) => { setPinataApiSecret(e.target.value) }} type="password" className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2" />
           </div>
           <div className="col-span-4 my-3 mr-2 text-right">
             Name
