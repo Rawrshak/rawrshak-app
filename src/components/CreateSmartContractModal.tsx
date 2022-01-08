@@ -57,7 +57,7 @@ function CreateSmartContractModal({
       image: imageUri,
       game: game,
       creator: creator,
-      tags: tags
+      tags: tags.filter( element => element )
     }
 
     setContentJson(newContentJson);
