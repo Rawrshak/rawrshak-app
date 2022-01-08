@@ -18,7 +18,6 @@ import Loader from '../Loader';
 import { InputAmount } from '../Input';
 import { ContentManager } from '../../assets/typechain';
 import { useTransaction } from "../../web3/transactions";
-import { useWeb3 } from '../../web3';
 import AssetTypes from './AssetTypes';
 
 function CreateAssetModal({
@@ -30,7 +29,6 @@ function CreateAssetModal({
   setShow: React.Dispatch<React.SetStateAction<boolean>>,
   contentManagerContract: ContentManager | undefined
 }) {
-  const web3 = useWeb3();
 
   const [pinataApiKey, setPinataApiKey] = useState<string>("");
   const [pinataApiSecret, setPinataApiSecret] = useState<string>("");
