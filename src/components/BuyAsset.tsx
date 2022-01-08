@@ -297,7 +297,7 @@ function BuyAsset({
 
     setBuyNowPending(true);
 
-    transaction(() => exchange.fillSellOrder(buyNowOrderIdsToFill, buyNowAssetAmount, buyNowTokenAmount), "Transaction pending", "Transaction failed", "Transaction succeeded", undefined, () => resetValues(), () => setBuyNowPending(false));
+    transaction(() => exchange.fillSellOrder(buyNowOrderIdsToFill, buyNowAssetAmount, buyNowTokenAmount), "Transaction pending", "Transaction failed", "Transaction succeeded", () => setBuyNowPending(false), () => resetValues(), () => setBuyNowPending(false));
   };
 
   const buyNowApprove = (approveAmountBn: BigNumber | undefined) => {
@@ -305,7 +305,7 @@ function BuyAsset({
 
     setBuyNowPending(true);
 
-    transaction(() => supportedToken.contract.approve(erc20Escrow.address, approveAmountBn), "Transaction pending", "Transaction failed", "Transaction succeeded", undefined, undefined, () => setBuyNowPending(false));
+    transaction(() => supportedToken.contract.approve(erc20Escrow.address, approveAmountBn), "Transaction pending", "Transaction failed", "Transaction succeeded", () => setBuyNowPending(false), undefined, () => setBuyNowPending(false));
   }
 
   const placeOrder = () => {
@@ -325,7 +325,7 @@ function BuyAsset({
         price: placeOrderPrice,
         amount: placeOrderAssetAmount,
         isBuyOrder: true
-      }), "Transaction pending", "Transaction failed", "Transaction succeeded", undefined, () => resetValues(), () => setPlaceOrderPending(false));
+      }), "Transaction pending", "Transaction failed", "Transaction succeeded", () => setPlaceOrderPending(false), () => resetValues(), () => setPlaceOrderPending(false));
     }
   }
 
@@ -334,7 +334,7 @@ function BuyAsset({
 
     setPlaceOrderPending(true);
 
-    transaction(() => supportedToken.contract.approve(erc20Escrow.address, approveAmountBn), "Transaction pending", "Transaction failed", "Transaction succeeded", undefined, undefined, () => setPlaceOrderPending(false));
+    transaction(() => supportedToken.contract.approve(erc20Escrow.address, approveAmountBn), "Transaction pending", "Transaction failed", "Transaction succeeded", () => setPlaceOrderPending(false), undefined, () => setPlaceOrderPending(false));
   }
 
   const resetValues = () => {

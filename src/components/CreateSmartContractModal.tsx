@@ -57,7 +57,7 @@ function CreateSmartContractModal({
       image: imageUri,
       game: game,
       creator: creator,
-      tags: tags
+      tags: tags.filter( element => element )
     }
 
     setContentJson(newContentJson);
@@ -136,7 +136,7 @@ function CreateSmartContractModal({
             () => createContractSuccess(),
             () => setTransactionPending(false)
           );
-        }, 30000);
+        }, 60000);
       })
       .catch(function (error) {
         console.error(error);

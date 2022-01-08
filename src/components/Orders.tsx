@@ -136,11 +136,21 @@ function Order({
     }
   }
 
+  const priceAmount = () => {
+    if (order === undefined || supportedToken === undefined) return;
+
+    if (order.type === "Buy") {
+      return (`${Number(order.amountFilled.sub(order.amountClaimed))} NFTs`);
+    } else {
+      return (`${Number(ethers.utils.formatUnits(order.price, supportedToken.decimals))} ${supportedToken.symbol}`);
+    }
+  }
+
   if (order === undefined) {
     return (null);
   } else {
     return (
-      <div className="grid grid-cols-6 h-16">
+      <div className="grid grid-cols-7 h-16">
         <div className="flex text-offWhite my-3">
           {order.cancelledAtTimestamp.eq(BigNumber.from("0")) && order.amountClaimed.lt(order.amountOrdered) &&
             <input
@@ -155,7 +165,10 @@ function Order({
           {order.assetGame}
         </div>
         <div className="flex text-offWhite my-3">
-          {moment(Number((order.createdAtTimestamp).mul(BigNumber.from("1000")))).format()}
+          {moment(Number((order.createdAtTimestamp).mul(BigNumber.from("1000")))).format("MMM Do YYYY")}
+        </div>
+        <div className="flex text-offWhite my-3">
+          {priceAmount()}
         </div>
         <div className="flex text-offWhite my-3">
           {Number(order.amountFilled)} / {Number(order.amountOrdered)}
@@ -349,7 +362,7 @@ function Orders() {
 
           </div>
         </div>
-        <div className="grid grid-cols-6 mb-4 text-lg">
+        <div className="grid grid-cols-7 mb-4 text-lg">
           <div className="flex text-offWhite">
             Item
           </div>
@@ -358,6 +371,9 @@ function Orders() {
           </div>
           <div className="flex text-offWhite">
             Created
+          </div>
+          <div className="flex text-offWhite">
+            Price
           </div>
           <div className="flex text-offWhite">
             Amount Filled

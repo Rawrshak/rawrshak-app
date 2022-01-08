@@ -63,43 +63,9 @@ function CreateAssetModal({
     }
   );
 
-  const [audioFilesMetadata, setAudioFilesMetadata] = useState<AudioFileMetadata[]>(
-    [
-      {
-        name: "",
-        engine: "unity",
-        compression: "compressed",
-        uri: "https://arweave.net/",
-        contentType: "audio/wav",
-        duration: 0,
-        channelCount: 0,
-        sampleRate: 0,
-      }
-    ]
-  );
-  const [imageFilesMetadata, setImageFilesMetadata] = useState<ImageFileMetadata[]>(
-    [
-      {
-        uri: "https://arweave.net/",
-        height: 0,
-        width: 0,
-        contentType: "image/png",
-      }
-    ]
-  );
-  const [static3dObjectFilesMetadata, setStatic3dObjectFilesMetadata] = useState<Static3dObjectFileMetadata[]>(
-    [
-      {
-        name: "",
-        engine: "unity",
-        platform: "windows",
-        renderPipeline: "brp",
-        fidelity: "low",
-        shape: "horizontalx",
-        uri: "https://arweave.net/",
-      }
-    ]
-  );
+  const [audioFilesMetadata, setAudioFilesMetadata] = useState<AudioFileMetadata[]>([]);
+  const [imageFilesMetadata, setImageFilesMetadata] = useState<ImageFileMetadata[]>([]);
+  const [static3dObjectFilesMetadata, setStatic3dObjectFilesMetadata] = useState<Static3dObjectFileMetadata[]>([]);
   const [textFileMetadata, setTextFileMetadata] = useState<TextFileMetadata>(
     {
       title: "",
@@ -122,12 +88,26 @@ function CreateAssetModal({
   }
 
   useEffect(() => {
-    if (name !== "" && description !== "" && pinataApiKey.length === 20 && pinataApiSecret.length === 64) {
+    if (
+        name !== "" && 
+        description !== "" &&
+        pinataApiKey.length === 20 &&
+        pinataApiSecret.length === 64 &&
+        (
+            audioFilesMetadata.length > 0 ||
+            imageFilesMetadata.length > 0 || 
+            static3dObjectFilesMetadata.length > 0 ||
+            (
+                textFileMetadata.title !== "" &&
+                textFileMetadata.description !== ""
+            )
+        )
+        ) {
       setEnableCreateButton(true);
     } else {
       setEnableCreateButton(false);
     }
-  }, [name, description, pinataApiKey.length, pinataApiSecret]);
+  }, [name, description, pinataApiKey.length, pinataApiSecret, audioFilesMetadata, imageFilesMetadata, static3dObjectFilesMetadata, textFileMetadata]);
 
   useEffect(() => {
     if (transactionPending) {
@@ -143,12 +123,6 @@ function CreateAssetModal({
       setShowStatusMessage(false);
     }
   }, [transactionPending]);
-
-  useEffect(() => {
-    if (web3.account === undefined) return;
-
-    setRoyaltyReceiver(web3.account);
-  }, [web3.account]);
 
   const [royaltyRate, setRoyaltyRate] = useState<BigNumber>(BigNumber.from("0"));
   useEffect(() => {
@@ -220,7 +194,7 @@ function CreateAssetModal({
       name: name,
       description: description,
       image: imageUri,
-      tags: tags,
+      tags: tags.filter( element => element ),
       type: type,
       subtype: subtype,
       nsfw: nsfw,
