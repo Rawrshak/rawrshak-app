@@ -68,39 +68,14 @@ function UpdateAssetModal({
 
   const [audioFilesMetadata, setAudioFilesMetadata] = useState<AudioFileMetadata[]>(
     [
-      {
-        name: "",
-        engine: "unity",
-        compression: "compressed",
-        uri: "https://arweave.net/",
-        contentType: "wav",
-        duration: 0,
-        channelCount: 0,
-        sampleRate: 0,
-      }
     ]
   );
   const [imageFilesMetadata, setImageFilesMetadata] = useState<ImageFileMetadata[]>(
     [
-      {
-        uri: "https://arweave.net/",
-        height: 0,
-        width: 0,
-        contentType: "png",
-      }
     ]
   );
   const [static3dObjectFilesMetadata, setStatic3dObjectFilesMetadata] = useState<Static3dObjectFileMetadata[]>(
     [
-      {
-        name: "",
-        engine: "unity",
-        platform: "windows",
-        renderPipeline: "brp",
-        fidelity: "low",
-        shape: "horizontal",
-        uri: "https://arweave.net/",
-      }
     ]
   );
   const [textFileMetadata, setTextFileMetadata] = useState<TextFileMetadata>(
@@ -117,12 +92,26 @@ function UpdateAssetModal({
   const [textAssetMetadata, setTextAssetMetadata] = useState<TextAssetMetadata>();
 
   useEffect(() => {
-    if (name !== "" && description !== "" && pinataApiKey.length === 20 && pinataApiSecret.length === 64) {
+    if (
+        name !== "" && 
+        description !== "" &&
+        pinataApiKey.length === 20 &&
+        pinataApiSecret.length === 64 &&
+        (
+            audioFilesMetadata.length > 0 ||
+            imageFilesMetadata.length > 0 || 
+            static3dObjectFilesMetadata.length > 0 ||
+            (
+                textFileMetadata.title !== "" &&
+                textFileMetadata.description !== ""
+            )
+        )
+        ) {
       setEnableUpdateButton(true);
     } else {
       setEnableUpdateButton(false);
     }
-  }, [name, description, pinataApiKey.length, pinataApiSecret]);
+  }, [name, description, pinataApiKey.length, pinataApiSecret, audioFilesMetadata, imageFilesMetadata, static3dObjectFilesMetadata, textFileMetadata]);
 
   useEffect(() => {
     if (asset === undefined || signerOrProvider === undefined) return;
@@ -295,7 +284,7 @@ function UpdateAssetModal({
       name: name,
       description: description,
       image: imageUri,
-      tags: tags,
+      tags: tags.filter( element => element ),
       type: type,
       subtype: subtype,
       nsfw: nsfw,
