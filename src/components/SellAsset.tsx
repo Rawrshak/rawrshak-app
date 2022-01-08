@@ -340,7 +340,7 @@ function SellAsset({
 
     setSellNowPending(true);
 
-    transaction(() => exchange.fillBuyOrder(sellNowOrderIdsToFill, sellNowAssetAmount, sellNowTokenAmount), "Transaction pending", "Transaction failed", "Transaction succeeded", undefined, () => resetValues(), () => setSellNowPending(false));
+    transaction(() => exchange.fillBuyOrder(sellNowOrderIdsToFill, sellNowAssetAmount, sellNowTokenAmount), "Transaction pending", "Transaction failed", "Transaction succeeded", () => setSellNowPending(false), () => resetValues(), () => setSellNowPending(false));
   };
 
   const sellNowApprove = () => {
@@ -352,7 +352,7 @@ function SellAsset({
 
     setSellNowPending(true);
 
-    transaction(() => contentContract.setApprovalForAll(nftEscrow.address, true), "Transaction pending", "Transaction failed", "Transaction succeeded", undefined, () => setAssetApproved(true), () => setSellNowPending(false));
+    transaction(() => contentContract.setApprovalForAll(nftEscrow.address, true), "Transaction pending", "Transaction failed", "Transaction succeeded", () => setSellNowPending(false), () => setAssetApproved(true), () => setSellNowPending(false));
   }
 
   const placeOrder = () => {
@@ -372,7 +372,7 @@ function SellAsset({
         price: placeOrderPrice,
         amount: placeOrderAssetAmount,
         isBuyOrder: false
-      }), "Transaction pending", "Transaction failed", "Transaction succeeded", undefined, () => resetValues(), () => setPlaceOrderPending(false));
+      }), "Transaction pending", "Transaction failed", "Transaction succeeded", () => setPlaceOrderPending(false), () => resetValues(), () => setPlaceOrderPending(false));
     }
   }
 
@@ -385,7 +385,7 @@ function SellAsset({
 
     setPlaceOrderPending(true);
 
-    transaction(() => contentContract.setApprovalForAll(nftEscrow.address, true), "Transaction pending", "Transaction failed", "Transaction succeeded", undefined, () => setAssetApproved(true), () => setPlaceOrderPending(false));
+    transaction(() => contentContract.setApprovalForAll(nftEscrow.address, true), "Transaction pending", "Transaction failed", "Transaction succeeded", () => setPlaceOrderPending(false), () => setAssetApproved(true), () => setPlaceOrderPending(false));
   }
 
   const resetValues = () => {
