@@ -19,7 +19,7 @@ const useInventoryAssets = (contentsSubgraphEndpoint: string | undefined) => {
             accounts(where: {address: "${account}"}) {
               id
               address
-              assetBalances {
+              assetBalances(where: {amount_gt: "0" }) {
                 id
                 asset {
                   id
