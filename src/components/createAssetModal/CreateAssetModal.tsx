@@ -34,10 +34,11 @@ function CreateAssetModal({
   const [pinataApiSecret, setPinataApiSecret] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [imageUri, setImageUri] = useState<string>("https://arweave.net/");
+  const [imageUri, setImageUri] = useState<string>("https://arweave.net/TsBCV3HyMssIZQk0S7MqZht_zR3e9pBXDWUo0VYAXW4");
+  const [useDefaultImage, setUseDefaultImage] = useState<boolean>(true);
   const [tags, setTags] = useState<string[]>([""]);
-  const [type, setType] = useState<string>("audio");
-  const [subtype, setSubtype] = useState<string>("sound-effect");
+  const [type, setType] = useState<string>("text");
+  const [subtype, setSubtype] = useState<string>("title");
   const [nsfw, setNsfw] = useState<boolean>(false);
   const [maxSupply, setMaxSupply] = useState<BigNumber>(BigNumber.from("0"));
   const [royaltyReceiver, setRoyaltyReceiver] = useState<string>("");
@@ -69,7 +70,6 @@ function CreateAssetModal({
       title: "",
       description: "",
     }
-
   );
 
   const [audioAssetMetadata, setAudioAssetMetadata] = useState<AudioAssetMetadata>();
@@ -83,6 +83,29 @@ function CreateAssetModal({
       royaltyRateString = "100";
     }
     setRoyaltyRateString(royaltyRateString);
+  }
+
+  const setImageData = (imageUri: string) => {
+    setImageUri(imageUri);
+    if (useDefaultImage) {
+        setUseDefaultImage(false);
+    }
+  }
+  
+  const setAssetType = (assetType: string) => {
+    setType(assetType);
+    if (useDefaultImage) {
+      if (assetType === "audio") {
+        setImageUri("https://arweave.net/eAnYl_kEpDtYQA8240b0naau5PP4czOFP1qGg4zazQQ");
+      } else if (assetType === "image") {
+        setImageUri("https://arweave.net/2BmDysofcccaTUbjKJHgr9_0ImlFadE00yAS_3E9M00");
+      } else if (assetType === "static3dobject") {
+        setImageUri("https://arweave.net/5jpY4ouIl9EXqyep6z0p0S_6nt87DEfsnsxefAa9cOE");
+      } else {
+        setImageUri("https://arweave.net/TsBCV3HyMssIZQk0S7MqZht_zR3e9pBXDWUo0VYAXW4");
+      }
+    }
+    
   }
 
   useEffect(() => {
@@ -287,12 +310,13 @@ function CreateAssetModal({
     setName("");
     setDescription("");
     setImageUri("");
+    setUseDefaultImage(true);
     setTags([""]);
     setMaxSupply(BigNumber.from("0"));
     setRoyaltyReceiver("");
     setRoyaltyRateString("0");
     setNsfw(false);
-    setType("audio");
+    setType("text");
 
     setShow(false);
   }
@@ -333,7 +357,7 @@ function CreateAssetModal({
             Image URI
           </div>
           <div className="flex flex-grow col-span-8 my-2">
-            <textarea value={imageUri} onChange={(e) => { setImageUri(e.target.value) }} className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2" />
+            <textarea value={imageUri} onChange={(e) => { setImageData(e.target.value) }} className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2" />
           </div>
           <div className="col-span-4 mt-3 mr-2 text-right">
             Tags
@@ -411,7 +435,10 @@ function CreateAssetModal({
             Asset Type
           </div>
           <div className="col-span-8 my-2">
-            <select onChange={(e) => setType(e.target.value)} name="assetType" className="bg-neutral700 focus:outline-none rounded py-1 px-2">
+            <select onChange={(e) => setAssetType(e.target.value)} name="assetType" className="bg-neutral700 focus:outline-none rounded py-1 px-2">
+              <option value="text">
+                Text
+              </option>
               <option value="audio">
                 Audio
               </option>
@@ -420,9 +447,6 @@ function CreateAssetModal({
               </option>
               <option value="static3dobject">
                 Static 3D Object
-              </option>
-              <option value="text">
-                Text
               </option>
             </select>
           </div>
