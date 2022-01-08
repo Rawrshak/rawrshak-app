@@ -136,7 +136,7 @@ function CreateSmartContractModal({
             () => createContractSuccess(),
             () => setTransactionPending(false)
           );
-        }, 30000);
+        }, 60000);
       })
       .catch(function (error) {
         console.error(error);
