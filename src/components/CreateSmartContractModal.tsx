@@ -24,7 +24,7 @@ function CreateSmartContractModal({
   const [pinataApiSecret, setPinataApiSecret] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [imageUri, setImageUri] = useState<string>("https://arweave.net/");
+  const [imageUri, setImageUri] = useState<string>("https://arweave.net/dI_5bBKqfDwLUHhQXu_ubnnBi5f3DcpHQ_oHmIky1QU");
   const [creator, setCreator] = useState<string>("");
   const [game, setGame] = useState<string>("");
   const [tags, setTags] = useState<string[]>([""]);
@@ -90,6 +90,7 @@ function CreateSmartContractModal({
   const createContractSuccess = () => {
     setName("");
     setDescription("");
+    setImageUri("https://arweave.net/dI_5bBKqfDwLUHhQXu_ubnnBi5f3DcpHQ_oHmIky1QU");
     setCreator("");
     setGame("");
     setTags([""]);
