@@ -117,7 +117,7 @@ function AssetModal({
             </button>
           </div>
           <div className="flex mb-12 justify-center">
-            <Image src={assetWithOrders.imageUri} className="flex cursor-pointer" type="content" />
+            <Image src={assetWithOrders.imageUri} className="flex w-1/3 cursor-pointer" type="content" />
           </div>
           <div className="flex flex-grow flex-col bg-black450 mx-4 my-2 px-4 py-2 rounded-lg">
             <div className="text-offWhite text-lg mb-2">

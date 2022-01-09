@@ -90,8 +90,8 @@ function AssetsView({
           </div>
           <div className="flex flex-row bg-black450 rounded-lg px-6 py-4 m-4">
             <div className="flex flex-col flex-grow">
-              <div className="flex">
-                <Image src={activeContent.imageUri} className="flex h-48 w-48" type="content" />
+              <div className="flex justify-center">
+                <Image src={activeContent.imageUri} className="flex w-1/3" type="content" />
               </div>
               <div className="flex text-xxxl">
                 {activeContent.name}
@@ -115,18 +115,18 @@ function AssetsView({
                 Game: {activeContent.game}
               </div>
 
-            </div>
-            <div className="flex flex-col">
-              <div className="flex flex-grow" />
-              <div className="text-offWhite text-sm my-1 justify-end">
-                <Button
-                  label="EDIT ROYALTIES"
-                  onClick={() => setShowUpdateRoyaltyModal(true)}
-                  enabled={true}
-                  show={true}
-                  enabledClassName="bg-black450 text-chartreuse500 border-chartreuse500 border-2 text-sm px-6 py-2 rounded-md"
-                  disabledClassName="bg-black45000 text-neutral900 text-xsm mr-4 px-6 py-2 rounded-md"
-                />
+              <div className="flex">
+                <div className="flex flex-grow" />
+                <div className="text-offWhite text-sm my-1 justify-end">
+                  <Button
+                    label="EDIT ROYALTIES"
+                    onClick={() => setShowUpdateRoyaltyModal(true)}
+                    enabled={true}
+                    show={true}
+                    enabledClassName="bg-black450 text-chartreuse500 border-chartreuse500 border-2 text-sm px-6 py-2 rounded-md"
+                    disabledClassName="bg-black45000 text-neutral900 text-xsm mr-4 px-6 py-2 rounded-md"
+                  />
+                </div>
               </div>
             </div>
           </div>
