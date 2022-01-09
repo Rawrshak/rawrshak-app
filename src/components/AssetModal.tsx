@@ -7,7 +7,7 @@ import X from '../assets/icons/X';
 import Image from "./Image";
 import { Content, Content__factory } from '../assets/typechain';
 import { useWeb3 } from '../web3';
-import { BigNumber } from "ethers";
+import { BigNumber, ethers } from "ethers";
 
 function truncate(fullStr: string, strLen: number, separator: string = "...") {
   if (fullStr.length <= strLen) return fullStr;
@@ -81,6 +81,14 @@ function AssetModal({
       .catch((error) => console.error(error));
   }, [contentContract, assetWithOrders, web3.account]);
 
+  const calculateMax = (maxSupply: string) => {
+    if (maxSupply === ethers.constants.MaxUint256.toString()) {
+      return "MAX"
+    } else {
+      return Number(maxSupply);
+    }
+  }
+
   if (assetWithOrders === undefined) {
     return (null);
   } else {
@@ -116,7 +124,7 @@ function AssetModal({
               Supply: {Number(assetWithOrders.currentSupply)}
             </div>
             <div className="flex text-black200 text-sm ml-1">
-              Max Supply: {Number(assetWithOrders.maxSupply)}
+              Max Supply: {calculateMax(assetWithOrders.maxSupply)}
             </div>
             <div className="flex text-black200 text-sm ml-1">
               Collection: {assetWithOrders.game}

@@ -91,7 +91,7 @@ function AssetsView({
           <div className="flex flex-row bg-black450 rounded-lg px-6 py-4 m-4">
             <div className="flex flex-col flex-grow">
               <div className="flex">
-                <Image src={activeContent.imageUri} className="flex" type="content" />
+                <Image src={activeContent.imageUri} className="flex h-48 w-48" type="content" />
               </div>
               <div className="flex text-xxxl">
                 {activeContent.name}
