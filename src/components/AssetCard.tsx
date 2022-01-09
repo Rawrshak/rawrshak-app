@@ -126,7 +126,7 @@ function AssetCard({
           </div>
         </div>
         <div onClick={() => openAssetModal()} className="flex h-72 text-offWhite text-xxl p-6 rounded-xl justify-center">
-          <Image src={assetWithOrders.imageUri} className="flex cursor-pointer object-contain" type="content" />
+          <Image src={assetWithOrders.imageUri} className="flex w-2/3 cursor-pointer object-contain" type="content" />
         </div>
         <div className="text-offWhite h-8 text-xxl mx-8 mt-2 truncate ...">
           {assetWithOrders.name}

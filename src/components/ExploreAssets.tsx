@@ -13,7 +13,7 @@ function SelectedAssets({
 
   const [filteredAssets, setFilteredAssets] = useState<AssetWithOrders[]>();
   const [filteredAndSlicedAssets, setFilteredAndSlicedAssets] = useState<AssetWithOrders[]>();
-  const [assetShowCount, setAssetShowCount] = useState<number>(6);
+  const [assetShowCount, setAssetShowCount] = useState<number>(8);
 
   useEffect(() => {
     if (selectedTags === undefined || assetsWithOrders === undefined) return;
@@ -59,14 +59,14 @@ function SelectedAssets({
   } else {
     return (
       <>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {filteredAndSlicedAssets.map(assetWithOrders => (
             <AssetCard key={assetWithOrders.id} assetWithOrders={assetWithOrders} />
           ))}
         </div>
         <Button
           label="Show More Assets"
-          onClick={() => setAssetShowCount(assetShowCount + 6)}
+          onClick={() => setAssetShowCount(assetShowCount + 8)}
           enabled={true}
           show={filteredAssets.length > assetShowCount}
           enabledClassName="flex text-chartreuse500 border-chartreuse500 border-2 text-sm rounded-md w-44 h-8 justify-center pt-1 ml-3 mt-2"

@@ -30,7 +30,7 @@ function GameCard({
       // </div>
 
 
-      <div className="flex flex-col flex-grow h-44 m-3 bg-black400 rounded-xl cursor-pointer" onClick={() => openSmartContract(smartContract)}>
+      <div className="flex flex-col flex-grow m-3 bg-black400 rounded-xl cursor-pointer" onClick={() => openSmartContract(smartContract)}>
         <div className="grid grid-cols-5">
           <div className="col-span-4 h-6 text-offWhite text-sm ml-4 mt-1 truncate ...">
 
@@ -38,18 +38,19 @@ function GameCard({
           <div className="flex col-span-1 justify-end">
             <Image
               src={contentIcon}
-              className={"h-5 mt-2 mr-3"}
+              className={"h-5 mt-2 mr-2"}
               type="content"
             />
           </div>
         </div>
-        <div className="flex justify-center h-24 text-offWhite text-xxl mt-1 mx-4 rounded-xl">
-          <img src={smartContract.imageUri} alt="Rawrshak Asset" className="flex object-scale-down" />
+        <div className="flex justify-center text-offWhite text-xxl mt-1 mx-4 rounded-xl">
+          <img src={smartContract.imageUri} alt="Rawrshak Asset" className="flex object-scale-down w-2/3" />
         </div>
-        <div className="h-5 text-offWhite text-sm mx-4">
-        </div>
-        <div className="h-5 text-offWhite text-sm mx-4 truncate ...">
+        <div className="text-offWhite text-lg mx-4 mt-2 truncate ...">
           {smartContract.name}
+        </div>
+        <div className="text-offWhite text-sm mx-4 mb-2 truncate ...">
+          {smartContract.creator}
         </div>
       </div>
     );

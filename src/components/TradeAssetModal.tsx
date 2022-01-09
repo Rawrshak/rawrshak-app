@@ -78,7 +78,7 @@ function TradeAssetModal({
       <Modal isOpen={show} setIsOpen={setShow} forceOpen={false}>
         <div className="flex flex-col bg-gray">
           <div className="flex flex-grow mb-4 justify-center">
-            <img src={assetWithOrders.imageUri} alt="Rawrshak Asset" className="w-44" />
+            <img src={assetWithOrders.imageUri} alt="Rawrshak Asset" className="w-1/2" />
           </div>
           <div className="text-offWhite text-xl ml-4 mt-4">
             {assetWithOrders.name}
