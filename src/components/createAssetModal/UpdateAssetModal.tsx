@@ -130,6 +130,9 @@ function UpdateAssetModal({
   }, [asset, contentContract]);
 
   useEffect(() => {
+    if (oldAssetUri === undefined) return;
+    
+    // Todo: if oldAssetUri is empty, query the blockchain for the asset uri instead.
     fetch(urlPrefix + oldAssetUri)
       .then(response => response.json())
       .then(data => {
