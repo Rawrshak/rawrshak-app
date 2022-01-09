@@ -300,12 +300,12 @@ function BuyAsset({
     transaction(() => exchange.fillSellOrder(buyNowOrderIdsToFill, buyNowAssetAmount, buyNowTokenAmount), "Transaction pending", "Transaction failed", "Transaction succeeded", () => setBuyNowPending(false), () => resetValues(), () => setBuyNowPending(false));
   };
 
-  const buyNowApprove = (approveAmountBn: BigNumber | undefined) => {
-    if (supportedToken === undefined || exchange === undefined || erc20Escrow === undefined || approveAmountBn === undefined) return;
+  const buyNowApprove = () => {
+    if (supportedToken === undefined || exchange === undefined || erc20Escrow === undefined) return;
 
     setBuyNowPending(true);
 
-    transaction(() => supportedToken.contract.approve(erc20Escrow.address, approveAmountBn), "Transaction pending", "Transaction failed", "Transaction succeeded", () => setBuyNowPending(false), undefined, () => setBuyNowPending(false));
+    transaction(() => supportedToken.contract.approve(erc20Escrow.address, ethers.constants.MaxUint256), "Transaction pending", "Transaction failed", "Transaction succeeded", () => setBuyNowPending(false), undefined, () => setBuyNowPending(false));
   }
 
   const placeOrder = () => {
@@ -329,12 +329,12 @@ function BuyAsset({
     }
   }
 
-  const placeOrderApprove = (approveAmountBn: BigNumber | undefined) => {
-    if (supportedToken === undefined || exchange === undefined || erc20Escrow === undefined || approveAmountBn === undefined) return;
+  const placeOrderApprove = () => {
+    if (supportedToken === undefined || exchange === undefined || erc20Escrow === undefined) return;
 
     setPlaceOrderPending(true);
 
-    transaction(() => supportedToken.contract.approve(erc20Escrow.address, approveAmountBn), "Transaction pending", "Transaction failed", "Transaction succeeded", () => setPlaceOrderPending(false), undefined, () => setPlaceOrderPending(false));
+    transaction(() => supportedToken.contract.approve(erc20Escrow.address, ethers.constants.MaxUint256), "Transaction pending", "Transaction failed", "Transaction succeeded", () => setPlaceOrderPending(false), undefined, () => setPlaceOrderPending(false));
   }
 
   const resetValues = () => {
@@ -370,7 +370,7 @@ function BuyAsset({
             <div className="flex flex-grow justify-center">
               <Button
                 label="APPROVE"
-                onClick={() => buyNowApprove(buyNowTokenAmount)}
+                onClick={() => buyNowApprove()}
                 enabled={enableBuyNowApproveButton}
                 show={showBuyNowApproveButton}
                 enabledClassName="flex justify-center text-chartreuse500 text-sm bg-black450 border-chartreuse500 border-2 m-2 py-1 rounded-lg w-48"
@@ -435,7 +435,7 @@ function BuyAsset({
             />
             <Button
               label="APPROVE"
-              onClick={() => placeOrderApprove(placeOrderTokenAmount)}
+              onClick={() => placeOrderApprove()}
               enabled={enablePlaceOrderApproveButton}
               show={showPlaceOrderApproveButton}
               enabledClassName="flex justify-center text-chartreuse500 text-sm bg-black450 border-chartreuse500 border-2 m-2 w-48 py-1 rounded-lg"

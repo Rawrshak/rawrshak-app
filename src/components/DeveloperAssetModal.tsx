@@ -80,9 +80,22 @@ function AssetModal({
       "Transaction failed",
       "Transaction succeeded",
       () => setTransactionPending(false),
-      undefined,
+      () => updateAssetSuccess(),
       () => setTransactionPending(false)
     );
+  }
+
+  const updateAssetSuccess = () => {
+    setMintAmount(BigNumber.from("0"));
+    setMintAmountString("");
+  }
+
+  const calculateMax = (maxSupply: string) => {
+    if (maxSupply === ethers.constants.MaxUint256.toString()) {
+      return "MAX"
+    } else {
+      return Number(maxSupply);
+    }
   }
 
   if (assetWithOrders === undefined) {
@@ -121,7 +134,7 @@ function AssetModal({
               Subtype: {assetWithOrders.subtype}
             </div>
             <div className="text-offWhite text-sm">
-              Supply: {Number(assetWithOrders.currentSupply)} / {Number(assetWithOrders.maxSupply)}
+              Supply: {Number(assetWithOrders.currentSupply)} / {calculateMax(assetWithOrders.maxSupply)}
             </div>
             <div className="break-all text-offWhite text-sm">
               URI: {assetUri}

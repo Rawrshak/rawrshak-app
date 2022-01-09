@@ -7,7 +7,7 @@ import X from '../assets/icons/X';
 import Image from "./Image";
 import { Content, Content__factory } from '../assets/typechain';
 import { useWeb3 } from '../web3';
-import { BigNumber } from "ethers";
+import { BigNumber, ethers } from "ethers";
 
 function truncate(fullStr: string, strLen: number, separator: string = "...") {
   if (fullStr.length <= strLen) return fullStr;
@@ -58,6 +58,9 @@ function AssetModal({
   }, [assetUri, assetWithOrders, contentContract]);
 
   useEffect(() => {
+    if (assetUri === undefined) return;
+    
+    // Todo: if assetUri is empty, query the blockchain for the asset uri instead.
     fetch(urlPrefix + assetUri)
       .then(response => response.json())
       .then(data => {
@@ -69,26 +72,22 @@ function AssetModal({
 
 
   useEffect(() => {
-    if (contentContract === undefined) return;
+    if (contentContract === undefined || web3.account === undefined || assetWithOrders === undefined) return;
 
-    const updateAssetBalance = () => {
-      if (contentContract === undefined || web3.account === undefined || assetWithOrders === undefined) return;
+    contentContract.balanceOf(web3.account, assetWithOrders.tokenId)
+      .then((balance) => {
+        setAssetBalance(balance);
+      })
+      .catch((error) => console.error(error));
+  }, [contentContract, assetWithOrders, web3.account]);
 
-      contentContract.balanceOf(web3.account, assetWithOrders.tokenId)
-        .then((balance) => {
-          setAssetBalance(balance);
-        })
-        .catch((error) => console.error(error));
+  const calculateMax = (maxSupply: string) => {
+    if (maxSupply === ethers.constants.MaxUint256.toString()) {
+      return "MAX"
+    } else {
+      return Number(maxSupply);
     }
-
-    if (assetBalance === undefined) {
-      updateAssetBalance();
-    }
-
-    const filter = contentContract.filters.TransferSingle();
-
-    contentContract.on(filter, updateAssetBalance);
-  }, [contentContract, assetWithOrders, web3.account, assetBalance]);
+  }
 
   if (assetWithOrders === undefined) {
     return (null);
@@ -125,7 +124,7 @@ function AssetModal({
               Supply: {Number(assetWithOrders.currentSupply)}
             </div>
             <div className="flex text-black200 text-sm ml-1">
-              Max Supply: {Number(assetWithOrders.maxSupply)}
+              Max Supply: {calculateMax(assetWithOrders.maxSupply)}
             </div>
             <div className="flex text-black200 text-sm ml-1">
               Collection: {assetWithOrders.game}

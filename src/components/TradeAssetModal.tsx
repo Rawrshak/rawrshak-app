@@ -51,26 +51,17 @@ function TradeAssetModal({
 
   const [assetBalance, setAssetBalance] = useState<BigNumber>();
   useEffect(() => {
-    if (contentContract === undefined) return;
+    if (contentContract === undefined || web3.account === undefined || assetWithOrders === undefined) return;
 
-    const updateAssetBalance = () => {
-      if (contentContract === undefined || web3.account === undefined || assetWithOrders === undefined) return;
-
-      contentContract.balanceOf(web3.account, assetWithOrders.tokenId)
-        .then((balance) => {
+    contentContract.balanceOf(web3.account, assetWithOrders.tokenId)
+      .then((balance) => {
+        if (balance !== undefined) {
           setAssetBalance(balance);
-        })
-        .catch((error) => console.error(error));
-    }
-
-    if (assetBalance === undefined) {
-      updateAssetBalance();
-    }
-
-    const filter = contentContract.filters.TransferSingle();
-
-    contentContract.on(filter, updateAssetBalance);
-  }, [contentContract, assetWithOrders, web3.account, assetBalance]);
+        }
+        
+      })
+      .catch((error) => console.error(error));
+  }, [contentContract, assetWithOrders, web3.account]);
 
   if (assetWithOrders === undefined) {
     return (
