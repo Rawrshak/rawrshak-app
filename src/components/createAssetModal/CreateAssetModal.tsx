@@ -142,7 +142,7 @@ function CreateAssetModal({
       setShowCreateButton(false);
       setShowLoader(true);
       setShowStatusMessage(true);
-      setStatusMessage("Pinning and propagating JSON to IPFS");
+      setStatusMessage("Pinning and propagating JSON to IPFS will take 60 seconds");
       setShowStatusMessage(true);
     } else {
       setShowCreateButton(true);

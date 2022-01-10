@@ -145,6 +145,9 @@ function AssetsView({
               />
             </div>
           </div>
+          <div className="flex text-base ml-4 mr-4">
+            IMPORTANT: Uploading IPFS Metadata is not deterministic. We will take 60 seconds to try to propagate the data so it takes a few minutes for the asset to get created. Please be patient. The subgraph may also fail to download and read the data. In this case, select and edit the asset to re-trigger the subgraph to attempt to read the metadata.
+          </div>
           <SmartContractAssets activeContent={activeContent} openUpdateAssetModal={openUpdateAssetModal} />
         </div >
       </>
@@ -251,6 +254,9 @@ function SmartContractsView({
             enabledClassName="flex justify-center text-chartreuse500 text-sm border-chartreuse500 border-2 py-2 px-4 rounded-lg"
             disabledClassName=""
           />
+        </div>
+        <div className="flex justify-end text-offWhite text-base mt-2 ml-4 mr-4">
+          Note: Creating a new smart contract can a few minutes.
         </div>
         <CreateSmartContractModal
           show={showSmartContractModal}
