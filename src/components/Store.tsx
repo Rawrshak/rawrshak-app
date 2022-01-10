@@ -255,8 +255,8 @@ function SmartContractsView({
             disabledClassName=""
           />
         </div>
-        <div className="flex justify-end text-offWhite text-base mt-2 ml-4 mr-4">
-          Note: Creating a new smart contract can a few minutes.
+        <div className="flex justify-end text-semanticOrange text-base mt-2 ml-4 mr-4">
+          IMPORTANT: Creating a new smart contract can a few minutes.
         </div>
         <CreateSmartContractModal
           show={showSmartContractModal}

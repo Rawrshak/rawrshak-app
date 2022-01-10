@@ -98,6 +98,7 @@ module.exports = {
       white: '#FFFFFF',
       semanticGreen: '#40DD7F',
       semanticRed: '#FF6262',
+      semanticOrange: '#ED8936',
       tagBorder: '3A3A3A',
       purple: '#AC54FF'
     },

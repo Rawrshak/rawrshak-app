@@ -18,7 +18,7 @@ function SupportedTokenBalance() {
   } else {
     return (
       <div className="flex text-black200 ml-4 text-sm mt-1">
-        {`${ethers.utils.formatUnits(supportedTokenBalance.toString(), supportedToken?.decimals)} ${supportedToken?.symbol}`}
+        User Balance: {`${ethers.utils.formatUnits(supportedTokenBalance.toString(), supportedToken?.decimals)} ${supportedToken?.symbol}`}
       </div>
     );
   }
@@ -120,9 +120,12 @@ function TradeAssetModal({
               disabledClassName="flex flex-grow justify-center text-black text-sm bg-semanticRed m-2 py-2 rounded-lg"
             />
           </div>
+          <OrderBook assetWithOrders={assetWithOrders} showInTheMarketplace={true} showBuyAndSellButtons={true} tradeAsset={undefined} />
+          <div className="flex text-black200 text-base mb-2 mt-2 mr-4 ml-4 justify-center text-semanticOrange" >
+            Important: Transactions may take a minute to propagate.
+          </div>
           <BuyAsset show={buyMode} assetWithOrders={assetWithOrders} updateAssetBalanceCallback={updateAssetBalance} />
           <SellAsset show={!buyMode} assetWithOrders={assetWithOrders} updateAssetBalanceCallback={updateAssetBalance} />
-          <OrderBook assetWithOrders={assetWithOrders} showInTheMarketplace={true} showBuyAndSellButtons={true} tradeAsset={undefined} />
         </div>
       </Modal >
     );
