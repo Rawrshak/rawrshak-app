@@ -22,9 +22,9 @@ function Footer() {
           {web3.account && <Link to="/inventory" className="flex justify-center">
             Inventory
           </Link>}
-          <Link to="/marketplace" className="flex justify-center">
+          {!isDevMode && <Link to="/marketplace" className="flex justify-center">
             Marketplace
-          </Link>
+          </Link>}
           {isDevMode && <Link to="/store" className="flex justify-center">
             Store
           </Link>}
