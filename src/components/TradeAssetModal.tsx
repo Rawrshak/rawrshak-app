@@ -64,8 +64,16 @@ function TradeAssetModal({
   }
 
   useEffect(() => {
-    updateAssetBalance();
-  }, [contentContract, assetWithOrders, web3.account, updateAssetBalance]);
+    if (contentContract === undefined || web3.account === undefined || assetWithOrders === undefined) return;
+
+    contentContract.balanceOf(web3.account, assetWithOrders.tokenId)
+      .then((balance) => {
+        if (balance !== undefined) {
+          setAssetBalance(balance);
+        }
+      })
+      .catch((error) => console.error(error));
+  }, [contentContract, assetWithOrders, web3.account]);
 
   if (assetWithOrders === undefined) {
     return (
