@@ -81,7 +81,7 @@ function SingleOrderActionsPopover({
             </div>
           }
           <hr className="text-black400 mx-3" />
-          {order?.cancelledAtTimestamp.eq(BigNumber.from("0")) ?
+          {order?.cancelledAtTimestamp.eq(BigNumber.from("0")) && order?.amountFilled.lt(order.amountOrdered) ?
             <div onClick={() => { cancel(); setShowPopover(false); }} className="text-semanticRed text-xsm mx-2 my-1 p-1 cursor-pointer">
               Cancel This Order
             </div>
@@ -376,7 +376,7 @@ function Orders() {
             Price
           </div>
           <div className="flex text-offWhite">
-            Amount Filled
+            Quantity Filled
           </div>
           <div className="flex text-offWhite">
             Claimable

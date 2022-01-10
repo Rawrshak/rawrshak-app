@@ -30,10 +30,12 @@ function TradeAssetStatus({
 
 function BuyAsset({
   show,
-  assetWithOrders
+  assetWithOrders,
+  updateAssetBalanceCallback
 }: {
   show: boolean,
   assetWithOrders: AssetWithOrders | undefined
+  updateAssetBalanceCallback?: () => void
 }) {
   const [transaction] = useTransaction();
   const web3 = useWeb3();
@@ -341,6 +343,7 @@ function BuyAsset({
     setBuyNowAssetAmountString("0");
     setPlaceOrderAssetAmountString("0");
     setPlaceOrderPriceString("0");
+    if (updateAssetBalanceCallback) updateAssetBalanceCallback();
   }
 
   if (show) {
@@ -352,7 +355,7 @@ function BuyAsset({
           </div>
           <div />
           <div className="flex mt-3 mx-2 text-xsm text-black200 justify-center">
-            Amount
+            Quantity
           </div>
           <div>
             <InputNumber
@@ -395,7 +398,7 @@ function BuyAsset({
             </div>
             <div />
             <div className="flex mt-3 mx-2 text-xsm text-black200 justify-center">
-              Amount
+             Quantity
             </div>
             <div className="flex flex-col">
               <div className="flex">
@@ -408,7 +411,7 @@ function BuyAsset({
               </div>
             </div>
             <div className="flex mt-3 mx-2 text-xsm text-black200 justify-center">
-              Price
+              Price per Unit
             </div>
             <div className="flex flex-col">
               <InputAmount

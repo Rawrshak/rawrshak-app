@@ -19,6 +19,7 @@ import { InputAmount } from '../Input';
 import { ContentManager } from '../../assets/typechain';
 import { useTransaction } from "../../web3/transactions";
 import AssetTypes from './AssetTypes';
+import { useWeb3 } from '../../web3';
 
 function CreateAssetModal({
   show,
@@ -29,6 +30,7 @@ function CreateAssetModal({
   setShow: React.Dispatch<React.SetStateAction<boolean>>,
   contentManagerContract: ContentManager | undefined
 }) {
+  const web3 = useWeb3();
 
   const [pinataApiKey, setPinataApiKey] = useState<string>("");
   const [pinataApiSecret, setPinataApiSecret] = useState<string>("");
@@ -77,6 +79,12 @@ function CreateAssetModal({
   const [static3dObjectAssetMetadata, setStatic3dObjectAssetMetadata] = useState<Static3dObjectAssetMetadata>();
   const [textAssetMetadata, setTextAssetMetadata] = useState<TextAssetMetadata>();
 
+  useEffect(() => {
+    if (web3.account === undefined) return;
+
+    setRoyaltyReceiver(web3.account);
+  }, [web3.account]);
+
   const [royaltyRateString, setRoyaltyRateString] = useState<string>("0");
   const updateRoyaltyRateString = (royaltyRateString: string) => {
     if (Number(royaltyRateString) > 100) {
@@ -105,7 +113,6 @@ function CreateAssetModal({
         setImageUri("https://arweave.net/TsBCV3HyMssIZQk0S7MqZht_zR3e9pBXDWUo0VYAXW4");
       }
     }
-    
   }
 
   useEffect(() => {
