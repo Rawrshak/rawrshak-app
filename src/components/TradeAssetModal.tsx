@@ -65,7 +65,7 @@ function TradeAssetModal({
 
   useEffect(() => {
     updateAssetBalance();
-  }, [contentContract, assetWithOrders, web3.account]);
+  }, [contentContract, assetWithOrders, web3.account, updateAssetBalance]);
 
   if (assetWithOrders === undefined) {
     return (
