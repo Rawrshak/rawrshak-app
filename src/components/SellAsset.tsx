@@ -31,10 +31,12 @@ function TradeAssetStatus({
 
 function SellAsset({
   show,
-  assetWithOrders
+  assetWithOrders,
+  updateAssetBalanceCallback
 }: {
   show: boolean,
-  assetWithOrders: AssetWithOrders | undefined
+  assetWithOrders: AssetWithOrders | undefined,
+  updateAssetBalanceCallback?: () => void
 }) {
   const [transaction] = useTransaction();
   const web3 = useWeb3();
@@ -392,6 +394,7 @@ function SellAsset({
     setSellNowAssetAmountString("0");
     setPlaceOrderAssetAmountString("0");
     setPlaceOrderPriceString("0");
+    if (updateAssetBalanceCallback) updateAssetBalanceCallback();
   }
 
   if (show) {
@@ -403,7 +406,7 @@ function SellAsset({
           </div>
           <div />
           <div className="flex mt-3 mx-2 text-xsm justify-center text-black200">
-            Amount
+            Quantity
           </div>
           <div>
             <InputNumber
@@ -446,7 +449,7 @@ function SellAsset({
             </div>
             <div />
             <div className="flex mt-3 mx-2 text-xsm justify-center text-black200">
-              Amount
+              Quantity
             </div>
             <div className="flex flex-col">
               <div className="flex">
@@ -459,7 +462,7 @@ function SellAsset({
               </div>
             </div>
             <div className="flex mt-3 mx-2 text-xsm justify-center text-black200">
-              Price
+              Price per Unit
             </div>
             <div className="flex flex-col">
               <InputAmount

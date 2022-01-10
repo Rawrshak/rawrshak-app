@@ -376,7 +376,7 @@ function Orders() {
             Price
           </div>
           <div className="flex text-offWhite">
-            Amount Filled
+            Quantity Filled
           </div>
           <div className="flex text-offWhite">
             Claimable

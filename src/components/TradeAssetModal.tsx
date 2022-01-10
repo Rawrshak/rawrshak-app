@@ -50,7 +50,8 @@ function TradeAssetModal({
   }, [assetWithOrders, web3.signerOrProvider]);
 
   const [assetBalance, setAssetBalance] = useState<BigNumber>();
-  useEffect(() => {
+
+  const updateAssetBalance = () => {
     if (contentContract === undefined || web3.account === undefined || assetWithOrders === undefined) return;
 
     contentContract.balanceOf(web3.account, assetWithOrders.tokenId)
@@ -58,9 +59,12 @@ function TradeAssetModal({
         if (balance !== undefined) {
           setAssetBalance(balance);
         }
-        
       })
       .catch((error) => console.error(error));
+  }
+
+  useEffect(() => {
+    updateAssetBalance();
   }, [contentContract, assetWithOrders, web3.account]);
 
   if (assetWithOrders === undefined) {
@@ -108,8 +112,8 @@ function TradeAssetModal({
               disabledClassName="flex flex-grow justify-center text-black text-sm bg-semanticRed m-2 py-2 rounded-lg"
             />
           </div>
-          <BuyAsset show={buyMode} assetWithOrders={assetWithOrders} />
-          <SellAsset show={!buyMode} assetWithOrders={assetWithOrders} />
+          <BuyAsset show={buyMode} assetWithOrders={assetWithOrders} updateAssetBalanceCallback={updateAssetBalance} />
+          <SellAsset show={!buyMode} assetWithOrders={assetWithOrders} updateAssetBalanceCallback={updateAssetBalance} />
           <OrderBook assetWithOrders={assetWithOrders} showInTheMarketplace={true} showBuyAndSellButtons={true} tradeAsset={undefined} />
         </div>
       </Modal >
