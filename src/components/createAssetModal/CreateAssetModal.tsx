@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { BigNumber } from "ethers";
+import { BigNumber, ethers } from "ethers";
 import {
   PublicAssetMetadata,
   AudioFileMetadata,
@@ -121,6 +121,7 @@ function CreateAssetModal({
         description !== "" &&
         pinataApiKey.length === 20 &&
         pinataApiSecret.length === 64 &&
+        (ethers.utils.isAddress(royaltyReceiver) || royaltyReceiver === "") && 
         (
             audioFilesMetadata.length > 0 ||
             imageFilesMetadata.length > 0 || 
@@ -135,7 +136,7 @@ function CreateAssetModal({
     } else {
       setEnableCreateButton(false);
     }
-  }, [name, description, pinataApiKey.length, pinataApiSecret, audioFilesMetadata, imageFilesMetadata, static3dObjectFilesMetadata, textFileMetadata]);
+  }, [name, description, royaltyReceiver, pinataApiKey.length, pinataApiSecret, audioFilesMetadata, imageFilesMetadata, static3dObjectFilesMetadata, textFileMetadata]);
 
   useEffect(() => {
     if (transactionPending) {
@@ -292,11 +293,12 @@ function CreateAssetModal({
         setTimeout(() => {
           console.log("URI: ", response.data.IpfsHash);
           const hiddenDataUri: string = "";
+          const receiver = ethers.utils.isAddress(royaltyReceiver) ? royaltyReceiver : ethers.constants.AddressZero;
           transaction(() => contentManagerContract.addAssetBatch([{
             publicDataUri: response.data.IpfsHash,
             hiddenDataUri: hiddenDataUri,
             maxSupply: maxSupply,
-            royaltyReceiver: royaltyReceiver,
+            royaltyReceiver: receiver,
             royaltyRate: royaltyRate
           }]),
             "Transaction pending",

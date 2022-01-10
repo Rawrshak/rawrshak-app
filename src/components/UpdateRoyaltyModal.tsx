@@ -54,9 +54,10 @@ function UpdateRoyaltyModal({
   }, [contentContract, web3.account, show]);
 
   useEffect(() => {
-    if ((royaltyRateString !== oldRoyaltyRateString ||
-      royaltyAccount.toLowerCase() !== oldRoyaltyAccount.toLowerCase())
-      && ethers.utils.isAddress(royaltyAccount.toLowerCase())) {
+    if (
+      (royaltyRateString !== oldRoyaltyRateString || royaltyAccount.toLowerCase() !== oldRoyaltyAccount.toLowerCase()) && 
+      ethers.utils.isAddress(royaltyAccount.toLowerCase()) &&
+      royaltyAccount !== ethers.constants.AddressZero) {
       setEnableUpdateButton(true);
     } else {
       setEnableUpdateButton(false);

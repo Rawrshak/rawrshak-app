@@ -9,6 +9,7 @@ import { BigNumber } from '@ethersproject/bignumber';
 import { useTransaction } from "../web3/transactions";
 import Loader from "./Loader";
 import { useWeb3 } from '../web3';
+import { ethers } from 'ethers';
 
 function CreateSmartContractModal({
   show,
@@ -64,7 +65,7 @@ function CreateSmartContractModal({
   }, [name, description, imageUri, creator, game, tags]);
 
   useEffect(() => {
-    if (name !== "" && description !== "" && imageUri !== "" && creator !== "" && royaltyAccount !== "" && pinataApiKey.length === 20 && pinataApiSecret.length === 64) {
+    if (name !== "" && description !== "" && imageUri !== "" && creator !== "" && ethers.utils.isAddress(royaltyAccount) && royaltyAccount !== ethers.constants.AddressZero && pinataApiKey.length === 20 && pinataApiSecret.length === 64) {
       setCreateButtonEnabled(true);
     } else {
       setCreateButtonEnabled(false);
