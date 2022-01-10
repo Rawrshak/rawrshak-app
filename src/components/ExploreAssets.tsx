@@ -5,33 +5,26 @@ import Button from "./Button";
 import { AssetWithOrders } from "../data/data"
 
 function SelectedAssets({
-  selectedTags
+  filterWords
 }: {
-  selectedTags: string[] | undefined
+  filterWords: string | undefined
 }) {
   const { assetsWithOrders } = useData();
 
   const [filteredAssets, setFilteredAssets] = useState<AssetWithOrders[]>();
   const [filteredAndSlicedAssets, setFilteredAndSlicedAssets] = useState<AssetWithOrders[]>();
   const [assetShowCount, setAssetShowCount] = useState<number>(8);
+  
+  // Todo: Put back Search by tags
 
   useEffect(() => {
-    if (selectedTags === undefined || assetsWithOrders === undefined) return;
-
-    const checkIfAssetHasTags = (assetTags: string[], filteredTags: (string | undefined)[]) => {
-      let foundTag = false;
-      assetTags.forEach((tag) => {
-        if (tag && filteredTags.includes(tag)) {
-          foundTag = true;
-        }
-      });
-
-      return foundTag;
-    };
+    if (filterWords === undefined || assetsWithOrders === undefined) return;
 
     const newFilteredAssets = assetsWithOrders.filter(assetWithOrders => {
-      if (!assetWithOrders.tags) return false;
-      if (checkIfAssetHasTags(assetWithOrders.tags, selectedTags)) {
+      // if there is no filter, return all assets
+      if (filterWords === "") return true;
+
+      if (filterWords && assetWithOrders.name && assetWithOrders.name.toLowerCase().includes(filterWords)) {
         return true;
       } else {
         return false;
@@ -40,7 +33,7 @@ function SelectedAssets({
 
     setFilteredAssets(newFilteredAssets);
 
-  }, [assetsWithOrders, selectedTags]);
+  }, [assetsWithOrders, filterWords]);
 
   useEffect(() => {
     if (filteredAssets === undefined) return;
@@ -77,88 +70,19 @@ function SelectedAssets({
   }
 }
 
-function Tag({
-  tagId,
-  selected,
-  selectTag
-}: {
-  tagId: string,
-  selected: boolean,
-  selectTag: (tag: string, select: boolean) => void
-}) {
-  const getClassName = () => {
-    const commonClassNames = "flex flex-shrink text-sm bg-gray rounded-xl m-1 px-3 py-1 border-2 cursor-pointer";
-    if (selected) {
-      return (commonClassNames + " text-chartreuse500 border-chartreuse500 hover:text-offWhite");
-    } else {
-      return (commonClassNames + " text-offWhite border-black200 hover:text-chartreuse500");
-    }
-  }
-
-  return (
-    <div className={getClassName()} onClick={() => selectTag(tagId, !selected)}>
-      {tagId}
-    </div>
-  );
-}
-
 function ExploreAssets({
   show
 }: {
   show: boolean
 }) {
   const [activeTradeAsset, setActiveTradeAsset] = useState<AssetWithOrders>();
-  const [visibleTags, setVisibleTags] = useState<string[]>();
-  const [selectedTags, setSelectedTags] = useState<string[]>();
   const [searchTerm, setSearchTerm] = useState<string>("");
-
-  const { curatedTags, allTags, assetsWithOrders } = useData();
+  const { assetsWithOrders } = useData();
 
   useEffect(() => {
     if (assetsWithOrders === undefined || activeTradeAsset === undefined) return;
     setActiveTradeAsset(assetsWithOrders.find(assetWithOrder => assetWithOrder.id === activeTradeAsset.id));
   }, [assetsWithOrders, activeTradeAsset])
-
-  useEffect(() => {
-    if (allTags === undefined) return;
-
-    if (searchTerm === "") {
-      setVisibleTags(curatedTags);
-      setSelectedTags(curatedTags);
-    } else {
-      const newVisibleTags = allTags.filter(tag => (tag.toLowerCase()).includes(searchTerm.toLowerCase()));
-      setVisibleTags(newVisibleTags);
-      setSelectedTags(newVisibleTags);
-    }
-  }, [searchTerm, curatedTags, allTags]);
-
-  useEffect(() => {
-    if (visibleTags === undefined && curatedTags !== undefined) {
-      setVisibleTags(curatedTags);
-      setSelectedTags(curatedTags);
-    }
-  }, [curatedTags, visibleTags])
-
-  const selectAllTags = () => {
-    setSelectedTags(visibleTags);
-  }
-
-  const deselectAllTags = () => {
-    setSelectedTags([]);
-  }
-
-  const selectTag = (tag: string, select: boolean) => {
-    if (selectedTags === undefined) return;
-
-    if (select) {
-      setSelectedTags([...selectedTags, tag]);
-    } else {
-      const index = selectedTags.indexOf(tag);
-      if (index !== -1) {
-        setSelectedTags([...selectedTags.slice(0, index), ...selectedTags.slice(index + 1, selectedTags.length)]);
-      }
-    }
-  }
 
   if (show) {
     return (
@@ -169,26 +93,15 @@ function ExploreAssets({
         <div className="flex">
           <div className="flex flex-grow text-offWhite mb-2 ml-1 py-2 pl-3 pr-2 rounded-lg">
             <div className="flex text-offWhite text-sm mt-1 mr-2">
-              All Tags
+              Search For Asset
             </div>
             <div className="flex">
               <input value={searchTerm} onChange={(e) => { setSearchTerm(e.target.value) }} type="text" className="flex text-offWhite bg-black450 focus:outline-none rounded py-1 px-2 w-96" />
             </div>
-            <div onClick={() => { selectAllTags() }} className="flex flex-shrink text-offWhite text-sm rounded-xl ml-4 m-1 px-3 py-1 cursor-pointer underline">
-              Select All
-            </div>
-            <div onClick={() => { deselectAllTags() }} className="flex flex-shrink text-offWhite text-sm rounded-xl m-1 px-3 py-1 cursor-pointer underline">
-              Clear
-            </div>
           </div>
         </div>
-        <div className="flex flex-wrap my-1 mx-3">
-          {visibleTags ? visibleTags.map((tag, index) => (
-            <Tag key={index} tagId={tag ? tag : "Undefined"} selected={selectedTags ? selectedTags.includes(tag) : false} selectTag={selectTag} />
-          )) : ""}
-        </div>
         <SelectedAssets
-          selectedTags={selectedTags}
+          filterWords={searchTerm}
         />
       </div>
     );
