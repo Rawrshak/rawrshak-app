@@ -164,7 +164,7 @@ function AudioFile({
           </select>
         </div>
         <div className="col-span-4 my-3 mr-2 text-right">
-          Duration (s)
+          Duration (ms)
         </div>
         <div className="flex flex-grow col-span-7 my-2">
           <InputNumber
@@ -185,7 +185,7 @@ function AudioFile({
           />
         </div>
         <div className="col-span-4 my-3 mr-2 text-right">
-          Sample Rate
+          Sample Rate (Hz)
         </div>
         <div className="flex flex-grow col-span-7 my-2">
           <InputNumber
