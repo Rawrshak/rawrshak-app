@@ -7,10 +7,17 @@ const useAssets = (contentsSubgraphEndpoint: string | undefined) => {
 
   useEffect(() => {
     if (contentsSubgraphEndpoint === undefined) return;
+    
+    if (process.env.REACT_APP_BANNED_CONTENT_ADDRESSES === undefined) {
+      console.error("Banned contracts have not been set!");
+      return;
+    }
+  
+    const bannedContracts = process.env.REACT_APP_BANNED_CONTENT_ADDRESSES;
 
     const exploreAssetsQuery = `
       query {
-        assets {
+        assets (where: {parentContract_not_in: ${bannedContracts} } ) {
           id
           tokenId
           currentSupply

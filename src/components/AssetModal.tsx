@@ -9,19 +9,6 @@ import { Content, Content__factory } from '../assets/typechain';
 import { useWeb3 } from '../web3';
 import { BigNumber, ethers } from "ethers";
 
-function truncate(fullStr: string, strLen: number, separator: string = "...") {
-  if (fullStr.length <= strLen) return fullStr;
-
-  separator = separator || '...';
-
-  const sepLen = separator.length;
-  const charsToShow = strLen - sepLen;
-  const frontChars = Math.ceil(charsToShow / 2 + 1); // accounts for the "0x"
-  const backChars = Math.floor(charsToShow / 2 - 1); // accounts for the "0x"
-
-  return fullStr.substr(0, frontChars) + separator + fullStr.substr(fullStr.length - backChars);
-}
-
 function AssetModal({
   show,
   setShow,
@@ -130,7 +117,7 @@ function AssetModal({
               Collection: {assetWithOrders.game}
             </div>
             <div className="flex text-black200 text-sm ml-1">
-              Contract Address: {truncate(assetWithOrders.parentContract, 11)}
+              Contract Address: {assetWithOrders.parentContract}
             </div>
             <div className="flex text-black200 text-sm ml-1">
               Token ID: {assetWithOrders.tokenId}
