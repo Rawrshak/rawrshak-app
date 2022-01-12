@@ -278,7 +278,7 @@ function AudioAsset({
       engine: "unity",
       compression: "compressed",
       uri: "https://arweave.net/",
-      contentType: "wav",
+      contentType: "audio/wav",
       duration: 0,
       channelCount: 0,
       sampleRate: 0,

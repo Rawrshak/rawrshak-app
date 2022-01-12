@@ -93,14 +93,14 @@ function ImageFile({
             name="assetType"
             className="bg-neutral700 focus:outline-none rounded py-1 px-2"
             value={imageFileMetadata.contentType}>
-            <option value="png">
-              image/png
+            <option value="image/png">
+              PNG
             </option>
-            <option value="jpg">
-              image/jpg
+            <option value="image/jpg">
+              JPG
             </option>
-            <option value="svg">
-              image/svg
+            <option value="image/svg">
+              SVG
             </option>
           </select>
         </div>
@@ -189,7 +189,7 @@ function ImageAsset({
       uri: "https://arweave.net/",
       height: 0,
       width: 0,
-      contentType: "png",
+      contentType: "image/png",
     }
 
     newImageFilesMetadata[newImageFilesMetadata.length] = newImageFile;
