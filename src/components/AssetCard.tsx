@@ -99,7 +99,7 @@ function AssetCard({
       setTypeIcon(audioIcon);
     } else if (assetWithOrders.type === "image") {
       setTypeIcon(imageIcon);
-    } else if (assetWithOrders.type === "static3dObject") {
+    } else if (assetWithOrders.type === "static3dobject") {
       setTypeIcon(static3dObjectIcon);
     } else if (assetWithOrders.type === "text") {
       setTypeIcon(textIcon);
