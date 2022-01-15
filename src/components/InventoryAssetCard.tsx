@@ -7,16 +7,46 @@ import contentIcon from '../assets/icons/contentIcon.png';
 import imageIcon from '../assets/icons/imageIcon.png';
 import static3dObjectIcon from '../assets/icons/static3dObjectIcon.png';
 import textIcon from '../assets/icons/textIcon.png';
+import { Content, Content__factory } from '../assets/typechain';
+import { useWeb3 } from '../web3';
 
 function InventoryAssetCard({
   assetWithOrders
 }: {
   assetWithOrders: AssetWithOrders,
 }) {
+  const web3 = useWeb3();
   const [showAssetModal, setShowAssetModal] = useState(false);
   const [showTradeAssetModal, setShowTradeAssetModal] = useState(false);
   const [initialBuyMode, setInitialBuyMode] = useState(true);
   const [typeIcon, setTypeIcon] = useState<any>();
+  const [contentContract, setContentContract] = useState<Content>();
+  const [collectionName, setCollectionName] = useState(true);
+  const urlPrefix = 'https://gateway.pinata.cloud/ipfs/';
+
+  // Todo: these are stop-gap measures. Currently, if the graph doesn't pick up the IPFS metadata, 
+  // some information will be empty. In order to combat that, we're querying for the parent contract 
+  // metadata name here. We'll remove this once Arweave is supported on TheGraph
+  
+  useEffect(() => {
+    if (assetWithOrders === undefined || web3.signerOrProvider === undefined || assetWithOrders.game !== null) return;
+
+    setContentContract(Content__factory.connect(assetWithOrders.parentContract, web3.signerOrProvider));
+  }, [assetWithOrders, web3.signerOrProvider]);
+
+  useEffect(() => {
+    if (contentContract === undefined || assetWithOrders === undefined || assetWithOrders.game !== null) return;
+
+    contentContract.contractUri()
+      .then(uri => {
+        fetch(urlPrefix + uri)
+          .then(response => response.json())
+          .then(data => {
+            setCollectionName(data.name);
+          });
+      })
+      .catch((error) => console.error(error));
+  }, [assetWithOrders, contentContract]);
 
   const openAssetModal = () => {
     setShowAssetModal(true);
@@ -67,7 +97,7 @@ function InventoryAssetCard({
           Qty x{assetWithOrders.balance}
         </div>
         <div className="h-5 text-offWhite text-sm mx-4 truncate ...">
-          {assetWithOrders.game}
+          {assetWithOrders.game === null ? collectionName : assetWithOrders.game}
         </div>
       </div>
     </>
