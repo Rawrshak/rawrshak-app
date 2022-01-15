@@ -37,6 +37,7 @@ const useAllContent = (contentsSubgraphEndpoint: string | undefined) => {
               id
             }
             imageUri
+            latestPublicUri
           }
         }
       }
@@ -68,6 +69,7 @@ const useAllContent = (contentsSubgraphEndpoint: string | undefined) => {
               balance: undefined,
               creator: content.creator,
               game: content.game,
+              latestPublicUri: asset.latestPublicUri,
               orders: [],
             }
             return newAsset;

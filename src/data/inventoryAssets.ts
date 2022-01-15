@@ -33,6 +33,7 @@ const useInventoryAssets = (contentsSubgraphEndpoint: string | undefined) => {
                     id
                   }
                   imageUri
+                  latestPublicUri
                   parentContract {
                     id
                     creator
@@ -71,6 +72,7 @@ const useInventoryAssets = (contentsSubgraphEndpoint: string | undefined) => {
                 balance: assetBalance.amount,
                 creator: assetBalance.asset.parentContract.creator,
                 game: assetBalance.asset.parentContract.name,
+                latestPublicUri: assetBalance.asset.latestPublicUri,
               }
 
               return newAsset;

@@ -129,7 +129,7 @@ function AssetModal({
               Subtype: {assetWithOrders.subtype}
             </div>
             {nsfw !== undefined ? <div className="flex text-black200 text-sm ml-1">
-              NSFW: {nsfw}
+              NSFW: {nsfw ? "TRUE" : "FALSE"}
             </div> : null}
             {assetUri !== undefined ? <div className="flex flex-grow flex-wrap break-all text-black200 text-sm ml-1">
               URI: {assetUri}
