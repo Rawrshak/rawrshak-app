@@ -19,6 +19,11 @@ const useContentWithMetadataAndOrders = (
         } else {
           newAssetsWithOrders[index] = asset;
         };
+        
+        // Todo: these are stop-gap measures. Currently, if the graph doesn't pick up the IPFS metadata, 
+        // some information will be empty. In order to combat that, we're querying for the parent contract 
+        // metadata name here. We'll remove this once Arweave is supported on TheGraph
+        newAssetsWithOrders[index].game = contentWithMetadata.name;
       });
       const newContentsWithMetadata: ContentDataWithMetadata = contentWithMetadata;
       newContentsWithMetadata.assets = newAssetsWithOrders;
