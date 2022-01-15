@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useInventoryAssets } from './inventoryAssets';
 import { useAssets } from './assets';
+import { useAssetsWithMetadata } from './assetsWithMetadata';
 import { useFeaturedAssets } from './featuredAssets';
 import { useAllContent } from './allContent';
 import { useOwnedContent } from './ownedContent';
@@ -99,6 +100,7 @@ export interface Asset {
   balance: BigNumber | undefined,
   creator: string,
   game: string,
+  latestPublicUri: string, 
 };
 
 export interface AssetWithOrders extends Asset {
@@ -238,14 +240,17 @@ function useSystemData() {
   const allTags = useAllTags(contentsSubgraphEndpoint);
   const ownedContent = useOwnedContent(contentsSubgraphEndpoint);
   const assets = useAssets(contentsSubgraphEndpoint);
-  const assetOrders = useAssetOrders(assets, exchangeContract, exchangeSubgraphEndpoint);
-  const assetsWithOrders = useAssetsWithOrders(assets, assetOrders);
+  const assetsWithMetadata = useAssetsWithMetadata(assets);
+  const assetOrders = useAssetOrders(assetsWithMetadata, exchangeContract, exchangeSubgraphEndpoint);
+  const assetsWithOrders = useAssetsWithOrders(assetsWithMetadata, assetOrders);
   const featuredAssets = useFeaturedAssets(contentsSubgraphEndpoint);
-  const featuredAssetOrders = useAssetOrders(featuredAssets, exchangeContract, exchangeSubgraphEndpoint);
-  const featuredAssetsWithOrders = useAssetsWithOrders(featuredAssets, featuredAssetOrders);
+  const featuredAssetsWithMetadata = useAssetsWithMetadata(featuredAssets);
+  const featuredAssetOrders = useAssetOrders(featuredAssetsWithMetadata, exchangeContract, exchangeSubgraphEndpoint);
+  const featuredAssetsWithOrders = useAssetsWithOrders(featuredAssetsWithMetadata, featuredAssetOrders);
   const inventoryAssets = useInventoryAssets(contentsSubgraphEndpoint);
-  const inventoryAssetOrders = useAssetOrders(inventoryAssets, exchangeContract, exchangeSubgraphEndpoint);
-  const inventoryAssetsWithOrders = useAssetsWithOrders(inventoryAssets, inventoryAssetOrders);
+  const inventoryAssetsWithMetadata = useAssetsWithMetadata(inventoryAssets);
+  const inventoryAssetOrders = useAssetOrders(inventoryAssetsWithMetadata, exchangeContract, exchangeSubgraphEndpoint);
+  const inventoryAssetsWithOrders = useAssetsWithOrders(inventoryAssetsWithMetadata, inventoryAssetOrders);
   const supportedToken = useSupportedToken();
   const ownedContentWithMetadata = useContentWithMetadata(ownedContent);
   const supportedTokenBalance = useSupportedTokenBalance(supportedToken);

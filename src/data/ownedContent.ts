@@ -41,6 +41,7 @@ const useOwnedContent = (contentsSubgraphEndpoint: string | undefined) => {
                 id
               }
               imageUri
+              latestPublicUri
             }
           }
         }
@@ -73,6 +74,7 @@ const useOwnedContent = (contentsSubgraphEndpoint: string | undefined) => {
               balance: undefined,
               creator: contentManager.content.creator,
               game: contentManager.content.game,
+              latestPublicUri: asset.latestPublicUri,
               orders: [],
             }
             return newAsset;
