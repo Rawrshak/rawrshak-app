@@ -20,6 +20,15 @@ function AvailableLinks() {
             <Logo />
           </Link>
         </div>
+        <div className="text-offWhite mr-4 mx-12 py-4 flex flex-col justify-center text-lg">
+          <a 
+            href="https://rawrshak.itch.io/rawrshak-asset-viewer" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="flex justify-center" >
+            ASSET VIEWER
+          </a>
+        </div>
         {web3.account && <div className="mr-4 mx-12 py-4 flex flex-col justify-center text-lg">
           <ActiveLink to="/inventory" exact>
             INVENTORY
@@ -40,6 +49,15 @@ function AvailableLinks() {
           <Link to="/">
             <Logo />
           </Link>
+        </div>
+        <div className="text-offWhite mr-4 mx-12 py-4 flex flex-col justify-center text-lg">
+          <a 
+            href="https://rawrshak.itch.io/rawrshak-asset-viewer" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="flex justify-center" >
+            ASSET VIEWER
+          </a>
         </div>
         {web3.account && <div className="mr-4 mx-12 py-4 flex flex-col justify-center text-lg">
           <ActiveLink to="/inventory" exact>
