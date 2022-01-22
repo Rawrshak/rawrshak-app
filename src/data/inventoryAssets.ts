@@ -29,6 +29,7 @@ const useInventoryAssets = (contentsSubgraphEndpoint: string | undefined) => {
                   name
                   type
                   subtype
+                  dateCreated
                   tags {
                     id
                   }
@@ -73,6 +74,7 @@ const useInventoryAssets = (contentsSubgraphEndpoint: string | undefined) => {
                 creator: assetBalance.asset.parentContract.creator,
                 game: assetBalance.asset.parentContract.name,
                 latestPublicUri: assetBalance.asset.latestPublicUri,
+                dateCreated: assetBalance.asset.dateCreated,
               }
 
               return newAsset;

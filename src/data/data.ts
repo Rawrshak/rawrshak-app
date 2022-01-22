@@ -70,6 +70,7 @@ export interface ContentData {
   managerAddress: string,
   creatorAddress: string,
   assets: AssetWithOrders[],
+  dateCreated: BigNumber,
 }
 
 export interface ContentApproval {
@@ -101,6 +102,7 @@ export interface Asset {
   creator: string,
   game: string,
   latestPublicUri: string, 
+  dateCreated: BigNumber,
 };
 
 export interface AssetWithOrders extends Asset {

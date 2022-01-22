@@ -26,6 +26,7 @@ const useOwnedContent = (contentsSubgraphEndpoint: string | undefined) => {
             creator
             creatorAddress
             owner
+            dateCreated
             manager {
               id
             }
@@ -42,6 +43,7 @@ const useOwnedContent = (contentsSubgraphEndpoint: string | undefined) => {
               }
               imageUri
               latestPublicUri
+              dateCreated
             }
           }
         }
@@ -76,6 +78,7 @@ const useOwnedContent = (contentsSubgraphEndpoint: string | undefined) => {
               game: contentManager.content.game,
               latestPublicUri: asset.latestPublicUri,
               orders: [],
+              dateCreated: asset.dateCreated,
             }
             return newAsset;
           });
@@ -90,6 +93,7 @@ const useOwnedContent = (contentsSubgraphEndpoint: string | undefined) => {
             owner: contentManager.content.owner,
             managerAddress: contentManager.content.manager.id,
             assets: newAssets,
+            dateCreated: contentManager.content.dateCreated,
           }
           return (newContent);
         });

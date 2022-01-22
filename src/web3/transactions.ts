@@ -33,7 +33,7 @@ const useTransaction = () => {
         .then((txResponse: ethers.ContractTransaction) => {
           const wait =
             process.env.NODE_ENV !== "development"
-              ? 0
+              ? 10000
               : process.env.REACT_APP_DEVELOPMENT_TX_WAIT_MS
                 ? parseInt(process.env.REACT_APP_DEVELOPMENT_TX_WAIT_MS)
                 : 0

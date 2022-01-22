@@ -18,6 +18,7 @@ const useAllContent = (contentsSubgraphEndpoint: string | undefined) => {
           game
           creator
           creatorAddress
+          dateCreated
           game
           owner {
             id
@@ -38,6 +39,7 @@ const useAllContent = (contentsSubgraphEndpoint: string | undefined) => {
             }
             imageUri
             latestPublicUri
+            dateCreated
           }
         }
       }
@@ -70,6 +72,7 @@ const useAllContent = (contentsSubgraphEndpoint: string | undefined) => {
               creator: content.creator,
               game: content.game,
               latestPublicUri: asset.latestPublicUri,
+              dateCreated: asset.dateCreated,
               orders: [],
             }
             return newAsset;
@@ -85,6 +88,7 @@ const useAllContent = (contentsSubgraphEndpoint: string | undefined) => {
             owner: content.owner.id,
             managerAddress: content.manager.id,
             assets: newAssets,
+            dateCreated: content.dateCreated,
           }
           return (newContent);
         });

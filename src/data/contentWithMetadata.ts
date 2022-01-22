@@ -27,7 +27,8 @@ const useContentWithMetadata = (ownedContent: ContentData[] | undefined) => {
             creator: metadata.creator,
             creatorAddress: ownedContent.creatorAddress,
             owner: metadata.owner,
-            tags: metadata.tags
+            tags: metadata.tags,
+            dateCreated: ownedContent.dateCreated
           }
         } else {
           ownedContentWithMetadata = {
@@ -43,7 +44,8 @@ const useContentWithMetadata = (ownedContent: ContentData[] | undefined) => {
             creator: "",
             creatorAddress: "",
             owner: "",
-            tags: []
+            tags: [],
+            dateCreated: ownedContent.dateCreated
           }
         }
         return ownedContentWithMetadata;
