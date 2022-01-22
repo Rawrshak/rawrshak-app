@@ -30,6 +30,7 @@ const useFeaturedAssets = (contentsSubgraphEndpoint: string | undefined) => {
           }
           imageUri
           latestPublicUri
+          dateCreated
           parentContract {
             id
             creator
@@ -65,6 +66,7 @@ const useFeaturedAssets = (contentsSubgraphEndpoint: string | undefined) => {
             creator: asset.parentContract.creator,
             game: asset.parentContract.game,
             latestPublicUri: asset.latestPublicUri,
+            dateCreated: asset.dateCreated,
           }
           return newAsset;
         })
