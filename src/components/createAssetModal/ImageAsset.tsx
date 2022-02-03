@@ -61,7 +61,7 @@ function ImageFile({
           Image URI
         </div>
         <div className="flex flex-grow col-span-7 my-2">
-          <input value={imageFileMetadata.uri} onChange={(e) => { updateUri(e.target.value) }} type="text" className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2" />
+          <textarea value={imageFileMetadata.uri} onChange={(e) => { updateUri(e.target.value) }}  className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2" />
         </div>
         <div className="col-span-4 my-3 mr-2 text-right">
           Height (pixels)

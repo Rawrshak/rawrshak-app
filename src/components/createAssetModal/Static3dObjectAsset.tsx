@@ -197,7 +197,7 @@ function Static3dObject({
           Static 3D Object File URI
         </div>
         <div className="flex flex-grow col-span-7 my-2">
-          <input value={static3dObjectFileMetadata.uri} onChange={(e) => { updateUri(e.target.value) }} type="text" className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2" />
+          <textarea value={static3dObjectFileMetadata.uri} onChange={(e) => { updateUri(e.target.value) }} className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2" />
         </div>
       </div>
     </div>
