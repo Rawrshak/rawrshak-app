@@ -10,7 +10,7 @@ const useAssets = (contentsSubgraphEndpoint: string | undefined) => {
 
     const exploreAssetsQuery = `
       query {
-        assets {
+        assets (first: 300) {
           id
           tokenId
           currentSupply
