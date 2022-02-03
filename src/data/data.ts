@@ -150,13 +150,9 @@ export interface PublicAssetMetadata {
 
 export interface AudioFileMetadata {
   name: string,
-  engine: string,
-  compression: string,
   uri: string,
   contentType: string,
   duration: number,
-  channelCount: number,
-  sampleRate: number,
 }
 
 export interface AudioAssetMetadata extends PublicAssetMetadata {
