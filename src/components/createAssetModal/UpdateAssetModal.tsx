@@ -157,13 +157,9 @@ function UpdateAssetModal({
       const newAudioFilesMetadata: AudioFileMetadata[] = oldJson.assetProperties.map((audioFileJson: any) => {
         const newAudioFileMetadata: AudioFileMetadata = {
           name: audioFileJson.name,
-          engine: audioFileJson.engine,
-          compression: audioFileJson.compression,
           uri: audioFileJson.uri,
           contentType: audioFileJson.contentType,
           duration: audioFileJson.duration,
-          channelCount: audioFileJson.channelCount,
-          sampleRate: audioFileJson.sampleRate,
         }
         return newAudioFileMetadata;
       });

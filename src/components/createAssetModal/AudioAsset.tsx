@@ -22,18 +22,6 @@ function AudioFile({
     updateAudioFileMetadata(index, newAudioFileMetadata);
   }
 
-  const updateEngine = (engine: string) => {
-    const newAudioFileMetadata = Object.assign({}, audioFileMetadata);
-    newAudioFileMetadata.engine = engine;
-    updateAudioFileMetadata(index, newAudioFileMetadata);
-  }
-
-  const updateCompression = (compression: string) => {
-    const newAudioFileMetadata = Object.assign({}, audioFileMetadata);
-    newAudioFileMetadata.compression = compression;
-    updateAudioFileMetadata(index, newAudioFileMetadata);
-  }
-
   const updateUri = (uri: string) => {
     const newAudioFileMetadata = Object.assign({}, audioFileMetadata);
     newAudioFileMetadata.uri = uri;
@@ -49,18 +37,6 @@ function AudioFile({
   const updateDuration = (duration: number) => {
     const newAudioFileMetadata = Object.assign({}, audioFileMetadata);
     newAudioFileMetadata.duration = duration;
-    updateAudioFileMetadata(index, newAudioFileMetadata);
-  }
-
-  const updateChannelCount = (channelCount: number) => {
-    const newAudioFileMetadata = Object.assign({}, audioFileMetadata);
-    newAudioFileMetadata.channelCount = channelCount;
-    updateAudioFileMetadata(index, newAudioFileMetadata);
-  }
-
-  const updateSampleRate = (sampleRate: number) => {
-    const newAudioFileMetadata = Object.assign({}, audioFileMetadata);
-    newAudioFileMetadata.sampleRate = sampleRate;
     updateAudioFileMetadata(index, newAudioFileMetadata);
   }
 
@@ -89,55 +65,10 @@ function AudioFile({
           <input value={audioFileMetadata.name} onChange={(e) => updateName(e.target.value)} className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2" />
         </div>
         <div className="col-span-4 my-3 mr-2 text-right">
-          Engine
-        </div>
-        <div className="col-span-8 my-2">
-          <select
-            onChange={(e) => updateEngine(e.target.value)}
-            name="assetType"
-            className="bg-neutral700 focus:outline-none rounded py-1 px-2"
-            value={audioFileMetadata.engine}
-          >
-            <option value="unity">
-              Unity
-            </option>
-            <option value="unreal">
-              Unreal
-            </option>
-            <option value="none">
-              None
-            </option>
-          </select>
-        </div>
-        <div className="col-span-4 my-3 mr-2 text-right">
-          Compression
-        </div>
-        <div className="col-span-8 my-2">
-          <select
-            onChange={(e) => updateCompression(e.target.value)}
-            name="assetType"
-            className="bg-neutral700 focus:outline-none rounded py-1 px-2"
-            value={audioFileMetadata.compression}
-          >
-            <option value="compressed">
-              Compressed
-            </option>
-            <option value="pcm">
-              PCM
-            </option>
-            <option value="adpcm">
-              ADPCM
-            </option>
-            <option value="raw">
-              Raw
-            </option>
-          </select>
-        </div>
-        <div className="col-span-4 my-3 mr-2 text-right">
           Audio File URI
         </div>
-        <div className="col-span-8 my-2">
-          <input value={audioFileMetadata.uri} onChange={(e) => { updateUri(e.target.value) }} type="text" className="bg-neutral700 focus:outline-none rounded py-1 px-2" />
+        <div className="flex flex-grow col-span-7 my-2">
+          <textarea value={audioFileMetadata.uri} onChange={(e) => { updateUri(e.target.value) }} className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2" />
         </div>
         <div className="col-span-4 my-3 mr-2 text-right">
           Content Type
@@ -172,28 +103,6 @@ function AudioFile({
             onChange={(e: any) => updateDuration(e)}
             className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2"
             disabled={false} />
-        </div>
-        <div className="col-span-4 my-3 mr-2 text-right">
-          Channel Count
-        </div>
-        <div className="flex flex-grow col-span-7 my-2">
-          <InputNumber
-            value={(audioFileMetadata.channelCount).toString()}
-            onChange={(e: any) => updateChannelCount(e)}
-            className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2"
-            disabled={false}
-          />
-        </div>
-        <div className="col-span-4 my-3 mr-2 text-right">
-          Sample Rate (Hz)
-        </div>
-        <div className="flex flex-grow col-span-7 my-2">
-          <InputNumber
-            value={(audioFileMetadata.sampleRate).toString()}
-            onChange={(e: any) => updateSampleRate(e)}
-            className="flex flex-grow bg-neutral700 focus:outline-none rounded py-1 px-2"
-            disabled={false}
-          />
         </div>
       </div>
     </div>
@@ -275,13 +184,9 @@ function AudioAsset({
     const newAudioFilesMetadata = audioFilesMetadata.map(audioFile => { return { ...audioFile } });
     const newAudioFile: AudioFileMetadata = {
       name: "",
-      engine: "unity",
-      compression: "compressed",
       uri: "https://arweave.net/",
       contentType: "audio/wav",
       duration: 0,
-      channelCount: 0,
-      sampleRate: 0,
     }
     newAudioFilesMetadata[newAudioFilesMetadata.length] = newAudioFile;
     setAudioFilesMetadata(newAudioFilesMetadata);
