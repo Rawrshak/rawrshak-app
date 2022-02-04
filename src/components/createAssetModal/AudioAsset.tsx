@@ -86,12 +86,6 @@ function AudioFile({
             <option value="audio/mp3">
               MP3
             </option>
-            <option value="audio/ogg">
-              OGG
-            </option>
-            <option value="audio/aiff">
-              AIFF
-            </option>
           </select>
         </div>
         <div className="col-span-4 my-3 mr-2 text-right">
