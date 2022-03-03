@@ -10,6 +10,7 @@ import contentIcon from '../assets/icons/contentIcon.png';
 import imageIcon from '../assets/icons/imageIcon.png';
 import static3dObjectIcon from '../assets/icons/static3dObjectIcon.png';
 import textIcon from '../assets/icons/textIcon.png';
+import { useHistory } from 'react-router-dom';
 
 function BuyNow({
   assetWithOrders,
@@ -82,10 +83,16 @@ function AssetCard({
   const [showTradeAssetModal, setShowTradeAssetModal] = useState(false);
   const [initialBuyMode, setInitialBuyMode] = useState(true);
   const [typeIcon, setTypeIcon] = useState<any>();
+  const history = useHistory();
 
+    /* opening of the modal for an asset
   const openAssetModal = () => {
     setShowAssetModal(true);
     setShowTradeAssetModal(false);
+  }*/
+
+  const openNewAssetPage = (id:string) => {
+    history.push('/assetPage/'.concat(id));
   }
 
   const openTradeAssetModal = (buyMode: boolean) => {
@@ -125,7 +132,7 @@ function AssetCard({
             />
           </div>
         </div>
-        <div onClick={() => openAssetModal()} className="flex h-72 text-offWhite text-xxl p-6 rounded-xl justify-center">
+        <div onClick={() => openNewAssetPage(assetWithOrders.id)} className="flex h-72 text-offWhite text-xxl p-6 rounded-xl justify-center">
           <Image src={assetWithOrders.imageUri} className="flex w-2/3 cursor-pointer object-contain" type="content" />
         </div>
         <div className="text-offWhite h-8 text-xxl mx-8 mt-2 truncate ...">

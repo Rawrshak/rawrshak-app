@@ -4,7 +4,7 @@ import AssetCard from "./AssetCard";
 import Button from "./Button";
 import { AssetWithOrders } from "../data/data"
 
-function SelectedAssets({
+function SearchResults({
   filterWords
 }: {
   filterWords: string | undefined
@@ -43,15 +43,23 @@ function SelectedAssets({
 
   if (!assetsWithOrders) {
     return (
-      <div>No assets found</div>
+      <div>No Assets found</div>
     );
   }
 
   if (filteredAndSlicedAssets === undefined || filteredAssets === undefined || filteredAndSlicedAssets.length === 0) {
-    return null;
+    return <div className='flex text-offWhite text-xxxl my-2 mx-4'>No Assets Found</div>;
   } else {
     return (
       <>
+        <div className="w-full flex flex-row place-content-center">
+          <button className="bg-darkBlue200 hover:bg-violet-600 text-white font-bold px-3 ml-3 my-3 border-b-4 border-blue-700 hover:border-blue-500 rounded-full">
+            Collections
+          </button>
+          <button className="bg-darkBlue200 hover:bg-violet-600 text-white font-bold px-3 ml-3 my-3 border-b-4 border-blue-700 hover:border-blue-500 rounded-full">
+            Assets
+          </button>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {filteredAndSlicedAssets.map(assetWithOrders => (
             <AssetCard key={assetWithOrders.id} assetWithOrders={assetWithOrders} />
@@ -70,45 +78,4 @@ function SelectedAssets({
   }
 }
 
-function ExploreAssets({
-  show
-}: {
-  show: boolean
-}) {
-  const [activeTradeAsset, setActiveTradeAsset] = useState<AssetWithOrders>();
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  const { assetsWithOrders } = useData();
-
-  useEffect(() => {
-    if (assetsWithOrders === undefined || activeTradeAsset === undefined) return;
-    setActiveTradeAsset(assetsWithOrders.find(assetWithOrder => assetWithOrder.id === activeTradeAsset.id));
-  }, [assetsWithOrders, activeTradeAsset])
-
-  if (show) {
-    return (
-      <div className="flex flex-col m-4">
-        <div className="flex text-offWhite text-xxxl my-2 mx-4">
-          Top Volume
-        </div>
-        <div className="flex">
-          <div className="flex flex-grow text-offWhite mb-2 ml-1 py-2 pl-3 pr-2 rounded-lg">
-            <div className="flex text-offWhite text-sm mt-1 mr-2">
-              Search For Asset
-            </div>
-            <div className="flex">
-              <input value={searchTerm} onChange={(e) => { setSearchTerm(e.target.value) }} type="text" className="flex text-offWhite bg-black450 focus:outline-none rounded py-1 px-2 w-96" />
-            </div>
-          </div>
-        </div>
-        <SelectedAssets
-          filterWords={searchTerm}
-        />
-      </div>
-    );
-  } else {
-    return (null);
-  }
-}
-
-
-export default ExploreAssets;
+export default SearchResults;

@@ -70,7 +70,7 @@ function SelectedAssets({
   }
 }
 
-function ExploreAssets({
+function ExploreMoreAssets({
   show
 }: {
   show: boolean
@@ -87,8 +87,18 @@ function ExploreAssets({
   if (show) {
     return (
       <div className="flex flex-col m-4">
-        <div className="flex text-offWhite text-xxxl my-2 mx-4">
-          Top Volume
+        <div className="flex justify-start flex-wrap">
+          <div className="flex text-offWhite text-xxxl my-2 ml-4">
+            Top Volume
+          </div>
+          <div className="inline-flex">
+            <button className="bg-darkBlue200 hover:bg-violet-600 text-white font-bold px-3 ml-3 my-3 border-b-4 border-blue-700 hover:border-blue-500 rounded-full">
+              Collections
+            </button>
+            <button className="bg-darkBlue200 hover:bg-violet-600 text-white font-bold px-3 ml-3 my-3 border-b-4 border-blue-700 hover:border-blue-500 rounded-full">
+              Assets
+            </button>
+          </div>
         </div>
         <div className="flex">
           <div className="flex flex-grow text-offWhite mb-2 ml-1 py-2 pl-3 pr-2 rounded-lg">
@@ -111,4 +121,4 @@ function ExploreAssets({
 }
 
 
-export default ExploreAssets;
+export default ExploreMoreAssets;
