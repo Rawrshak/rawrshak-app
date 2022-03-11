@@ -37,3 +37,24 @@
 .slide-pane__overlay.overlay-after-open {
   background-color: rgba(0, 0, 0, 0) !important;
 }
+
+.rmsc {
+  --rmsc-main: #d43f3f;
+  --rmsc-hover: #b81868;
+  --rmsc-selected: #2015b6;
+  --rmsc-border: #ccc;
+  --rmsc-gray: rgb(28, 192, 124);
+  --rmsc-bg: rgb(21, 190, 233);
+  --rmsc-p: 10px; /* Spacing */
+  --rmsc-radius: 4px; /* Radius */
+  --rmsc-h: 38px; /* Height */
+}
+
+.hiddenDesc {
+  visibility: hidden;
+  display: none !important;
+}
+
+.nonHiddenDesc {
+  visibility: visible;
+}

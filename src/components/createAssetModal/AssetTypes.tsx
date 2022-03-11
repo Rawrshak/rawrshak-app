@@ -22,7 +22,8 @@ function AssetTypes({
   setAudioFilesMetadata,
   setImageFilesMetadata,
   setStatic3dObjectFilesMetadata,
-  setTextFileMetadata
+  setTextFileMetadata,
+  isModal
 }: {
   assetType: string,
   audioFilesMetadata: AudioFileMetadata[],
@@ -35,7 +36,8 @@ function AssetTypes({
   setAudioFilesMetadata: React.Dispatch<React.SetStateAction<AudioFileMetadata[]>>,
   setImageFilesMetadata: React.Dispatch<React.SetStateAction<ImageFileMetadata[]>>,
   setStatic3dObjectFilesMetadata: React.Dispatch<React.SetStateAction<Static3dObjectFileMetadata[]>>,
-  setTextFileMetadata: React.Dispatch<React.SetStateAction<TextFileMetadata>>
+  setTextFileMetadata: React.Dispatch<React.SetStateAction<TextFileMetadata>>,
+  isModal: boolean
 }) {
   if (assetType === "audio") {
     return (
@@ -54,6 +56,7 @@ function AssetTypes({
         subtype={subtype}
         setSubtype={setSubtype}
         subtypeEditable={subtypeEditable}
+        isModal={isModal}
       />
     );
   } else if (assetType === "static3dobject") {

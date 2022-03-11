@@ -141,5 +141,8 @@ module.exports = {
   variants: {
     extend: {},
   },
+  screens: {
+    'xs': '10px',
+  },
   plugins: [],
 }

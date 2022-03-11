@@ -58,7 +58,7 @@ function Static3dObject({
   }
 
   return (
-    <div className="bg-neutral900 pt-1 pb-3 mb-4 rounded-lg">
+    <div className="bg-neutral900 pt-1 pb-3 mb-4 rounded-lg m-3">
       <div className="grid grid-cols-8 justify-center">
         <div className="col-span-1" />
         <div className="col-span-6 justify-center text-lg">
@@ -286,23 +286,25 @@ function Static3dObjectAsset({
   }
 
   return (
-    <>
+    <div className='col-span-3'>
       <div className="grid grid-cols-12">
         <div className="col-span-4 my-3 mr-2 text-right">
           Asset SubType
         </div>
         <Static3dObjectAssetSubtype subtype={subtype} setSubtype={setSubtype} subtypeEditable={subtypeEditable} />
       </div>
-      {static3dObjectFilesMetadata.map((static3dObjectFile, index) => (
-        <React.Fragment key={index}>
-          <Static3dObject
-            static3dObjectFileMetadata={static3dObjectFile}
-            updateStatic3dObjectFileMetadata={updateStatic3dObjectFileMetadata}
-            index={index}
-            deleteFile={deleteStatic3dObjectFile}
-          />
-        </React.Fragment>
-      ))}
+      <div className='col-span-3 grid grid-cols-3'>
+        {static3dObjectFilesMetadata.map((static3dObjectFile, index) => (
+          <React.Fragment key={index}>
+            <Static3dObject
+              static3dObjectFileMetadata={static3dObjectFile}
+              updateStatic3dObjectFileMetadata={updateStatic3dObjectFileMetadata}
+              index={index}
+              deleteFile={deleteStatic3dObjectFile}
+            />
+          </React.Fragment>
+        ))}
+      </div>
       <div className="flex justify-center mt-2">
         <Button
           label="Add Static 3D Object File"
@@ -313,7 +315,7 @@ function Static3dObjectAsset({
           disabledClassName=""
         />
       </div>
-    </>
+    </div>
   );
 }
 

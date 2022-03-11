@@ -1,15 +1,19 @@
 import { Asset } from "../data/data";
 import Image from './Image';
 import { ethers } from "ethers";
+import { useHistory } from "react-router-dom";
 
 function DeveloperAssetCard({
   asset,
-  openAsset
+  openAsset,
+  collectionID
 }: {
   asset: Asset,
-  openAsset: (asset: Asset) => void
+  openAsset: (asset: Asset) => void,
+  collectionID: string
 }) {
   
+  const history = useHistory();
   const calculateMax = (maxSupply: string) => {
     if (maxSupply === ethers.constants.MaxUint256.toString()) {
       return "MAX"
@@ -19,7 +23,11 @@ function DeveloperAssetCard({
   }
 
   return (
-    <div className="flex flex-col flex-grow h-44 m-3 bg-black450 rounded-xl cursor-pointer" onClick={() => openAsset(asset)}>
+    <div 
+      className="flex flex-col flex-grow h-44 m-3 bg-black450 rounded-xl cursor-pointer" 
+      onClick={() => history.push('/store/collection/'.concat(collectionID).concat('/asset/'.concat(asset.id)))}
+      //onClick={() => openAsset(asset)}
+    >
       <div className="grid grid-cols-5">
         <div className="col-span-4 h-6 text-offWhite text-sm ml-4 mt-1 truncate ...">
           {asset.name}

@@ -157,7 +157,7 @@ function OrderBook({
     return (null);
   } else {
     return (
-      <div className="flex flex-col bg-black450 my-1 mx-4 p-4 rounded-lg">
+      <div className="flex flex-col bg-black450 my-1 mx-1 p-4 rounded-lg">
         {inTheMarketplace()}
         <div className="flex-grow grid grid-cols-2 justify-items-center">
           <BuyOrders buyOrders={buyOrders} />

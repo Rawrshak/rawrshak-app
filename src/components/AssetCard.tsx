@@ -84,15 +84,9 @@ function AssetCard({
   const [initialBuyMode, setInitialBuyMode] = useState(true);
   const [typeIcon, setTypeIcon] = useState<any>();
   const history = useHistory();
-
-    /* opening of the modal for an asset
-  const openAssetModal = () => {
-    setShowAssetModal(true);
-    setShowTradeAssetModal(false);
-  }*/
-
+  
   const openNewAssetPage = (id:string) => {
-    history.push('/assetPage/'.concat(id));
+    history.push('/asset/'.concat(id));
   }
 
   const openTradeAssetModal = (buyMode: boolean) => {
@@ -119,7 +113,7 @@ function AssetCard({
     <>
       <TradeAssetModal show={showTradeAssetModal} setShow={setShowTradeAssetModal} initialBuyMode={initialBuyMode} assetWithOrders={assetWithOrders} />
       <AssetModal show={showAssetModal} setShow={setShowAssetModal} assetWithOrders={assetWithOrders} tradeAsset={openTradeAssetModal} />
-      <div className="flex flex-col flex-grow h-120 m-3 assetCardBackground rounded-xl cursor-pointer">
+      <div className="flex flex-col flex-grow m-3 assetCardBackground rounded-xl cursor-pointer">
         <div className="grid grid-cols-8 h-10 my-2 ml-4 mr-3">
           <div className="col-span-7 text-offWhite text-sm mt-1 truncate ...">
             {assetWithOrders.game}
@@ -128,11 +122,11 @@ function AssetCard({
             <img
               src={typeIcon}
               alt=" "
-              className={"h-8 mt-1"}
+              className={"aspect-square"}
             />
           </div>
         </div>
-        <div onClick={() => openNewAssetPage(assetWithOrders.id)} className="flex h-72 text-offWhite text-xxl p-6 rounded-xl justify-center">
+        <div onClick={() => openNewAssetPage(assetWithOrders.id)} className="flex text-offWhite text-xxl p-6 rounded-xl justify-center">
           <Image src={assetWithOrders.imageUri} className="flex w-2/3 cursor-pointer object-contain" type="content" />
         </div>
         <div className="text-offWhite h-8 text-xxl mx-8 mt-2 truncate ...">

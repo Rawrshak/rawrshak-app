@@ -27,9 +27,13 @@ function truncate(fullStr: string, strLen: number, separator: string = "...") {
 function WalletModal({
   show,
   setShow,
+  setIsNightMode,
+  isNightMode
 }: {
-  show: boolean;
+  show: boolean,
   setShow: React.Dispatch<React.SetStateAction<boolean>>,
+  setIsNightMode: React.Dispatch<React.SetStateAction<boolean>>,
+  isNightMode:boolean
 }) {
   const web3 = useWeb3();
   const history = useHistory();
@@ -62,11 +66,15 @@ function WalletModal({
     history.push('/orders');
   }
 
+  const handleNightModeClick = () => {
+    setIsNightMode(!isNightMode)
+  }
+
   return (
-    <>
+    <div className='z-10'>
       <InstallMetamaskModal show={showInstallMetamaskModal} setShow={setShowInstallMetamaskModal} />
       <SlidingPane
-        className="flex bg-black400 rounded-bl-lg rounded-tl-lg rounded-br-lg"
+        className="flex bg-black400 rounded-bl-lg rounded-tl-lg rounded-br-lg z-100"
         overlayClassName="wallet-sliding-pane"
         isOpen={show}
         onRequestClose={() => { setShow(false) }}
@@ -109,6 +117,24 @@ function WalletModal({
               disabledClassName="flex flex-grow justify-center text-black400 text-lg bg-chartreuse500 rounded-lg h-24 w-48 m-2 pt-8"
             />
           </div>
+          <div className="flex grow grid-cols-2 mt-6 w-full mx-auto">
+            <Button
+              label="NightMode"
+              onClick={handleNightModeClick}
+              enabled={isNightMode}
+              show={web3.account !== undefined && web3.account !== ""}
+              enabledClassName="flex w-full justify-center text-chartreuse500 text-lg bg-black400 rounded-lg h-24 w-48 m-2 pt-8"
+              disabledClassName="flex w-full justify-center text-black400 text-lg bg-chartreuse500 rounded-lg h-24 w-48 m-2 pt-8"
+            />
+            <Button
+              label="LightMode"
+              onClick={handleNightModeClick}
+              enabled={!isNightMode}
+              show={web3.account !== undefined && web3.account !== ""}
+              enabledClassName="flex w-full justify-center text-chartreuse500 text-lg bg-black400 rounded-lg h-24 w-48 m-2 pt-8"
+              disabledClassName="flex w-full justify-center text-black400 text-lg bg-chartreuse500 rounded-lg h-24 w-48 m-2 pt-8"
+            />
+          </div>
           {web3.account && <div className="grid grid-cols-2 text-offWhite text-lg cursor-pointer bg-black450 h-12 mx-4 mt-8 rounded-sm" onClick={() => toOrders()}>
             <div className="flex justify-start ml-4 mt-2" >
               My Orders
@@ -119,7 +145,7 @@ function WalletModal({
           </div>}
         </div>
       </SlidingPane>
-    </>
+    </div>
   );
 
 }

@@ -223,7 +223,7 @@ function FilterPopover({
   );
 }
 
-function Orders() {
+function RoyaltiesHistory() {
   const { ownedOrders, systemContracts: { exchange } } = useData();
   const [typeFilteredOrders, setTypeFilteredOrders] = useState<OrderWithAssetMetadata[]>([]);
   const [statusFilteredOrders, setStatusFilteredOrders] = useState<OrderWithAssetMetadata[]>([]);
@@ -310,7 +310,7 @@ function Orders() {
     <div className="flex flex-grow mt-6">
       <div className="flex flex-grow flex-col">
         <div className="text-offWhite text-xxxl mb-6">
-          Orders
+          Royalties
         </div>
         <div className="grid grid-cols-7 mb-8 text-lg h-8">
           <div>
@@ -401,10 +401,9 @@ function Orders() {
             cancelOrder={cancelOrder}
           />
         ))}
-
       </div>
     </div >
   );
 }
 
-export default Orders;
+export default RoyaltiesHistory;

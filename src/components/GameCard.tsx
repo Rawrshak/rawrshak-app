@@ -15,25 +15,9 @@ function GameCard({
   } else {
 
     return (
-      // <div className="flex w-64 h-44 m-3 bg-black rounded-xl cursor-pointer" onClick={() => openSmartContract(smartContract)} >
-      //   <div className="flex h-38">
-      //     <Image src={smartContract.imageUri} className="object-cover h-44 w-64 rounded-xl opacity-95" type="content" />
-      //   </div>
-      //   <div className="flex flex-grow absolute justify-center h-6 w-64">
-      //     <div className="flex text-offWhite text-sm mt-1 h-6 truncate ...">
-      //       {smartContract.name}
-      //     </div>
-      //   </div>
-      //   <div className="flex absolute text-offWhite text-sm mt-36 ml-4 h-6 truncate ...">
-      //     {smartContract.creator}
-      //   </div>
-      // </div>
-
-
       <div className="flex flex-col flex-grow m-3 bg-black400 rounded-xl cursor-pointer" onClick={() => openSmartContract(smartContract)}>
         <div className="grid grid-cols-5">
           <div className="col-span-4 h-6 text-offWhite text-sm ml-4 mt-1 truncate ...">
-
           </div>
           <div className="flex col-span-1 justify-end">
             <Image

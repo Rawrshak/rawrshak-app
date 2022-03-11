@@ -1,24 +1,20 @@
-import { useEffect, useState } from 'react';
 import ExploreFeatured from './ExploreFeatured';
 import ExploreMoreAssets from './ExploreMoreAssets';
 
-function Explore({
-  searchTerm,
-  setSearchTerm
-}:{
-  searchTerm:string,
-  setSearchTerm: React.Dispatch<React.SetStateAction<string>>
-}) {
+function Explore() {
 
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
-
-  const [showExploreAssets, setShowExploreAssets] = useState<boolean>(true);
   return (
     <div className="flex justify-items-center place-content-center flex-wrap">
-      <ExploreFeatured setShowExploreAssets={setShowExploreAssets} />
-      <ExploreMoreAssets show={showExploreAssets}/>
+
+      <div className='flex justify-items-center place-content-center'>
+        <div className="flex text-offWhite text-xxxxl">
+          EXPLORE
+        </div>
+      </div>
+      {/*show Featured Collections*/}
+      <ExploreFeatured />
+      {/*show Top Volume Assets*/}
+      <ExploreMoreAssets AssetSectionTitle='Top Volume' />
     </div>
   );
 }
