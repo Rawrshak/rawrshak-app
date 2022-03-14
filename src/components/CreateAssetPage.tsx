@@ -421,7 +421,7 @@ function CreateAssetPage() {
               </div>
             </div>
             <div className="col-span-8 my-2 col-start-5">
-              <div>Insert the Pinata Key here. You should have recieved it during the creation of your pinata account.</div>
+              <div>Insert the Pinata API Secret here. You should have recieved it during the creation of your pinata account.</div>
             </div>
           </div>
           <div className="col-span-4 my-3 mr-2 text-right">
@@ -440,7 +440,7 @@ function CreateAssetPage() {
               </div>
             </div>
             <div className="col-span-8 my-2 col-start-5">
-              <div>Insert the Pinata Key here. You should have recieved it during the creation of your pinata account.</div>
+              <div>Insert what you want to name your asset.</div>
             </div>
           </div>
           <div className="col-span-4 my-3 mr-2 text-right">
@@ -459,7 +459,7 @@ function CreateAssetPage() {
               </div>
             </div>
             <div className="col-span-8 my-2 col-start-5">
-              <div>Insert the Pinata Key here. You should have recieved it during the creation of your pinata account.</div>
+              <div>Insert a description of the asset.</div>
             </div>
           </div>
           <div className="col-span-4 my-3 mr-2 text-right">
@@ -478,7 +478,7 @@ function CreateAssetPage() {
               </div>
             </div>
             <div className="col-span-8 my-2 col-start-5">
-              <div>Insert the Pinata Key here. You should have recieved it during the creation of your pinata account.</div>
+              <div>Insert the image uri for the asset.</div>
             </div>
           </div>
           <div className="col-span-4 mt-3 mr-2 text-right">
@@ -556,7 +556,7 @@ function CreateAssetPage() {
                 </div>
               </div>
               <div className="col-span-8 my-2 col-start-5">
-                <div>Insert the Pinata Key here. You should have recieved it during the creation of your pinata account.</div>
+                <div>Insert a tag for the asset. You may add multiple.</div>
               </div>
             </div>
           </div>
@@ -581,7 +581,7 @@ function CreateAssetPage() {
               </div>
             </div>
             <div className="col-span-8 my-2 col-start-5">
-              <div>Insert the Pinata Key here. You should have recieved it during the creation of your pinata account.</div>
+              <div>Insert the maximum number for this asset to be minted.</div>
             </div>
           </div>
           <div className="col-span-4 my-3 mr-2 text-right">
@@ -600,7 +600,7 @@ function CreateAssetPage() {
               </div>
             </div>
             <div className="col-span-8 my-2 col-start-5">
-              <div>Insert the Pinata Key here. You should have recieved it during the creation of your pinata account.</div>
+              <div>Insert the address for the royalties for this asset to be directed to.</div>
             </div>
           </div>
           <div className="col-span-4 my-3 mr-2 text-right">
@@ -625,7 +625,7 @@ function CreateAssetPage() {
               </div>
             </div>
             <div className="col-span-8 my-2 col-start-5">
-              <div>Insert the Pinata Key here. You should have recieved it during the creation of your pinata account.</div>
+              <div>Insert the royalties rate for each sale of this asset.</div>
             </div>
           </div>
           <div className="col-span-4 my-3 mr-2 text-right">
@@ -644,7 +644,7 @@ function CreateAssetPage() {
               </div>
             </div>
             <div className="col-span-8 my-2 col-start-5">
-              <div>Insert the Pinata Key here. You should have recieved it during the creation of your pinata account.</div>
+              <div>Check if this asset if NSFW!.</div>
             </div>
           </div>
         </div>
@@ -709,7 +709,7 @@ function CreateAssetPage() {
               </div>
             </div>
             <div className="col-span-8 my-2">
-              <div>Insert the Pinata Key here. You should have recieved it during the creation of your pinata account.</div>
+              <div>Insert the the type of asset. Check out the Rawrshak documentation if you aren't sure!.</div>
             </div>
           </div>
         </div>

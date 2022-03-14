@@ -221,7 +221,7 @@ function CreateCollectionPage() {
                 </div>
               </div>
               <div className="col-span-6 my-2 col-start-4">
-                <div>Insert the Pinata Key here. You should have recieved it during the creation of your pinata account.</div>
+                <div>Insert the Pinata API Secret here. You should have recieved it during the creation of your pinata account.</div>
               </div>
             </div>
           </div>
@@ -242,7 +242,7 @@ function CreateCollectionPage() {
                 </div>
               </div>
               <div className="col-span-6 my-2 col-start-4">
-                <div>Insert the Pinata Key here. You should have recieved it during the creation of your pinata account.</div>
+                <div>Insert the name of your collection. This cannot be changed later!</div>
               </div>
             </div>
           </div>
@@ -263,7 +263,7 @@ function CreateCollectionPage() {
                 </div>
               </div>
               <div className="col-span-6 my-2 col-start-4">
-                <div>Insert the Pinata Key here. You should have recieved it during the creation of your pinata account.</div>
+                <div>Insert a description of the collection.</div>
               </div>
             </div>
           </div>
@@ -284,7 +284,7 @@ function CreateCollectionPage() {
                 </div>
               </div>
               <div className="col-span-6 my-2 col-start-4">
-                <div>Insert the Pinata Key here. You should have recieved it during the creation of your pinata account.</div>
+                <div>Insert the image uri for the collection.</div>
               </div>
             </div>
           </div>
@@ -305,7 +305,7 @@ function CreateCollectionPage() {
                 </div>
               </div>
               <div className="col-span-6 my-2 col-start-4">
-                <div>Insert the Pinata Key here. You should have recieved it during the creation of your pinata account.</div>
+                <div>Insert the creator of this collection.</div>
               </div>
             </div>
           </div>
@@ -326,7 +326,7 @@ function CreateCollectionPage() {
                 </div>
               </div>
               <div className="col-span-6 my-2 col-start-4">
-                <div>Insert the Pinata Key here. You should have recieved it during the creation of your pinata account.</div>
+                <div>Insert the game that this collection is meant for.</div>
               </div>
             </div>
           </div>
@@ -398,7 +398,7 @@ function CreateCollectionPage() {
                 </div>
               </div>
               <div className="col-span-6 my-2 col-start-4">
-                <div>Insert the Pinata Key here. You should have recieved it during the creation of your pinata account.</div>
+                <div>Insert a tag for the collection. You may add more than one.</div>
               </div>
             </div>
           </div>
@@ -419,7 +419,7 @@ function CreateCollectionPage() {
                 </div>
               </div>
               <div className="col-span-6 my-2 col-start-4">
-                <div>Insert the Pinata Key here. You should have recieved it during the creation of your pinata account.</div>
+                <div>Insert the address for the royalties for this collection to be directed to.</div>
               </div>
             </div>
           </div>
@@ -447,7 +447,7 @@ function CreateCollectionPage() {
                 </div>
               </div>
               <div className="col-span-6 my-2 col-start-4">
-                <div>Insert the Pinata Key here. You should have recieved it during the creation of your pinata account.</div>
+                <div>Insert the royalties rate for sales of assets for this collection.</div>
               </div>
             </div>
           </div>

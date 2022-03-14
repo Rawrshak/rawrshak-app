@@ -223,7 +223,7 @@ export interface Data {
 };
 
 function useSystemData() {
-  const [isDevMode, setIsDevMode] = useState(true);
+  const [isDevMode, setIsDevMode] = useState(false);
   const userChangedIsDevMode = (newUserSetting: boolean) => setIsDevMode(newUserSetting);
   const addressResolverContract = useAddressResolverContract();
   const contentFactoryContract = useContentFactoryContract(addressResolverContract);

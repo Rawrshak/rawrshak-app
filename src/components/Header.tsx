@@ -88,7 +88,7 @@ function AvailableLinks({
     )
   } else {
     return (
-      <div className='flex flex-row z-50 inline-block'>
+      <div className='flex flex-row w-full z-50 inline-block'>
         <MenuLink menuName='Logo' />
         <div className="flex mx-4 mt-4 text-lg">
           <input 
