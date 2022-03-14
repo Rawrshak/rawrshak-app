@@ -22,7 +22,7 @@ function TextFile({
   }
 
   return (
-    <div className="bg-neutral900 pt-1 pb-3 mb-4 rounded-lg">
+    <div className="bg-neutral900 pt-1 pb-3 mb-4 rounded-lg col-span-3">
       <div className="flex justify-center text-lg">
         Text File
       </div>
@@ -106,7 +106,7 @@ function TextAsset({
 
   return (
     <>
-      <div className="grid grid-cols-12">
+      <div className="grid grid-cols-12 col-span-3">
         <div className="col-span-4 my-3 mr-2 text-right">
           Text Asset SubType
         </div>

@@ -1,14 +1,21 @@
-import { useState } from 'react';
-import FeaturedContent from "./FeaturedContent";
-import ExploreAssets from "./ExploreAssets";
+import { useEffect } from 'react';
+import ExploreFeatured from './ExploreFeatured';
+import ExploreMoreAssets from './ExploreMoreAssets';
+import Hero from './Hero';
 
 function Marketplace() {
-  const [showExploreAssets, setShowExploreAssets] = useState<boolean>(true);
+  
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   return (
-    <div className="flex flex-col py-2">
-      <FeaturedContent setShowExploreAssets={setShowExploreAssets} />
-      <ExploreAssets show={showExploreAssets} />
+    <div className="flex flex-col py-2 mt-5">
+      <Hero />
+      {/*show Featured Collections*/}
+      <ExploreFeatured />
+      {/*show Top Volume Assets*/}
+      <ExploreMoreAssets AssetSectionTitle='Top Volume'/>
     </div>
   );
 }

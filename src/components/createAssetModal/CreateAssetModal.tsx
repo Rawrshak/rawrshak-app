@@ -257,7 +257,7 @@ function CreateAssetModal({
       jsonToPin = textAssetMetadata;
     }
 
-    console.log("JSON to pin: ", jsonToPin);
+    //console.log("JSON to pin: ", jsonToPin);
 
   }, [type, audioAssetMetadata, imageAssetMetadata, static3dObjectAssetMetadata, textAssetMetadata]);
 
@@ -280,7 +280,7 @@ function CreateAssetModal({
       jsonToPin = textAssetMetadata;
     }
 
-    console.log("json to pin: ", jsonToPin);
+    //console.log("json to pin: ", jsonToPin);
 
     axios
       .post(url, jsonToPin, {
@@ -473,6 +473,7 @@ function CreateAssetModal({
           setImageFilesMetadata={setImageFilesMetadata}
           setStatic3dObjectFilesMetadata={setStatic3dObjectFilesMetadata}
           setTextFileMetadata={setTextFileMetadata}
+          isModal={true}
         />
         <div className="flex flex-col justify-center mt-10">
           {showStatusMessage && <div className="flex justify-center text-offWhite">

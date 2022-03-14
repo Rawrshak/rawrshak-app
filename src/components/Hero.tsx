@@ -20,10 +20,10 @@ function Hero() {
   return (
     <>
       <InstallMetamaskModal show={showInstallMetamaskModal} setShow={setShowInstallMetamaskModal} />
-      <div className="flex m-8">
-        <div className="flex flex-wrap flex-shrink border-2 my-4 rounded-xl border-darkBlue100">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12">
-            <div className="flex m-8">
+      <div className="flex">
+        <div className="flex flex-wrap flex-shrink border-2 mb-4 rounded-xl border-darkBlue100">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 mx-5 my-5">
+            <div className="flex">
               <img className="self-center" src={HeroCubesFlattened} alt="Abstract content cubes" />
             </div>
             <div className="justify-center m-8">

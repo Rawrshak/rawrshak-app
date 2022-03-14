@@ -41,7 +41,7 @@ function AudioFile({
   }
 
   return (
-    <div className="bg-neutral900 pt-1 pb-3 mb-4 rounded-lg">
+    <div className="bg-neutral900 pt-1 pb-3 mb-4 rounded-lg m-3">
       <div className="grid grid-cols-8 justify-center">
         <div className="col-span-1" />
         <div className="col-span-6 justify-center text-lg">
@@ -191,23 +191,25 @@ function AudioAsset({
   }
 
   return (
-    <div>
+    <div className='col-span-3'>
       <div className="grid grid-cols-12">
         <div className="col-span-4 my-3 mr-2 text-right">
           Audio Asset SubType
         </div>
         <AudioAssetSubtype subtype={subtype} setSubtype={setSubtype} subtypeEditable={subtypeEditable} />
       </div>
-      {audioFilesMetadata.map((audioFile, index) => (
-        <React.Fragment key={index}>
-          <AudioFile
-            audioFileMetadata={audioFile}
-            updateAudioFileMetadata={updateAudioFileMetadata}
-            index={index}
-            deleteFile={deleteAudioFile}
-          />
-        </React.Fragment>
-      ))}
+      <div className='col-span-3 grid grid-cols-3'>
+        {audioFilesMetadata.map((audioFile, index) => (
+          <React.Fragment key={index}>
+            <AudioFile
+              audioFileMetadata={audioFile}
+              updateAudioFileMetadata={updateAudioFileMetadata}
+              index={index}
+              deleteFile={deleteAudioFile}
+            />
+          </React.Fragment>
+        ))}
+      </div>
       <div className="flex justify-center">
         <Button
           label="Add Audio File"

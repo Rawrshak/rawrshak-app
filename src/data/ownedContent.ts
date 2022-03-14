@@ -25,7 +25,9 @@ const useOwnedContent = (contentsSubgraphEndpoint: string | undefined) => {
             game
             creator
             creatorAddress
-            owner
+            owner {
+              id
+            }
             dateCreated
             manager {
               id
@@ -90,7 +92,7 @@ const useOwnedContent = (contentsSubgraphEndpoint: string | undefined) => {
             game: contentManager.content.game,
             creator: contentManager.content.creator,
             creatorAddress: contentManager.content.creatorAddress,
-            owner: contentManager.content.owner,
+            owner: contentManager.content.owner.id,
             managerAddress: contentManager.content.manager.id,
             assets: newAssets,
             dateCreated: contentManager.content.dateCreated,

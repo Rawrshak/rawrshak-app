@@ -40,7 +40,7 @@ function ImageFile({
   }
 
   return (
-    <div className="bg-neutral900 pt-1 pb-3 mb-4 rounded-lg">
+    <div className="bg-neutral900 pt-1 pb-3 mb-4 rounded-lg col-span-1 m-3">
       <div className="grid grid-cols-8 justify-center">
         <div className="col-span-1" />
         <div className="col-span-6 justify-center text-lg">
@@ -167,13 +167,15 @@ function ImageAsset({
   setImageFilesMetadata,
   subtype,
   setSubtype,
-  subtypeEditable
+  subtypeEditable,
+  isModal
 }: {
   imageFilesMetadata: ImageFileMetadata[],
   setImageFilesMetadata: React.Dispatch<React.SetStateAction<ImageFileMetadata[]>>,
   subtype: string,
   setSubtype: React.Dispatch<React.SetStateAction<string>>,
   subtypeEditable: boolean
+  isModal: boolean
 }) {
 
   const updateImageFileMetadata = (index: number, imageFileMetadata: ImageFileMetadata) => {
@@ -202,24 +204,27 @@ function ImageAsset({
   }
 
   return (
-    <div>
-      <div className="grid grid-cols-12">
+    <div className='grid col-span-3 grid-cols-3'>
+      <div title='here' className="grid grid-cols-12 col-span-3">
         <div className="col-span-4 my-3 mr-2 text-right">
           Image SubType
         </div>
         <ImageAssetSubtype subtype={subtype} setSubtype={setSubtype} subtypeEditable={subtypeEditable} />
       </div>
-      {imageFilesMetadata.map((imageFile, index) => (
-        <React.Fragment key={index}>
-          <ImageFile
-            imageFileMetadata={imageFile}
-            updateImageFileMetadata={updateImageFileMetadata}
-            index={index}
-            deleteFile={deleteImageFile}
-          />
-        </React.Fragment>
-      ))}
-      <div className="flex justify-center">
+
+      <div className={'grid col-span-3 ' +  (isModal ? 'grid-cols-1' : 'grid-cols-3')}>
+        {imageFilesMetadata.map((imageFile, index) => (
+          <React.Fragment key={index}>
+            <ImageFile
+              imageFileMetadata={imageFile}
+              updateImageFileMetadata={updateImageFileMetadata}
+              index={index}
+              deleteFile={deleteImageFile}
+            />
+          </React.Fragment>
+        ))}
+      </div>
+      <div className="flex justify-center col-start-2">
         <Button
           label="Add Image File"
           onClick={() => addImageFile()}

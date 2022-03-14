@@ -88,7 +88,7 @@ function ExploreAssets({
     return (
       <div className="flex flex-col m-4">
         <div className="flex text-offWhite text-xxxl my-2 mx-4">
-          Explore Assets
+          Top Volume
         </div>
         <div className="flex">
           <div className="flex flex-grow text-offWhite mb-2 ml-1 py-2 pl-3 pr-2 rounded-lg">

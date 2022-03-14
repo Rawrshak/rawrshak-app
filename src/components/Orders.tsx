@@ -151,7 +151,7 @@ function Order({
   } else {
     return (
       <div className="grid grid-cols-7 h-16">
-        <div className="flex text-offWhite my-3">
+        <div className="flex text-offWhite my-3 mx-1 flex-wrap">
           {order.cancelledAtTimestamp.eq(BigNumber.from("0")) && order.amountClaimed.lt(order.amountOrdered) &&
             <input
               checked={selected}
@@ -161,19 +161,19 @@ function Order({
             />}
           {order.assetName}
         </div>
-        <div className="flex text-offWhite my-3">
+        <div className="flex text-offWhite my-3 mx-1 flex-wrap">
           {order.assetGame}
         </div>
-        <div className="flex text-offWhite my-3">
+        <div className="flex text-offWhite my-3 mx-1 flex-wrap">
           {moment(Number((order.createdAtTimestamp).mul(BigNumber.from("1000")))).format("MMM Do YYYY")}
         </div>
-        <div className="flex text-offWhite my-3">
+        <div className="flex text-offWhite my-3 mx-1 flex-wrap">
           {priceAmount()}
         </div>
-        <div className="flex text-offWhite my-3">
+        <div className="flex text-offWhite my-3 mx-1 flex-wrap">
           {Number(order.amountFilled)} / {Number(order.amountOrdered)}
         </div>
-        <div className="flex text-offWhite my-3">
+        <div className="flex text-offWhite my-3 mx-1 flex-wrap">
           {claimableAmount()}
         </div>
         <SingleOrderActionsPopover claim={() => claim()} cancel={() => cancel()} order={order} />
@@ -312,7 +312,7 @@ function Orders() {
         <div className="text-offWhite text-xxxl mb-6">
           Orders
         </div>
-        <div className="grid grid-cols-6 mb-8 text-lg h-8">
+        <div className="grid grid-cols-7 mb-8 text-lg h-8">
           <div>
             <Button
               onClick={() => setTypeFilter("buy")}
@@ -343,45 +343,41 @@ function Orders() {
               label="ORDER HISTORY"
             />
           </div>
-          <div />
-          <div>
+          <div className='col-start-7'>
+            <div className="z-0">
+              <div className="flex flex-row">
+                <FilterPopover
+                  showFilledOrders={showFilledOrders}
+                  showCancelledOrders={showCancelledOrders}
+                  setShowFilledOrders={setShowFilledOrders}
+                  setShowCancelledOrders={setShowCancelledOrders}
+                />
+                <SelectedOrdersActionsPopover claim={claimSelectedOrders} cancel={cancelSelectedOrders} selectedOrderCount={selectedOrderIds.length} />
+              </div>
 
-
-
-          </div>
-          <div className="z-0">
-            <div className="flex flex-row">
-              <FilterPopover
-                showFilledOrders={showFilledOrders}
-                showCancelledOrders={showCancelledOrders}
-                setShowFilledOrders={setShowFilledOrders}
-                setShowCancelledOrders={setShowCancelledOrders}
-              />
-              <SelectedOrdersActionsPopover claim={claimSelectedOrders} cancel={cancelSelectedOrders} selectedOrderCount={selectedOrderIds.length} />
             </div>
-
-          </div>
+        </div>
         </div>
         <div className="grid grid-cols-7 mb-4 text-lg">
-          <div className="flex text-offWhite">
+          <div className="flex text-offWhite mx-1">
             Item
           </div>
-          <div className="flex text-offWhite">
+          <div className="flex text-offWhite mx-1">
             Collection
           </div>
-          <div className="flex text-offWhite">
+          <div className="flex text-offWhite mx-1">
             Created
           </div>
-          <div className="flex text-offWhite">
+          <div className="flex text-offWhite mx-1">
             Price
           </div>
-          <div className="flex text-offWhite">
+          <div className="flex text-offWhite mx-1">
             Quantity Filled
           </div>
-          <div className="flex text-offWhite">
+          <div className="flex text-offWhite mx-1">
             Claimable
           </div>
-          <div className="flex text-offWhite">
+          <div className="flex text-offWhite mx-1">
             Actions
           </div>
         </div>

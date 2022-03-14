@@ -431,14 +431,20 @@ function UpdateAssetModal({
                   type="text"
                   className="flex flex-grow bg-neutral700 focus:outline-none rounded mb-1 mt-2 py-1 px-2"
                 />
-                <Button
-                  label="X"
-                  onClick={() => { setTags([...tags.slice(0, index), ...tags.slice(index + 1, tags.length)]) }}
-                  enabled={true}
-                  show={true}
-                  enabledClassName="ml-2 text-chartreuse500"
-                  disabledClassName=""
-                />
+                {
+                  index > 0
+                    ?
+                      <Button
+                        label="X"
+                        onClick={() => { setTags([...tags.slice(0, index), ...tags.slice(index + 1, tags.length)]) }}
+                        enabled={true}
+                        show={true}
+                        enabledClassName="ml-2 text-chartreuse500"
+                        disabledClassName=""
+                      />
+                    :
+                      <></>
+                }
               </div>
             );
             return (tagInputJsx);
@@ -481,6 +487,7 @@ function UpdateAssetModal({
           setImageFilesMetadata={setImageFilesMetadata}
           setStatic3dObjectFilesMetadata={setStatic3dObjectFilesMetadata}
           setTextFileMetadata={setTextFileMetadata}
+          isModal={true}
         />
         <div className="flex flex-col justify-center mt-10">
           {showStatusMessage && <div className="flex justify-center text-offWhite">

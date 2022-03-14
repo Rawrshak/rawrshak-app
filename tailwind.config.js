@@ -103,6 +103,12 @@ module.exports = {
       purple: '#AC54FF'
     },
     fontSize: {
+      '2xl': '1.5rem',
+      '3xl': '1.875rem',
+      '4xl': '2.25rem',
+      '5xl': '3rem',
+      '6xl': '4rem',
+      '7xl': '5rem',
       xxsm: ['14px', '18px'],
       xsm: ['16px', '20px'],
       sm: ['18px', '22px'],
@@ -110,7 +116,8 @@ module.exports = {
       lg: ['22px', '26px'],
       xl: ['25px', '30px'],
       xxl: ['28px', '32px'],
-      xxxl: ['32px', '38px']
+      xxxl: ['32px', '38px'],
+      xxxxl: ['70px', '80px']
     },
     container: {
       center: true,
@@ -133,6 +140,9 @@ module.exports = {
   },
   variants: {
     extend: {},
+  },
+  screens: {
+    'xs': '10px',
   },
   plugins: [],
 }
