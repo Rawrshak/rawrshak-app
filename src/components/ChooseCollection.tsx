@@ -26,7 +26,7 @@ function ChooseCollection() {
     return null;
   } else {
     return (
-      <div className='text-offWhite text-xxl text-center'>
+      <div className='text-offWhite text-xxl text-center mt-5'>
         Choose Collection to create an assset with:
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {

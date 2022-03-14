@@ -87,15 +87,15 @@ function FullCollectionPage() {
                     type="content"
                   />
                 </div>
-                <div className="flex flex-col">
+                <div className="flex flex-col justify-center">
                   <div className="flex w-full rounded-xl text-offWhite text-xxxl">
                     {content.name}
                   </div>
                   <div className="flex w-full rounded-xl text-offWhite text-xxl">
-                    by {content.creator}
+                    Creator: {content.creator}
                   </div>
-                  <div className="flex w-full rounded-xl text-offWhite text-l">
-                    {content.creatorAddress}
+                  <div className="mt-2 flex w-full rounded-xl text-offWhite text-l">
+                    Creator Address: {content.creatorAddress}
                   </div>
                   <div className="flex w-full rounded-xl text-offWhite text-l my-3">
                     Contract Address: {content.contractAddress}
@@ -159,7 +159,7 @@ function FullCollectionPage() {
                       </div>
                     :
                       <div className='flex text-offWhite text-xl w-full place-content-center mt-10'>
-                        INSERT STATISTICS HERE
+                        Statistics to come.
                       </div>
                 }
             </div>

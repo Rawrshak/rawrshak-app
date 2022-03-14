@@ -1,4 +1,4 @@
-import { useData } from '../data';
+
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
 import { AssetWithOrders } from "../data/data";
@@ -11,6 +11,7 @@ import imageIcon from '../assets/icons/imageIcon.png';
 import static3dObjectIcon from '../assets/icons/static3dObjectIcon.png';
 import textIcon from '../assets/icons/textIcon.png';
 import { useHistory } from 'react-router-dom';
+import { useSupportedToken } from "../data/supportedToken";
 
 function BuyNow({
   assetWithOrders,
@@ -19,9 +20,9 @@ function BuyNow({
   assetWithOrders: AssetWithOrders,
   buyNow: (assetWithOrders: AssetWithOrders) => void
 }) {
-  const { supportedToken } = useData();
   const [buyNowPrice, setBuyNowPrice] = useState<string>("");
   const [buyNowAvailable, setBuyNowAvailable] = useState<boolean>(false);
+  const supportedToken = useSupportedToken();
 
   useEffect(() => {
     if (!assetWithOrders || !assetWithOrders.orders || assetWithOrders.orders.length === 0 || supportedToken === undefined) return;
@@ -113,7 +114,7 @@ function AssetCard({
     <>
       <TradeAssetModal show={showTradeAssetModal} setShow={setShowTradeAssetModal} initialBuyMode={initialBuyMode} assetWithOrders={assetWithOrders} />
       <AssetModal show={showAssetModal} setShow={setShowAssetModal} assetWithOrders={assetWithOrders} tradeAsset={openTradeAssetModal} />
-      <div className="flex flex-col flex-grow m-3 assetCardBackground rounded-xl cursor-pointer">
+      <div className="mt-2 flex flex-col h-fit justify-center flex-grow m-3 assetCardBackground rounded-xl cursor-pointer">
         <div className="grid grid-cols-8 h-10 my-2 ml-4 mr-3">
           <div className="col-span-7 text-offWhite text-sm mt-1 truncate ...">
             {assetWithOrders.game}
@@ -126,13 +127,17 @@ function AssetCard({
             />
           </div>
         </div>
-        <div onClick={() => openNewAssetPage(assetWithOrders.id)} className="flex text-offWhite text-xxl p-6 rounded-xl justify-center">
+        <div onClick={() => openNewAssetPage(assetWithOrders.id)} className="flex text-offWhite text-xxl rounded-xl justify-center">
           <Image src={assetWithOrders.imageUri} className="flex w-2/3 cursor-pointer object-contain" type="content" />
         </div>
-        <div className="text-offWhite h-8 text-xxl mx-8 mt-2 truncate ...">
-          {assetWithOrders.name}
+        <div className='justify-self-end w-full'>
+          <div className="text-offWhite h-8 text-xxl mx-8 mt-2 truncate ...">
+            {assetWithOrders.name}
+          </div>
+          <div className='w-full'>
+          <BuyNow assetWithOrders={assetWithOrders} buyNow={() => openTradeAssetModal(true)} />
+          </div>
         </div>
-        <BuyNow assetWithOrders={assetWithOrders} buyNow={() => openTradeAssetModal(true)} />
       </div>
     </>
   );

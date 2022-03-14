@@ -90,11 +90,14 @@ const useInventoryAssets = (contentsSubgraphEndpoint: string | undefined) => {
         });
     }
 
-    updateInventory();
+    if(account !== undefined) {
+      updateInventory();
+    }
 
     const interval = setInterval(() => {
-      updateInventory();
-
+      if(account !== undefined) {
+        updateInventory();
+      }
     }, 30000);
     return () => clearInterval(interval);
   }, [account, contentsSubgraphEndpoint]);

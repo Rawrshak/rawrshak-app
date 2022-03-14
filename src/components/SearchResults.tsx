@@ -15,7 +15,7 @@ function SearchResults({
 
   const [filteredAssets, setFilteredAssets] = useState<AssetWithOrders[]>();
   const [filteredCollections, setFilteredCollections] = useState<ContentDataWithMetadata[]>();
-  const [collectionsView,setCollectionsView] = useState<boolean>(true);
+  const [collectionsView,setCollectionsView] = useState<boolean>(false);
   
   //filter content for search word in name
   useEffect(() => {
@@ -88,6 +88,14 @@ function SearchResults({
             Assets
           </button>
         </div>
+        {
+          collectionsView
+            ?
+              <div className='flex w-full text-offWhite justify-center'><div className='flex'>Currently in Collections view. Switch to Assets view to see asset search results.</div></div>
+              
+            :
+              <div className='flex w-full text-offWhite justify-center'><div className='flex'>Currently in Assets view. Switch to Collections view to see collections search results.</div></div>
+        }
         {
           collectionsView
             ?

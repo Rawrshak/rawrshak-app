@@ -23,7 +23,7 @@ function Header({
 }) {
   const [showWalletModal, setShowWalletModal] = useState<boolean>(false)
   return (
-    <div  className='inline-block fixed flex top-0 left-0 right-0 px-16 w-full bg-black opacity-95 justify-between pb-3 sticky'>
+    <div  className='inline-block fixed flex top-0 left-0 right-0 px-16 w-full bg-black opacity-95 justify-between sticky'>
       <WalletModal show={showWalletModal} setShow={setShowWalletModal} setIsNightMode={setIsNightMode} isNightMode={isNightMode}/>
       <AvailableLinks searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
       <div className='flex flex-row'>
@@ -67,7 +67,7 @@ function AvailableLinks({
   */
   if (isDevMode) {
     return (
-      <div className='flex flex-row z-50 inline-block'>
+      <div className='flex flex-row w-full z-50 inline-block'>
         <MenuLink menuName='Logo' />
         <div className="flex mx-4 mt-4 text-lg">
           <input 
@@ -88,7 +88,7 @@ function AvailableLinks({
     )
   } else {
     return (
-      <div className='flex flex-row z-50 absolute'>
+      <div className='flex flex-row z-50 inline-block'>
         <MenuLink menuName='Logo' />
         <div className="flex mx-4 mt-4 text-lg">
           <input 

@@ -117,7 +117,7 @@ function WalletModal({
               disabledClassName="flex flex-grow justify-center text-black400 text-lg bg-chartreuse500 rounded-lg h-24 w-48 m-2 pt-8"
             />
           </div>
-          <div className="flex grow grid-cols-2 mt-6 w-full mx-auto">
+          <div className="flex grow grid-cols-2 mt-6 w-full mx-auto hidden">
             <Button
               label="NightMode"
               onClick={handleNightModeClick}

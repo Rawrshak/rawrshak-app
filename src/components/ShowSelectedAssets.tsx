@@ -36,7 +36,7 @@ export function ShowSelectedAssets({
     return null;
   } else {
     return (
-      <div className=''>
+      <div className='m-2'>
         <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {filteredAndSlicedAssets.map(assetWithOrders => (
             <AssetCard key={assetWithOrders.id} assetWithOrders={assetWithOrders} />

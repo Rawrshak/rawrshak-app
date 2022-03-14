@@ -305,7 +305,7 @@ function UpdateAssetModal({
       jsonToPin = textAssetMetadata;
     }
 
-    //console.log("JSON to pin: ", jsonToPin);
+    console.log("JSON to pin: ", jsonToPin);
 
   }, [type, audioAssetMetadata, imageAssetMetadata, static3dObjectAssetMetadata, textAssetMetadata]);
 
@@ -328,7 +328,7 @@ function UpdateAssetModal({
       jsonToPin = textAssetMetadata;
     }
 
-    //console.log("json to pin: ", jsonToPin);
+    console.log("json to pin: ", jsonToPin);
 
     axios
       .post(url, jsonToPin, {

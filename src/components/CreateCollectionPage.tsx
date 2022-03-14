@@ -9,7 +9,7 @@ import { useTransaction } from "../web3/transactions";
 import Loader from "./Loader";
 import { useWeb3 } from '../web3';
 import { ethers } from 'ethers';
-import Hint from '../assets/icons/hint.png';
+import Hint from '../assets/images/downArrow.png';
 import { useHistory } from 'react-router-dom';
 import ReactTooltip from 'react-tooltip';
 
@@ -18,8 +18,8 @@ function CreateCollectionPage() {
   const { systemContracts: { contentFactory } } = useData();
   const web3 = useWeb3();
 
-  const [pinataApiKey, setPinataApiKey] = useState<string>("425a554712c84caf1ece");
-  const [pinataApiSecret, setPinataApiSecret] = useState<string>("48ae7bd84dba220429be1275c116032a1578b92e0baa02424dbf90559575341c");
+  const [pinataApiKey, setPinataApiKey] = useState<string>('');
+  const [pinataApiSecret, setPinataApiSecret] = useState<string>('');
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [imageUri, setImageUri] = useState<string>("https://arweave.net/dI_5bBKqfDwLUHhQXu_ubnnBi5f3DcpHQ_oHmIky1QU");
@@ -175,7 +175,7 @@ function CreateCollectionPage() {
   }
 
   return (
-    <div className="flex flex-col text-offWhite">
+    <div className="flex flex-col text-offWhite mt-5">
       <ReactTooltip id='registerTip' place="right" effect="float">
         Click the lightbulb to show/hide helpful tips about the input fields!
       </ReactTooltip>

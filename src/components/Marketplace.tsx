@@ -10,7 +10,7 @@ function Marketplace() {
   }, [])
 
   return (
-    <div className="flex flex-col py-2">
+    <div className="flex flex-col py-2 mt-5">
       <Hero />
       {/*show Featured Collections*/}
       <ExploreFeatured />

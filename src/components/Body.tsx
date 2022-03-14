@@ -24,7 +24,7 @@ function Body({
 }) {
 
   return (
-    <div className="container mt-20 -z-10">
+    <div className="container -z-10 inline-block">
       <Switch>
         <Route exact path="/">
           <Marketplace />

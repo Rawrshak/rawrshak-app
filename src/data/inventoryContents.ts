@@ -95,7 +95,7 @@ const useInventoryContents = (contentsSubgraphEndpoint: string | undefined) => {
           } else {
             setInventoryContents(undefined);
           }
-          console.log('Inventory Contents queried')
+          //console.log('Inventory Contents queried')
         })
         .catch(err => {
           console.error("Error fetching GraphQL data:", err);
@@ -115,7 +115,6 @@ const useInventoryContents = (contentsSubgraphEndpoint: string | undefined) => {
     return () => clearInterval(interval);
   }, [account, contentsSubgraphEndpoint]);
 
-  console.log('useInventoryContents called')
   return inventoryContents;
 }
 

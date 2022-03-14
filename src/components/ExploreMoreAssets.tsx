@@ -1,5 +1,12 @@
 import { useState } from 'react';
-import { useData } from '../data';
+import { useAllContent } from '../data/allContent';
+import { useAssetOrders } from '../data/assetOrders';
+import { useAssets } from '../data/assets';
+import { useAssetsWithMetadata } from '../data/assetsWithMetadata';
+import { useAssetsWithOrders } from '../data/assetsWithOrders';
+import { useContentWithMetadata } from '../data/contentWithMetadata';
+import { useContentsSubgraphEndpoint, useExchangeSubgraphEndpoint } from '../data/subgraphEndpoints';
+import { useAddressResolverContract, useExchangeContract } from '../data/systemContracts';
 import ShowSelectedAssets from './ShowSelectedAssets';
 import ShowSelectedCollections from './ShowSelectedCollections';
 
@@ -9,11 +16,26 @@ function ExploreMoreAssets({
   AssetSectionTitle:string
 }) {
 
-  const { assetsWithOrders,allContentWithMetadata } = useData();
+
+  const contentsSubgraphEndpoint = useContentsSubgraphEndpoint();
+  const exchangeSubgraphEndpoint = useExchangeSubgraphEndpoint();
+  const addressResolverContract = useAddressResolverContract();
+  const exchangeContract = useExchangeContract(addressResolverContract);
+
+
+  const assets = useAssets(contentsSubgraphEndpoint);
+  const assetsWithMetadata = useAssetsWithMetadata(assets);
+  const assetOrders = useAssetOrders(assetsWithMetadata, exchangeContract, exchangeSubgraphEndpoint);
+  const assetsWithOrders = useAssetsWithOrders(assetsWithMetadata, assetOrders);
+
+  const allContent = useAllContent(contentsSubgraphEndpoint);
+  const allContentWithMetadata = useContentWithMetadata(allContent);
+
+
   const [collectionsView,setCollectionsView] = useState<boolean>(true);
 
   return (
-    <div className="flex flex-col m-4">
+    <div className="flex flex-col m-4 w-full">
       <div className="flex justify-start flex-wrap">
         <div className="flex text-offWhite text-xxxl my-2 ml-4">
           {AssetSectionTitle}

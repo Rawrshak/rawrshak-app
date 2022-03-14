@@ -343,16 +343,6 @@ function Orders() {
               label="ORDER HISTORY"
             />
           </div>
-          <div>
-            <Button
-              onClick={() => setTypeFilter("orderFullfill")}
-              enabledClassName="flex justify-center text-offWhite text-sm bg-opacity-1 my-2 w-36 py-1 rounded-sm"
-              disabledClassName="flex justify-center text-black text-sm bg-purple my-2 w-36 py-1 rounded-sm"
-              enabled={orderTypeToShow !== "orderFullfilment"}
-              show={true}
-              label="FULFILLMENT"
-            />
-          </div>
           <div className='col-start-7'>
             <div className="z-0">
               <div className="flex flex-row">

@@ -4,9 +4,9 @@ import ExploreMoreAssets from './ExploreMoreAssets';
 function Explore() {
 
   return (
-    <div className="flex justify-items-center place-content-center flex-wrap">
+    <div className="flex justify-items-center place-content-center flex-wrap mt-5 flex-col w-full">
 
-      <div className='flex justify-items-center place-content-center'>
+      <div className='flex justify-items-center place-content-center w-full'>
         <div className="flex text-offWhite text-xxxxl">
           EXPLORE
         </div>

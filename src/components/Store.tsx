@@ -20,7 +20,7 @@ function Store() {
   }
 
   return (
-    <div className="flex flex-col flex-grow">
+    <div className="flex flex-col flex-grow mt-10">
       <div className="grid grid-cols-5 mb-2">
         <div className="col-span-1 text-offWhite text-xxxl ml-4 mt-2">
           Store

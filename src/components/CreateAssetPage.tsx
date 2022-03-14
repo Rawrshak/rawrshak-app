@@ -7,7 +7,7 @@ import { useTransaction } from "../web3/transactions";
 import Loader from "./Loader";
 import { useWeb3 } from '../web3';
 import { ethers } from 'ethers';
-import Hint from '../assets/icons/hint.png';
+import Hint from '../assets/images/downArrow.png';
 import { AudioAssetMetadata, AudioFileMetadata, ImageAssetMetadata, ImageFileMetadata, PublicAssetMetadata, Static3dObjectAssetMetadata, Static3dObjectFileMetadata, TextAssetMetadata, TextFileMetadata } from '../data/data';
 import { ContentManager, ContentManager__factory } from '../assets/typechain';
 import { useHistory, useParams } from 'react-router-dom';
@@ -17,8 +17,8 @@ import { useData } from '../data';
 function CreateAssetPage() {
   
   const web3 = useWeb3();
-  const [pinataApiKey, setPinataApiKey] = useState<string>("425a554712c84caf1ece");
-  const [pinataApiSecret, setPinataApiSecret] = useState<string>("48ae7bd84dba220429be1275c116032a1578b92e0baa02424dbf90559575341c");
+  const [pinataApiKey, setPinataApiKey] = useState<string>("");
+  const [pinataApiSecret, setPinataApiSecret] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [imageUri, setImageUri] = useState<string>("https://arweave.net/TsBCV3HyMssIZQk0S7MqZht_zR3e9pBXDWUo0VYAXW4");
@@ -381,7 +381,7 @@ function CreateAssetPage() {
 
   if (!addAssetsStep) {
     return (
-      <div className="flex flex-col text-offWhite">
+      <div className="flex flex-col text-offWhite mt-5">
         <div className="flex flex-grow justify-center text-xl mb-4">
           Create Asset
         </div>

@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import { AssetWithOrders, ContentDataWithMetadata } from '../data/data';
 import DropdownFilter from './DropdownFilter';
-import { useWeb3 } from '../web3';
-import { Content__factory } from '../assets/typechain';
 import ShowInventoryAssets from './ShowInventoryAssets';
 import ShowInventoryCollections from './ShowInventoryCollections';
 import { useAddressResolverContract, useExchangeContract } from '../data/systemContracts';
@@ -23,7 +21,7 @@ function Inventory() {
   const exchangeContract = useExchangeContract(addressResolverContract);
   const exchangeSubgraphEndpoint = useExchangeSubgraphEndpoint();
   const contentsSubgraphEndpoint = useContentsSubgraphEndpoint();
-  const urlPrefix = 'https://gateway.pinata.cloud/ipfs/';
+  //const urlPrefix = 'https://gateway.pinata.cloud/ipfs/';
 
   //grab necessary inventory content,assets,metadata, and orders
   const inventoryAssets = useInventoryAssets(contentsSubgraphEndpoint);
@@ -35,19 +33,16 @@ function Inventory() {
   const inventoryContent = useInventoryContents(contentsSubgraphEndpoint);
   const inventoryContentWithMetadata = useContentWithMetadata(inventoryContent);
 
-  //get web3 account
-  const web3 = useWeb3();
-
   //set up tags and filters
   const [genre,setGenre] = useState<string>('All')
   const [type,setType] = useState<string>('All')
-  const [allTags, setAllTags] = useState<string[]>([]);
+  //const [allTags, setAllTags] = useState<string[]>([]);
   const [searchTerm,setSearchTerm] = useState<string>('')
   const [collectionsView,setCollectionsView] = useState<boolean>(false)
 
   //set up variables to store assets and content
   const [filteredAssets, setFilteredAssets] = useState<AssetWithOrders[]>();
-  const [assetsURI,setAssetsURI] = useState<string[]>([])
+  //const [assetsURI,setAssetsURI] = useState<string[]>([])
   const [inventoryContents,setInventoryContents] = useState<ContentDataWithMetadata[]>()
   const [inventoryContentsFiltered,setInventoryContentsFiltered] = useState<ContentDataWithMetadata[]>()
 
@@ -91,7 +86,7 @@ function Inventory() {
 
   }, [inventoryContentWithMetadata, searchTerm]);
 
-  //filter content for search word in name and dtype
+  //filter content for search word in name and type
   useEffect(() => {
     if (inventoryAssetsWithOrders === undefined) return
     if (searchTerm === '' && type === 'All') {
@@ -100,7 +95,7 @@ function Inventory() {
     } else {
       const filterCache = inventoryAssetsWithOrders.filter(assetWithOrder => {
         if (searchTerm !== '' && type !== 'All') {
-          if (type.toLowerCase() === assetWithOrder.type.toLowerCase() && searchTerm.toLowerCase() === assetWithOrder.name.toLowerCase()) {
+          if (type.toLowerCase() === assetWithOrder.type.toLowerCase() && assetWithOrder.name.toLowerCase().includes(searchTerm.toLowerCase())) {
             return true
           } else {
             return false
@@ -126,6 +121,7 @@ function Inventory() {
 
   }, [inventoryAssetsWithOrders, searchTerm, type]);
 
+  /*
   //get asset uris from filtered assets
   useEffect(() => {
     if (filteredAssets !== undefined) {
@@ -157,17 +153,18 @@ function Inventory() {
         })
         .catch(error => console.error(error));
       }
-  }, [filteredAssets,assetsURI]);
+  }, [filteredAssets, assetsURI, allTags]);
+  */
 
   if (filteredAssets === undefined) {
     return (
-      <div className="flex flex-col">
-        <div className='flex-col flex w-full ml-4'>
-          <div className='flex flex-row w-full text-offWhite text-xxxl'>
+      <div className="flex flex-row w-full justify-center mt-5">
+        <div className='flex-col flex ml-4'>
+          <div className='flex flex-row text-offWhite text-xxxl'>
             My Inventory
           </div>
-          <div className="text-offWhite text-xl">
-            No items found
+          <div className="text-offWhite text-xl mt-5">
+            No items Found
           </div>
         </div>
       </div>
@@ -176,9 +173,9 @@ function Inventory() {
     //example multiselect with search for tags
     //<Multiselect className='rmsc' showArrow options={allTags} isObject={false} />
     return (
-      <div className="flex flex-col text-offWhite -mt-14">
-        <div className='flex-col flex w-full'>
-          <div className='flex flex-row w-full text-xxxl'>
+      <div className="flex flex-col text-offWhite inline-block">
+        <div className='flex-row flex w-full sticky top-14 pb-2 w-full justify-center bg-black opacity-95 h-full'>
+          <div className='flex flex-row text-xxxl pt-6'>
             <div className='text-offWhite'>
               My Inventory
             </div>

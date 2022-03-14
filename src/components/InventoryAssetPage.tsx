@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { AssetWithOrders } from '../data/data';
 import { useData } from '../data';
 import Image from './Image';
@@ -7,6 +7,8 @@ import { useWeb3 } from '../web3';
 import { Content,Content__factory } from '../assets/typechain';
 import OrderBook from './OrderBook';
 import { BigNumber, ethers } from "ethers";
+import { Menu, Transition } from '@headlessui/react';
+import TradeAssetModal from './TradeAssetModal';
 
 
 function InventoryAssetPage() {
@@ -24,6 +26,8 @@ function InventoryAssetPage() {
   const [nsfw, setNsfw] = useState<boolean | undefined>();
   const [tags,setTags] = useState<string[]>([])
   const [assetBalance] = useState<BigNumber>();
+  const [initialBuyMode, setInitialBuyMode] = useState(true);
+  const [showTradeAssetModal, setShowTradeAssetModal] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -79,7 +83,8 @@ function InventoryAssetPage() {
     );
   } else {
     return (
-      <div>
+      <div className='mt-10'>
+        <TradeAssetModal show={showTradeAssetModal} setShow={setShowTradeAssetModal} initialBuyMode={initialBuyMode} assetWithOrders={assetWithOrders} />
         <div>
           {assetsWithOrders.filter(assetWithOrders => assetWithOrders.id === assetID ).map((assetWithOrders: AssetWithOrders) => (
             <div className='w-full -mt-12'>
@@ -92,9 +97,6 @@ function InventoryAssetPage() {
                 <div className='flex flex-col w-1/2'>
                   <div title='Name' className=''>
                     <div className='flex text-offWhite text-5xl'>{assetWithOrders.name}</div>
-                  </div>
-                  <div title='Creator' className=''>
-                    <div className='flex text-offWhite text-2xl'> By: {assetWithOrders.creator === null ? 'Unknown' : assetWithOrders.creator}</div>
                   </div>
                   <div title='Description' className=''>
                     <div className='flex text-offWhite text-2xl'> Description: {description}</div>
@@ -119,6 +121,95 @@ function InventoryAssetPage() {
                             SFW
                           </div>
                     }
+                  </div>
+
+                  <div title='OrderButtons' className='flex flex-row'>
+                    <Menu as="div" className="w-1/2 mr-2">
+                      <div>
+                        <Menu.Button className="w-full bg-darkBlue200 hover:bg-violet-600 text-white font-bold px-3 my-2 border-b-4 border-blue-700 hover:border-blue-500 rounded-full">
+                          Buy
+                        </Menu.Button>
+                      </div>
+                      <Transition
+                        as={Fragment}
+                        enter="transition ease-out duration-100"
+                        enterFrom="transform opacity-0 scale-95"
+                        enterTo="transform opacity-100 scale-100"
+                        leave="transition ease-in duration-75"
+                        leaveFrom="transform opacity-100 scale-100"
+                        leaveTo="transform opacity-0 scale-95"
+                      >
+                        <Menu.Items className="absolute text-white px-3 rounded-md shadow-lg bg-darkBlue200 bg-opacity-45 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                          <div className="ml-3 py-1">
+                            <Menu.Item>
+                              <div
+                                className='hover:text-chartreuse500 cursor-pointer'
+                                onClick={ () => { 
+                                  setInitialBuyMode(true)
+                                  setShowTradeAssetModal(true)}
+                                }
+                              >
+                                Instant Buy
+                              </div>
+                            </Menu.Item>
+                            <Menu.Item>
+                              <div
+                                className='hover:text-chartreuse500 cursor-pointer'
+                                onClick={ () => { 
+                                  setInitialBuyMode(true)
+                                  setShowTradeAssetModal(true)}
+                                }
+                              >
+                                Create Buy Order
+                              </div>
+                            </Menu.Item>
+                          </div>
+                        </Menu.Items>
+                      </Transition>
+                    </Menu>
+                    <Menu as="div" className="w-1/2 ml-2">
+                      <div>
+                        <Menu.Button className="w-full bg-darkBlue200 hover:bg-violet-600 text-white font-bold px-3 my-2 border-b-4 border-blue-700 hover:border-blue-500 rounded-full">
+                          Sell
+                        </Menu.Button>
+                      </div>
+                      <Transition
+                        as={Fragment}
+                        enter="transition ease-out duration-100"
+                        enterFrom="transform opacity-0 scale-95"
+                        enterTo="transform opacity-100 scale-100"
+                        leave="transition ease-in duration-75"
+                        leaveFrom="transform opacity-100 scale-100"
+                        leaveTo="transform opacity-0 scale-95"
+                      >
+                        <Menu.Items className="absolute text-white px-3 rounded-md shadow-lg bg-darkBlue200 bg-opacity-45 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                          <div className="ml-3 py-1">
+                            <Menu.Item>
+                              <div
+                                className='hover:text-chartreuse500 cursor-pointer'
+                                onClick={ () => { 
+                                  setInitialBuyMode(false)
+                                  setShowTradeAssetModal(true)}
+                                }
+                              >
+                                Instant Sell
+                              </div>
+                            </Menu.Item>
+                            <Menu.Item>
+                              <div
+                                className='hover:text-chartreuse500 cursor-pointer'
+                                onClick={ () => { 
+                                  setInitialBuyMode(false)
+                                  setShowTradeAssetModal(true)}
+                                }
+                              >
+                                Create Sell Order
+                              </div>
+                            </Menu.Item>
+                          </div>
+                        </Menu.Items>
+                      </Transition>
+                    </Menu>
                   </div>
                   <div title='Listings' className='w-full h-full text-offWhite text-xl'>
                     <OrderBook assetWithOrders={assetWithOrders} showInTheMarketplace={true} showBuyAndSellButtons={true} tradeAsset={undefined} />

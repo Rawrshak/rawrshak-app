@@ -79,7 +79,9 @@ const useOwnedOrders = (exchangeSubgraphEndpoint: string | undefined) => {
 
     // Todo: fix this. this causes issues with the order check box
     const interval = setInterval(() => {
-      updateOrders();
+      if(account !== undefined) {
+        updateOrders();
+      }
     }, 30000);
     return () => clearInterval(interval);
 

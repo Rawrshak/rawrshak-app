@@ -84,11 +84,11 @@ function FullAssetPage() {
   } else {
     const assetWithOrders = assetsWithOrders.find(assetsWithOrders => assetsWithOrders.id === assetID) 
     return (
-      <div>
+      <div className='mt-5'>
         <TradeAssetModal show={showTradeAssetModal} setShow={setShowTradeAssetModal} initialBuyMode={initialBuyMode} assetWithOrders={assetWithOrders} />
         <div>
           {assetsWithOrders.filter(assetWithOrders => assetWithOrders.id === assetID ).map((assetWithOrders: AssetWithOrders, index) => (
-            <div key={index} className='w-full -mt-12'>
+            <div key={index} className='w-full'>
               <div className='w-full flex flex-row'>
                 <div className='flex w-1/2 flex-col'>
                   <div className='flex w-full h-full justify-center'>
@@ -98,9 +98,6 @@ function FullAssetPage() {
                 <div className='flex flex-col w-1/2'>
                   <div title='Name' className=''>
                     <div className='flex text-offWhite text-5xl'>{assetWithOrders.name}</div>
-                  </div>
-                  <div title='Creator' className=''>
-                    <div className='flex text-offWhite text-2xl'> By: {assetWithOrders.creator === null ? 'Unknown' : assetWithOrders.creator}</div>
                   </div>
                   <div title='Description' className=''>
                     <div className='flex text-offWhite text-2xl'> Description: {description}</div>
